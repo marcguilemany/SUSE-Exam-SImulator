@@ -153,6 +153,9 @@
 // =============================================================================
 //  DATA SOURCE - SCA SLES 15 (2025 Update) - COMPLETO
 // =============================================================================
+// =============================================================================
+//  DATA SOURCE - SCA SLES 15 (2025 Update) - ESTRUCTURA COMPLETA
+// =============================================================================
 const DATA = [
 
     // -------------------------------------------------------------------------
@@ -178,7 +181,7 @@ const DATA = [
             {text: "A separate License/Registration code for that extension.", correct: true},
             {text: "Root privileges only.", correct: false}
         ], 
-        rationale: "Extensions like HA are add-on products that require a specific registration code to enable their repositories.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-register-sle.html' target='_blank'>📚 SUSE Docs: Modules & Extensions</a>" 
+        rationale: "Extensions like HA are add-on products that require a specific registration code to enable their repositories." 
     },
     { 
         type: "SINGLE", 
@@ -189,7 +192,7 @@ const DATA = [
             {text: "ip addr", correct: false},
             {text: "wicked-gui", correct: false}
         ], 
-        rationale: "The command 'yast2' invokes the Qt/GTK graphical interface, while 'yast' typically invokes the Ncurses (text) interface.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-yast-work.html' target='_blank'>📚 SUSE Docs: YaST Interface</a>" 
+        rationale: "'yast2' invokes the Qt/GTK graphical interface. 'yast' is for text mode (ncurses)." 
     },
     { 
         type: "SINGLE", 
@@ -200,7 +203,7 @@ const DATA = [
             {text: "/etc/grub.conf", correct: false},
             {text: "/var/lib/grub2", correct: false}
         ], 
-        rationale: "While you edit /etc/default/grub, the generated file used by the bootloader is in /boot/grub2/grub.cfg.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-grub2.html' target='_blank'>📚 SUSE Docs: GRUB2</a>" 
+        rationale: "You edit /etc/default/grub, but the generated file used by the bootloader is /boot/grub2/grub.cfg." 
     },
 
     // -------------------------------------------------------------------------
@@ -214,7 +217,7 @@ const DATA = [
             {term: "STDOUT (Output)", def: "1"},
             {term: "STDERR (Error)", def: "2"}
         ], 
-        rationale: "0 is Input, 1 is Output, 2 is Error.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Shell Redirection</a>" 
+        rationale: "0 is Input, 1 is Output, 2 is Error." 
     },
     { 
         type: "MATCHING", 
@@ -225,7 +228,7 @@ const DATA = [
             {term: ";", def: "Run always (sequential)"},
             {term: "|", def: "Pass output to input"}
         ], 
-        rationale: "|| is OR (on failure), && is AND (on success), ; is separator, | is pipe.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Shell Operators</a>" 
+        rationale: "|| is OR (on failure), && is AND (on success), ; is separator, | is pipe." 
     },
     { 
         type: "SINGLE", 
@@ -236,7 +239,7 @@ const DATA = [
             {text: "Space", correct: false},
             {text: "Ctrl+C", correct: false}
         ], 
-        rationale: "The Tab key provides auto-completion in Bash.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Bash Completion</a>" 
+        rationale: "The Tab key provides auto-completion in Bash." 
     },
     { 
         type: "MULTI", 
@@ -247,7 +250,7 @@ const DATA = [
             {text: "The file used is ~/.bash_history.", correct: true},
             {text: "History is cleared automatically every reboot.", correct: false}
         ], 
-        rationale: "Defaults are HISTSIZE=1000 and the file is ~/.bash_history.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Bash History</a>" 
+        rationale: "Defaults are HISTSIZE=1000 and the file is ~/.bash_history." 
     },
     { 
         type: "SINGLE", 
@@ -258,7 +261,7 @@ const DATA = [
             {text: "/tmp/.profile", correct: false},
             {text: "/var/bashrc", correct: false}
         ], 
-        rationale: "~/.bashrc is the standard location for user-specific shell configuration.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Bash Config Files</a>" 
+        rationale: "~/.bashrc is the standard location for user-specific shell configuration." 
     },
     { 
         type: "SINGLE", 
@@ -269,7 +272,7 @@ const DATA = [
             {text: "/var/man", correct: false},
             {text: "/opt/man", correct: false}
         ], 
-        rationale: "The standard path is /usr/share/man.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Man Pages</a>" 
+        rationale: "The standard path is /usr/share/man." 
     },
     { 
         type: "MATCHING", 
@@ -296,7 +299,7 @@ const DATA = [
             {text: "Symbolic links can point to directories.", correct: true},
             {text: "If you delete the original file, the Hard Link breaks.", correct: false}
         ], 
-        rationale: "Hard links are the same file (inode). Soft links are pointers and can cross partitions.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html' target='_blank'>📚 SUSE Docs: Links</a>" 
+        rationale: "Hard links are the same file (inode). Soft links are pointers and can cross partitions." 
     },
     { 
         type: "SINGLE", 
@@ -306,7 +309,7 @@ const DATA = [
             {text: "A kernel abstraction layer providing a common interface for all filesystems.", correct: true},
             {text: "A specific filesystem type for virtual machines.", correct: false}
         ], 
-        rationale: "VFS allows the kernel to treat all filesystems (Ext4, XFS, Btrfs) uniformly.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html' target='_blank'>📚 SUSE Docs: VFS</a>" 
+        rationale: "VFS allows the kernel to treat all filesystems (Ext4, XFS, Btrfs) uniformly." 
     },
     { 
         type: "SINGLE", 
@@ -317,7 +320,15 @@ const DATA = [
             {text: "Root: XFS, Home: Btrfs", correct: false},
             {text: "Root: LVM, Home: Ext4", correct: false}
         ], 
-        rationale: "Btrfs is used for / to enable Snapper rollbacks. XFS is used for /home for performance.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html' target='_blank'>📚 SUSE Docs: Default Filesystems</a>" 
+        rationale: "Btrfs is used for / to enable Snapper rollbacks. XFS is used for /home for performance." 
+    },
+    // --- HOTSPOT MOUNT (Colocado en Topic 04) ---
+    { 
+        type: "HOTSPOT", 
+        text: "In the mount command output, click on the Mount Options to check if the filesystem is Read-Only (ro) or Read-Write (rw).", 
+        image: "assets/img/mount_output.png", 
+        target: {x: 85, y: 50}, 
+        rationale: "Mount options (rw, ro, nosuid) are displayed inside parentheses at the end of the line.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html' target='_blank'>📚 SUSE Docs: Mounting</a>" 
     },
     { 
         type: "HOTSPOT", 
@@ -334,7 +345,7 @@ const DATA = [
         type: "FILL", 
         text: "In Vim, what command is used to quit without saving (force quit)?", 
         validAnswers: [":q!", "q!"], 
-        rationale: ":q! forces exit discarding changes.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-vim.html' target='_blank'>📚 SUSE Docs: Vim Basics</a>" 
+        rationale: ":q! forces exit discarding changes." 
     },
     { 
         type: "FILL", 
@@ -370,9 +381,10 @@ const DATA = [
     { 
         type: "HOTSPOT", 
         text: "Identify where the added secondary group for a user is displayed in the 'id' command output.", 
-        image: "https://files.catbox.moe/example_id_output.png", // Nota: Necesitarías una imagen real de 'id'.
-        target: {x: 90, y: 50}, // Apunta al final de la línea
-        rationale: "Secondary groups appear at the very end of the 'id' command output." 
+        // --- AQUÍ VA TU IMAGEN DEL COMANDO ID ---
+        image: "assets/img/id_command_output.png", 
+        target: {x: 90, y: 50}, 
+        rationale: "Secondary groups appear at the very end of the 'id' command output.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-users.html' target='_blank'>📚 SUSE Docs: User Identity</a>" 
     },
     
     // -------------------------------------------------------------------------
@@ -387,7 +399,7 @@ const DATA = [
             {text: "Directory: 777", correct: false},
             {text: "File: 755", correct: false}
         ], 
-        rationale: "Dir: 777-022=755. File: 666-022=644.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html#sec-adm-shell-perm' target='_blank'>📚 SUSE Docs: Permissions</a>" 
+        rationale: "Dir: 777-022=755. File: 666-022=644." 
     },
     { 
         type: "MATCHING", 
@@ -411,7 +423,7 @@ const DATA = [
             {text: "-15", correct: true},
             {text: "7", correct: false}
         ], 
-        rationale: "Lower numbers = Higher priority. -20 is max, 19 is min.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Nice</a>" 
+        rationale: "Lower numbers = Higher priority. -20 is max, 19 is min." 
     },
     { 
         type: "MULTI", 
@@ -434,7 +446,6 @@ const DATA = [
     // -------------------------------------------------------------------------
     // 09 System Service Management
     // -------------------------------------------------------------------------
-    // (Añadida la que pudo ser "rara")
     { 
         type: "SINGLE", 
         text: "How do you safely modify a systemd service configuration without editing the vendor file in /usr/lib?", 
@@ -484,7 +495,7 @@ const DATA = [
             {text: "su", correct: false},
             {text: "chgrp", correct: false}
         ], 
-        rationale: "newgrp changes the primary group for the session. sg executes a command as a different group.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-users.html' target='_blank'>📚 SUSE Docs: Group Management</a>" 
+        rationale: "newgrp changes the primary group for the session. sg executes a command as a different group." 
     },
 
     // -------------------------------------------------------------------------
@@ -499,7 +510,7 @@ const DATA = [
             {text: "putty", correct: false},
             {text: "ftp", correct: false}
         ], 
-        rationale: "SSH (CLI) and VNC (Graphical) are the standard supported tools. Putty is a 3rd party Windows client.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-remote-admin.html' target='_blank'>📚 SUSE Docs: Remote Admin</a>" 
+        rationale: "SSH (CLI) and VNC (Graphical) are the standard supported tools. Putty is a 3rd party Windows client." 
     },
 
     // -------------------------------------------------------------------------
@@ -510,7 +521,7 @@ const DATA = [
         text: "Construct the parted command to create a primary XFS partition using the whole disk.", 
         items: ["mkpart", "primary", "xfs", "0%", "100%"], 
         correct: ["mkpart", "primary", "xfs", "0%", "100%"], 
-        rationale: "Syntax: mkpart [type] [fs-type] [start] [end].<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-parted.html' target='_blank'>📚 SUSE Docs: Parted</a>" 
+        rationale: "Syntax: mkpart [type] [fs-type] [start] [end]." 
     },
 
     // -------------------------------------------------------------------------
@@ -545,16 +556,29 @@ const DATA = [
         ], 
         rationale: "pvmove evacuates data to other disks in the VG. Only then can you reduce/remove." 
     },
-    // Nota: Aquí iría la de "Hotspot: LVM Striped" si tuvieramos la imagen. Como no la tenemos, te pongo una conceptual.
-    {
-        type: "SINGLE",
-        text: "In a diagram where data blocks are distributed evenly across all disks at the same level (e.g., A1, B2, C3), what type of LVM volume is it?",
+    // --- HOTSPOT LVM (Colocado en Topic 14) ---
+    { 
+        type: "HOTSPOT", 
+        text: "Identify the Striped Logical Volume (RAID 0) layout in the diagram.", 
+        // --- AQUÍ VA TU IMAGEN DE LVM ---
+        image: "assets/img/lvm_types_diagram.png", 
+        target: {x: 50, y: 80}, 
+        rationale: "Striped volumes distribute data evenly across multiple disks simultaneously to improve performance.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-lvm.html' target='_blank'>📚 SUSE Docs: LVM Striping</a>" 
+    },
+
+    // -------------------------------------------------------------------------
+    // 15 Btrfs Management
+    // -------------------------------------------------------------------------
+    { 
+        type: "MULTI", 
+        text: "Which statements regarding subvolumes in a BtrFS filesystem are true? (Choose two)", 
         options: [
-            {text: "Linear", correct: false},
-            {text: "Striped", correct: true},
-            {text: "Mirrored", correct: false}
-        ],
-        rationale: "Striped volumes write data in parallel across all disks for performance."
+            {text: "Every subvolume must have the same quota.", correct: false},
+            {text: "Subvolumes can be mounted separately using -o sub=...", correct: true},
+            {text: "Every subvolume must begin with '@'.", correct: false},
+            {text: "Multiple virtual filesystems can be created inside the BtrFS filesystem.", correct: true}
+        ], 
+        rationale: "BtrFS subvolumes act like independent file trees and can be mounted individually." 
     },
 
     // -------------------------------------------------------------------------
@@ -568,7 +592,7 @@ const DATA = [
             {text: "ICMP", correct: true},
             {text: "UDP", correct: false}
         ], 
-        rationale: "ICMP (Internet Control Message Protocol) is used for diagnostics.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-network.html' target='_blank'>📚 SUSE Docs: Network</a>" 
+        rationale: "ICMP (Internet Control Message Protocol) is used for diagnostics." 
     },
     { 
         type: "FILL", 
@@ -581,12 +605,46 @@ const DATA = [
     // 17 Software Management
     // -------------------------------------------------------------------------
     { 
+        type: "SINGLE", 
+        text: "What is required to access updates for SLE?", 
+        options: [
+            {text: "A Software Subscription", correct: false},
+            {text: "Nothing", correct: false},
+            {text: "Account Registration", correct: false},
+            {text: "An account with SUSE Customer Center", correct: false},
+            {text: "An account with SUSE Customer Center and a SLE Product Key", correct: true}
+        ], 
+        rationale: "To access repositories and updates, you need to register with SCC using a Product Key." 
+    },
+    { 
+        type: "MULTI", 
+        text: "What two commands will you use if you are going to compile and install from source code? (Choose two)", 
+        options: [
+            {text: "compile", correct: false},
+            {text: "make install", correct: true},
+            {text: "assemble", correct: false},
+            {text: "./configure", correct: true},
+            {text: "./compile", correct: false}
+        ], 
+        rationale: "The standard workflow is usually: ./configure, make, and make install." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What is the command to remove repository number 4?", 
+        options: [
+            {text: "yumrepo -del 4", correct: false},
+            {text: "zypper rr 4", correct: true},
+            {text: "rpm -e 4", correct: false},
+            {text: "yast remove 4", correct: false}
+        ], 
+        rationale: "`zypper rr` stands for removerepo." 
+    },
+    { 
         type: "FILL", 
         text: "Which rpm flag displays a progress bar with hash marks (#) during installation?", 
         validAnswers: ["-h", "--hash"], 
         rationale: "-h (hash) prints hashes. -v is just verbose text." 
     },
-    // Hotspot Simulado para RPM Release
     { 
         type: "SINGLE", 
         text: "In the package name 'bash-4.4-23.1.x86_64.rpm', which part is the Release?", 
@@ -616,9 +674,30 @@ const DATA = [
             {text: "Manual execution only", correct: false}
         ], 
         rationale: "SLES 15 uses a systemd timer (logrotate.timer) instead of a cron job." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What does the term 'action' mean when referring to system logging (rsyslog/syslog-ng)?", 
+        options: [
+            {text: "An action defines where a log message ends up (file, db, remote).", correct: true},
+            {text: "An action defines the severity.", correct: false},
+            {text: "An action is used to filter out messages.", correct: false},
+            {text: "An action is a process facility.", correct: false}
+        ], 
+        rationale: "In logging config, the selector filters the message, and the action defines where to write it." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What is the name of the system logging facility in SUSE Linux Enterprise?", 
+        options: [
+            {text: "mail-log", correct: false},
+            {text: "syslog", correct: false},
+            {text: "syslog-ng", correct: false},
+            {text: "rsyslog / syslog-ng", correct: true} 
+        ], 
+        rationale: "SLES uses rsyslog or syslog-ng (depending on version/config), but syslog-ng is the traditional robust answer for SLES." 
     }
 ];
-
 
 // =============================================================================
 //  ENGINE LOGIC
