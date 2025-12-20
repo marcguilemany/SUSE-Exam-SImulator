@@ -151,67 +151,474 @@
 
 <script>
 // =============================================================================
-//  DATA SOURCE (Tus preguntas originales)
+//  DATA SOURCE - SCA SLES 15 (2025 Update) - COMPLETO
 // =============================================================================
 const DATA = [
-    // BASH & CONCEPTS
-    { type: "SINGLE", text: "What is the primary function of the Bash shell?", options: [{text:"Command language interpreter", correct:true}, {text:"Kernel module", correct:false}, {text:"Graphical server", correct:false}, {text:"Compiler for C++", correct:false}], rationale: "Bash (Bourne Again SHell) interprets commands given by the user." },
-    { type: "ORDER", text: "Order Bash command precedence from Highest to Lowest.", items: ["Alias", "Function", "Built-in", "PATH"], correct: ["Alias", "Function", "Built-in", "PATH"], rationale: "Order: Alias -> Function -> Built-in -> Hash/PATH." },
-    { type: "SINGLE", text: "Pressing Tab twice in Bash does what?", options: [{text:"Lists all matching commands", correct:true}, {text:"Auto-completes first match", correct:false}, {text:"Beeps only", correct:false}, {text:"Exits the shell", correct:false}], rationale: "It lists all ambiguities." },
-    
-    // STORAGE
-    { type: "MULTI", text: "Select valid LVM Logical Volume Types (Select 3).", options: [{text:"Linear", correct:true}, {text:"Striped", correct:true}, {text:"Mirrored", correct:true}, {text:"Circular", correct:false}, {text:"Deduplicated", correct:false}, {text:"Z-RAID", correct:false}], rationale: "Common LVM types are Linear (Concatenated), Striped (RAID0-like), and Mirrored (RAID1-like)." },
-    { type: "SINGLE", text: "Which command forces an ext4 check after a specific number of mounts?", options: [{text:"tune2fs -c", correct:true}, {text:"fsck -n", correct:false}, {text:"dumpe2fs", correct:false}, {text:"mount -o check", correct:false}], rationale: "`tune2fs -c [count]` sets the max mount count before check." },
-    { type: "SINGLE", text: "Which LVM command moves data from one Physical Volume to another?", options: [{text:"pvmove", correct:true}, {text:"vgreduce", correct:false}, {text:"pvremove", correct:false}, {text:"lvmove", correct:false}], rationale: "`pvmove` evacuates data from a PV." },
-    { type: "MATCHING", text: "Match the Btrfs concepts.", pairs: [{term:"Snapshot", def:"Point-in-time copy"}, {term:"Subvolume", def:"Independent file tree"}, {term:"CoW", def:"Copy on Write"}], rationale: "Subvolumes act like filesystems, Snapshots are copies of them." },
-    { type: "ORDER", text: "Order the steps to extend an LVM filesystem.", items: ["pvcreate (if new disk)", "vgextend", "lvextend", "resize_fs"], correct: ["pvcreate (if new disk)", "vgextend", "lvextend", "resize_fs"], rationale: "Physical -> Volume Group -> Logical Volume -> Filesystem." },
-    { type: "SINGLE", text: "Default Filesystem for the root partition in SLES 15?", options: [{text:"Btrfs", correct:true}, {text:"XFS", correct:false}, {text:"Ext4", correct:false}, {text:"ReiserFS", correct:false}], rationale: "SLES uses Btrfs for root to enable Snapper rollback." },
-    { type: "FILL", text: "Enter the command to rollback the system using snapper (no arguments).", validAnswers: ["snapper rollback"], rationale: "The command is `snapper rollback`." },
-    
-    // SCENARIOS
-    { type: "SINGLE", text: "Why can't hard links cross partition boundaries?", options: [{text:"Inodes are specific to a filesystem", correct:true}, {text:"Requires root privileges", correct:false}, {text:"Filesystem format issue", correct:false}, {text:"Btrfs limitation", correct:false}], rationale: "Hard links point to an Inode number. Inode numbers are unique only within their own partition." },
-    { type: "SINGLE", text: "What technically grants 'root' privileges to a user?", options: [{text:"UID 0", correct:true}, {text:"Username 'root'", correct:false}, {text:"Group 'wheel'", correct:false}, {text:"Home directory /root", correct:false}], rationale: "The Kernel checks for User ID 0, regardless of the name." },
-    { type: "SINGLE", text: "A user has Read on a directory but NO Execute. What happens?", options: [{text:"Cannot cd into it", correct:true}, {text:"Cannot list files", correct:false}, {text:"Cannot stat files", correct:false}, {text:"Cannot echo", correct:false}], rationale: "Execute permission on a directory is required to traverse (enter) it." },
-    
-    // RPM & TOOLS
-    { type: "SINGLE", text: "What does RPM stand for?", options: [{text:"RPM Package Manager", correct:true}, {text:"Red Hat Package Maker", correct:false}, {text:"Remote Package Monitor", correct:false}, {text:"Rapid Package Mover", correct:false}], rationale: "It is a recursive acronym." },
-    { type: "SINGLE", text: "Which flag installs a package in rpm?", options: [{text:"-i", correct:true}, {text:"-c", correct:false}, {text:"-e", correct:false}, {text:"-r", correct:false}], rationale: "`rpm -i` (install)." },
-    { type: "MULTI", text: "Select 3 valid SLE 15 Product Modules.", options: [{text:"SLES", correct:true}, {text:"SLE HPC", correct:true}, {text:"SLE Real Time", correct:true}, {text:"SLE Macro", correct:false}, {text:"SUSE Cloud", correct:false}, {text:"SLE Home", correct:false}], rationale: "SLES, HPC, and Real Time are core products." },
-    { type: "FILL", text: "Command to install the 'lamp_server' pattern via zypper?", validAnswers: ["zypper in -t pattern lamp_server", "zypper install -t pattern lamp_server"], rationale: "`zypper in -t pattern <name>`." },
-    { type: "SINGLE", text: "Which rpm flag shows a hash progress bar?", options: [{text:"-h", correct:true}, {text:"-b", correct:false}, {text:"-v", correct:false}, {text:"-p", correct:false}], rationale: "`-h` prints hash marks." },
-    { type: "SINGLE", text: "Command to perform a Distribution Upgrade?", options: [{text:"zypper dup", correct:true}, {text:"zypper up", correct:false}, {text:"zypper patch", correct:false}, {text:"yast update", correct:false}], rationale: "`dup` (Distribution Upgrade)." },
 
-    // GENERAL ADMIN
-    { type: "SINGLE", text: "Target for GUI interface in systemd?", options: [{text:"graphical.target", correct:true}, {text:"multi-user.target", correct:false}, {text:"runlevel5", correct:false}, {text:"x11.target", correct:false}], rationale: "graphical.target equates to runlevel 5." },
-    { type: "SINGLE", text: "Command to reload systemd unit files after modification?", options: [{text:"systemctl daemon-reload", correct:true}, {text:"systemctl reload", correct:false}, {text:"systemctl restart", correct:false}, {text:"init q", correct:false}], rationale: "`daemon-reload` reads changes from disk." },
-    { type: "SINGLE", text: "Show logs for the current boot only.", options: [{text:"journalctl -b", correct:true}, {text:"dmesg", correct:false}, {text:"syslog", correct:false}, {text:"less /var/log/boot", correct:false}], rationale: "`-b` filters for current boot." },
-    { type: "SINGLE", text: "Which signal is sent by default with `kill`?", options: [{text:"SIGTERM (15)", correct:true}, {text:"SIGKILL (9)", correct:false}, {text:"SIGHUP (1)", correct:false}, {text:"SIGSTOP (19)", correct:false}], rationale: "SIGTERM asks nicely to stop." },
-    
-    // FILLERS
-    { type: "SINGLE", text: "Which command shows listening sockets?", options: [{text:"ss -l", correct:true}, {text:"netstat -s", correct:false}, {text:"ip link", correct:false}, {text:"nmcli", correct:false}], rationale: "`ss` is the modern replacement for netstat." },
-    { type: "SINGLE", text: "File for local hostname resolution?", options: [{text:"/etc/hosts", correct:true}, {text:"/etc/resolv.conf", correct:false}, {text:"/etc/nsswitch.conf", correct:false}, {text:"/etc/nameserver", correct:false}], rationale: "`/etc/hosts` maps IP to names locally." },
-    { type: "FILL", text: "Which file contains DNS nameserver configuration?", validAnswers: ["/etc/resolv.conf"], rationale: "`resolv.conf` holds nameserver IPs." },
-    { type: "SINGLE", text: "Check connectivity to a host?", options: [{text:"ping", correct:true}, {text:"echo", correct:false}, {text:"curl", correct:false}, {text:"wget", correct:false}], rationale: "ICMP Ping." },
-    { type: "FILL", text: "Command to print kernel release version?", validAnswers: ["uname -r"], rationale: "`uname -r` prints the release." },
-    { type: "SINGLE", text: "List loaded kernel modules?", options: [{text:"lsmod", correct:true}, {text:"modprobe -l", correct:false}, {text:"insmod", correct:false}, {text:"depmod", correct:false}], rationale: "`lsmod`." },
-    { type: "FILL", text: "Command to load a module and its dependencies?", validAnswers: ["modprobe"], rationale: "`modprobe` handles deps; `insmod` does not." },
-    { type: "MATCHING", text: "Match FHS Directories.", pairs: [{term:"/proc", def:"Kernel virtual fs"}, {term:"/dev", def:"Device files"}, {term:"/sys", def:"Hardware/Driver info"}], rationale: "Standard Linux FHS." },
-    { type: "SINGLE", text: "Configuration file for sudo?", options: [{text:"/etc/sudoers", correct:true}, {text:"/etc/su", correct:false}, {text:"/etc/admin", correct:false}, {text:"/etc/users", correct:false}], rationale: "Edited with `visudo`." },
-    { type: "SINGLE", text: "Where are hashed user passwords stored?", options: [{text:"/etc/shadow", correct:true}, {text:"/etc/passwd", correct:false}, {text:"/etc/security", correct:false}, {text:"/etc/master.passwd", correct:false}], rationale: "Shadow file is readable only by root." },
-    { type: "SINGLE", text: "Numerical value of the Sticky Bit?", options: [{text:"1000", correct:true}, {text:"4000", correct:false}, {text:"2000", correct:false}, {text:"0777", correct:false}], rationale: "4=SUID, 2=SGID, 1=Sticky." },
-    { type: "SINGLE", text: "Command to register SLE with SCC?", options: [{text:"SUSEConnect", correct:true}, {text:"yast-register", correct:false}, {text:"subscription-manager", correct:false}, {text:"reg-tool", correct:false}], rationale: "SUSEConnect is the CLI tool." },
-    { type: "SINGLE", text: "Regenerate GRUB2 configuration?", options: [{text:"grub2-mkconfig", correct:true}, {text:"update-grub", correct:false}, {text:"grub-install", correct:false}, {text:"install-grub", correct:false}], rationale: "`grub2-mkconfig -o ...`" },
-    { type: "FILL", text: "Command to create a directory and its parents?", validAnswers: ["mkdir -p"], rationale: "`mkdir -p` creates parents if needed." },
-    { type: "SINGLE", text: "Which symbol overwrites a file in redirection?", options: [{text:">", correct:true}, {text:">>", correct:false}, {text:"|", correct:false}, {text:"<", correct:false}], rationale: "`>` overwrites, `>>` appends." },
-    { type: "SINGLE", text: "Where is the cron log typically found in SUSE?", options: [{text:"/var/log/cron", correct:false}, {text:"/var/log/messages", correct:true}, {text:"/var/log/syslog", correct:false}, {text:"/var/log/jobs", correct:false}], rationale: "In standard SLES, cron logs to `/var/log/messages` unless configured otherwise." },
+    // -------------------------------------------------------------------------
+    // 02 Overview of SUSE Linux Enterprise
+    // -------------------------------------------------------------------------
+    { 
+        type: "SINGLE", 
+        text: "What is the Total Lifecycle (General + LTSS) of a SLES major version?", 
+        options: [
+            {text: "10 years", correct: false},
+            {text: "5 years", correct: false},
+            {text: "13 years", correct: true},
+            {text: "15 years", correct: false}
+        ], 
+        rationale: "SLES has 10 years of General Support + 3 years of Long Term Service Pack Support (LTSS).<br><br><a href='https://www.suse.com/lifecycle/' target='_blank'>📚 SUSE Lifecycle</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "You want to use the High Availability (HA) or Live Patching repositories. What is required?", 
+        options: [
+            {text: "Nothing, they are included in the base system.", correct: false},
+            {text: "Just an internet connection.", correct: false},
+            {text: "A separate License/Registration code for that extension.", correct: true},
+            {text: "Root privileges only.", correct: false}
+        ], 
+        rationale: "Extensions like HA are add-on products that require a specific registration code to enable their repositories.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-register-sle.html' target='_blank'>📚 SUSE Docs: Modules & Extensions</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What command allows you to configure the network settings Graphically?", 
+        options: [
+            {text: "yast", correct: false},
+            {text: "yast2", correct: true},
+            {text: "ip addr", correct: false},
+            {text: "wicked-gui", correct: false}
+        ], 
+        rationale: "The command 'yast2' invokes the Qt/GTK graphical interface, while 'yast' typically invokes the Ncurses (text) interface.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-yast-work.html' target='_blank'>📚 SUSE Docs: YaST Interface</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Where is the main configuration file for the GRUB2 bootloader located (the one read by the system)?", 
+        options: [
+            {text: "/etc/default/grub", correct: false},
+            {text: "/boot/grub2/grub.cfg", correct: true},
+            {text: "/etc/grub.conf", correct: false},
+            {text: "/var/lib/grub2", correct: false}
+        ], 
+        rationale: "While you edit /etc/default/grub, the generated file used by the bootloader is in /boot/grub2/grub.cfg.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-grub2.html' target='_blank'>📚 SUSE Docs: GRUB2</a>" 
+    },
+
+    // -------------------------------------------------------------------------
+    // 03 The Command Line
+    // -------------------------------------------------------------------------
+    { 
+        type: "MATCHING", 
+        text: "Match the File Descriptors (Streams) to their ID numbers.", 
+        pairs: [
+            {term: "STDIN (Input)", def: "0"},
+            {term: "STDOUT (Output)", def: "1"},
+            {term: "STDERR (Error)", def: "2"}
+        ], 
+        rationale: "0 is Input, 1 is Output, 2 is Error.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Shell Redirection</a>" 
+    },
+    { 
+        type: "MATCHING", 
+        text: "Match the command operators to their logic.", 
+        pairs: [
+            {term: "||", def: "Run if previous failed"},
+            {term: "&&", def: "Run if previous succeeded"},
+            {term: ";", def: "Run always (sequential)"},
+            {term: "|", def: "Pass output to input"}
+        ], 
+        rationale: "|| is OR (on failure), && is AND (on success), ; is separator, | is pipe.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Shell Operators</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which key is used to autocomplete commands or file paths in the shell?", 
+        options: [
+            {text: "Enter", correct: false},
+            {text: "Tab", correct: true},
+            {text: "Space", correct: false},
+            {text: "Ctrl+C", correct: false}
+        ], 
+        rationale: "The Tab key provides auto-completion in Bash.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Bash Completion</a>" 
+    },
+    { 
+        type: "MULTI", 
+        text: "Select two true statements regarding Command History.", 
+        options: [
+            {text: "The default history size (HISTSIZE) is usually 1000.", correct: true},
+            {text: "History is stored in /var/log/history.", correct: false},
+            {text: "The file used is ~/.bash_history.", correct: true},
+            {text: "History is cleared automatically every reboot.", correct: false}
+        ], 
+        rationale: "Defaults are HISTSIZE=1000 and the file is ~/.bash_history.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Bash History</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Where should a user define persistent aliases and variables for their shell session?", 
+        options: [
+            {text: "/etc/profile", correct: false},
+            {text: "~/.bashrc", correct: true},
+            {text: "/tmp/.profile", correct: false},
+            {text: "/var/bashrc", correct: false}
+        ], 
+        rationale: "~/.bashrc is the standard location for user-specific shell configuration.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Bash Config Files</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Where are the main manual pages (man pages) located in the filesystem?", 
+        options: [
+            {text: "/etc/man", correct: false},
+            {text: "/usr/share/man", correct: true},
+            {text: "/var/man", correct: false},
+            {text: "/opt/man", correct: false}
+        ], 
+        rationale: "The standard path is /usr/share/man.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Man Pages</a>" 
+    },
+    { 
+        type: "MATCHING", 
+        text: "Match the file management commands.", 
+        pairs: [
+            {term: "rmdir", def: "Removes empty directories"},
+            {term: "rm -r", def: "Removes directories with content"},
+            {term: "mv", def: "Moves or Renames"},
+            {term: "cp -r", def: "Copies directories"}
+        ], 
+        rationale: "rmdir only works on empty folders. mv is used for renaming." 
+    },
+
+    // -------------------------------------------------------------------------
+    // 04 The Linux Filesystem
+    // -------------------------------------------------------------------------
+    { 
+        type: "MULTI", 
+        text: "Select the true statements regarding Hard Links vs Symbolic Links (Select 3).", 
+        options: [
+            {text: "Symbolic links can cross filesystem boundaries.", correct: true},
+            {text: "Hard links share the same Inode number.", correct: true},
+            {text: "Hard links can point to directories.", correct: false},
+            {text: "Symbolic links can point to directories.", correct: true},
+            {text: "If you delete the original file, the Hard Link breaks.", correct: false}
+        ], 
+        rationale: "Hard links are the same file (inode). Soft links are pointers and can cross partitions.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html' target='_blank'>📚 SUSE Docs: Links</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What is VFS (Virtual File System)?", 
+        options: [
+            {text: "A translation tool for Windows files.", correct: false},
+            {text: "A kernel abstraction layer providing a common interface for all filesystems.", correct: true},
+            {text: "A specific filesystem type for virtual machines.", correct: false}
+        ], 
+        rationale: "VFS allows the kernel to treat all filesystems (Ext4, XFS, Btrfs) uniformly.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html' target='_blank'>📚 SUSE Docs: VFS</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What are the default filesystems for Root (/) and Home (/home) in SLES 15?", 
+        options: [
+            {text: "Root: Ext4, Home: XFS", correct: false},
+            {text: "Root: Btrfs, Home: XFS", correct: true},
+            {text: "Root: XFS, Home: Btrfs", correct: false},
+            {text: "Root: LVM, Home: Ext4", correct: false}
+        ], 
+        rationale: "Btrfs is used for / to enable Snapper rollbacks. XFS is used for /home for performance.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html' target='_blank'>📚 SUSE Docs: Default Filesystems</a>" 
+    },
     { 
         type: "HOTSPOT", 
         text: "Click on the directory where configuration files are stored (/etc).", 
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Standard-unix-filesystem-hierarchy.svg/1200px-Standard-unix-filesystem-hierarchy.svg.png", 
-        target: {x: 35, y: 35}, // Coordenadas aproximadas del /etc en esa imagen
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Standard-unix-filesystem-hierarchy.svg/800px-Standard-unix-filesystem-hierarchy.svg.png", 
+        target: {x: 35, y: 35}, 
         rationale: "/etc contains configuration files." 
+    },
+
+    // -------------------------------------------------------------------------
+    // 05 Text Editors (Vim)
+    // -------------------------------------------------------------------------
+    { 
+        type: "FILL", 
+        text: "In Vim, what command is used to quit without saving (force quit)?", 
+        validAnswers: [":q!", "q!"], 
+        rationale: ":q! forces exit discarding changes.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-vim.html' target='_blank'>📚 SUSE Docs: Vim Basics</a>" 
+    },
+    { 
+        type: "FILL", 
+        text: "In Vim, what command opens a new empty window horizontally?", 
+        validAnswers: [":new", "new"], 
+        rationale: ":new opens a new window. :split splits the current one." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which of the following represents the two main modes in Vim (often used in exams)?", 
+        options: [
+            {text: "Insert and Command (or Normal)", correct: true},
+            {text: "Input and Output", correct: false},
+            {text: "Write and Read", correct: false}
+        ], 
+        rationale: "Exams often categorize modes into Insert (typing) and Command/Normal (actions)." 
+    },
+    { 
+        type: "MATCHING", 
+        text: "Match the Vim movement keys.", 
+        pairs: [
+            {term: "h", def: "Left"},
+            {term: "j", def: "Down"},
+            {term: "k", def: "Up"},
+            {term: "l", def: "Right"}
+        ], 
+        rationale: "h(left), j(down), k(up), l(right) allows movement without leaving the home row." 
+    },
+
+    // -------------------------------------------------------------------------
+    // 06 Users and Groups
+    // -------------------------------------------------------------------------
+    { 
+        type: "HOTSPOT", 
+        text: "Identify where the added secondary group for a user is displayed in the 'id' command output.", 
+        image: "https://files.catbox.moe/example_id_output.png", // Nota: Necesitarías una imagen real de 'id'.
+        target: {x: 90, y: 50}, // Apunta al final de la línea
+        rationale: "Secondary groups appear at the very end of the 'id' command output." 
+    },
+    
+    // -------------------------------------------------------------------------
+    // 07 Standard Permissions
+    // -------------------------------------------------------------------------
+    { 
+        type: "MULTI", 
+        text: "Assuming default umask 022, select the default permissions for Files and Directories.", 
+        options: [
+            {text: "Directory: 755", correct: true},
+            {text: "File: 644", correct: true},
+            {text: "Directory: 777", correct: false},
+            {text: "File: 755", correct: false}
+        ], 
+        rationale: "Dir: 777-022=755. File: 666-022=644.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html#sec-adm-shell-perm' target='_blank'>📚 SUSE Docs: Permissions</a>" 
+    },
+    { 
+        type: "MATCHING", 
+        text: "Match the permission symbols.", 
+        pairs: [
+            {term: "rwx", def: "Read, Write, Execute"},
+            {term: "rw-", def: "Read, Write"},
+            {term: "r-x", def: "Read, Execute"},
+            {term: "---", def: "No permissions"}
+        ], 
+        rationale: "Basic Linux permissions notation." 
+    },
+
+    // -------------------------------------------------------------------------
+    // 08 Process Management
+    // -------------------------------------------------------------------------
+    { 
+        type: "SINGLE", 
+        text: "Which process has a higher priority (more CPU time)? Nice -15 or Nice 7?", 
+        options: [
+            {text: "-15", correct: true},
+            {text: "7", correct: false}
+        ], 
+        rationale: "Lower numbers = Higher priority. -20 is max, 19 is min.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Nice</a>" 
+    },
+    { 
+        type: "MULTI", 
+        text: "Which commands can display CPU and Memory usage per process? (Select 2)", 
+        options: [
+            {text: "top", correct: true},
+            {text: "ps aux", correct: true},
+            {text: "free", correct: false},
+            {text: "uptime", correct: false}
+        ], 
+        rationale: "top is real-time, ps aux gives a detailed snapshot including %CPU and %MEM." 
+    },
+    { 
+        type: "FILL", 
+        text: "What command is used to find the PID of a process by its name?", 
+        validAnswers: ["pidof", "pgrep"], 
+        rationale: "pidof or pgrep are the correct tools. 'pid' is not a command." 
+    },
+
+    // -------------------------------------------------------------------------
+    // 09 System Service Management
+    // -------------------------------------------------------------------------
+    // (Añadida la que pudo ser "rara")
+    { 
+        type: "SINGLE", 
+        text: "How do you safely modify a systemd service configuration without editing the vendor file in /usr/lib?", 
+        options: [
+            {text: "Use 'systemctl edit service_name'", correct: true},
+            {text: "Edit /usr/lib/systemd/system/file directly", correct: false},
+            {text: "Use 'systemctl modify'", correct: false}
+        ], 
+        rationale: "systemctl edit creates a drop-in file in /etc/systemd/system/....d/ to override settings safely." 
+    },
+
+    // -------------------------------------------------------------------------
+    // 10 Task Scheduling
+    // -------------------------------------------------------------------------
+    { 
+        type: "FILL", 
+        text: "Enter the crontab line to run a script at 10:35, on the 28th of every month, AND every Friday.", 
+        validAnswers: ["35 10 28 * 5"], 
+        rationale: "Min(35) Hour(10) Dom(28) Month(*) Dow(5). Note: Day of Month and Day of Week is an OR (Union) condition." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "How often is a script in /etc/cron.weekly executed?", 
+        options: [
+            {text: "Once a day", correct: false},
+            {text: "Once a week", correct: true},
+            {text: "Once a month", correct: false}
+        ], 
+        rationale: "As the name suggests, it runs once every 7 days." 
+    },
+    { 
+        type: "FILL", 
+        text: "Command to edit the current user's crontab?", 
+        validAnswers: ["crontab -e"], 
+        rationale: "crontab -e opens the editor defined in $EDITOR." 
+    },
+
+    // -------------------------------------------------------------------------
+    // 11 Privilege Delegation
+    // -------------------------------------------------------------------------
+    { 
+        type: "MULTI", 
+        text: "Which commands allow you to switch your primary group or execute a command with a different group ID? (Select 2)", 
+        options: [
+            {text: "sg", correct: true},
+            {text: "newgrp", correct: true},
+            {text: "su", correct: false},
+            {text: "chgrp", correct: false}
+        ], 
+        rationale: "newgrp changes the primary group for the session. sg executes a command as a different group.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-users.html' target='_blank'>📚 SUSE Docs: Group Management</a>" 
+    },
+
+    // -------------------------------------------------------------------------
+    // 12 Remote Administration
+    // -------------------------------------------------------------------------
+    { 
+        type: "MULTI", 
+        text: "Which of the following are considered native remote administration utilities in SLES? (Select 2)", 
+        options: [
+            {text: "ssh", correct: true},
+            {text: "vnc", correct: true},
+            {text: "putty", correct: false},
+            {text: "ftp", correct: false}
+        ], 
+        rationale: "SSH (CLI) and VNC (Graphical) are the standard supported tools. Putty is a 3rd party Windows client.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-remote-admin.html' target='_blank'>📚 SUSE Docs: Remote Admin</a>" 
+    },
+
+    // -------------------------------------------------------------------------
+    // 13 Storage Management Fundamentals
+    // -------------------------------------------------------------------------
+    { 
+        type: "ORDER", 
+        text: "Construct the parted command to create a primary XFS partition using the whole disk.", 
+        items: ["mkpart", "primary", "xfs", "0%", "100%"], 
+        correct: ["mkpart", "primary", "xfs", "0%", "100%"], 
+        rationale: "Syntax: mkpart [type] [fs-type] [start] [end].<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-parted.html' target='_blank'>📚 SUSE Docs: Parted</a>" 
+    },
+
+    // -------------------------------------------------------------------------
+    // 14 Logical Volume Management
+    // -------------------------------------------------------------------------
+    { 
+        type: "MULTI", 
+        text: "Select the commands used to display information about Physical Volumes. (Select 3)", 
+        options: [
+            {text: "pvs", correct: true},
+            {text: "pvdisplay", correct: true},
+            {text: "pvscan", correct: true},
+            {text: "pvshow", correct: false},
+            {text: "fdisk", correct: false}
+        ], 
+        rationale: "pvs (summary), pvdisplay (verbose), and pvscan (scan & list) are the correct tools." 
+    },
+    { 
+        type: "ORDER", 
+        text: "Order the steps to create a usable LVM mount.", 
+        items: ["pvcreate", "vgcreate", "lvcreate", "mkfs", "mount"], 
+        correct: ["pvcreate", "vgcreate", "lvcreate", "mkfs", "mount"], 
+        rationale: "Physical Vol -> Vol Group -> Logical Vol -> Format (Filesystem) -> Mount." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "You need to remove a PV that has data on it. What command must be run first?", 
+        options: [
+            {text: "pvmove", correct: true},
+            {text: "vgreduce", correct: false},
+            {text: "pvremove", correct: false}
+        ], 
+        rationale: "pvmove evacuates data to other disks in the VG. Only then can you reduce/remove." 
+    },
+    // Nota: Aquí iría la de "Hotspot: LVM Striped" si tuvieramos la imagen. Como no la tenemos, te pongo una conceptual.
+    {
+        type: "SINGLE",
+        text: "In a diagram where data blocks are distributed evenly across all disks at the same level (e.g., A1, B2, C3), what type of LVM volume is it?",
+        options: [
+            {text: "Linear", correct: false},
+            {text: "Striped", correct: true},
+            {text: "Mirrored", correct: false}
+        ],
+        rationale: "Striped volumes write data in parallel across all disks for performance."
+    },
+
+    // -------------------------------------------------------------------------
+    // 16 Network Management Fundamentals
+    // -------------------------------------------------------------------------
+    { 
+        type: "SINGLE", 
+        text: "What protocol is used by tools like 'ping' for network troubleshooting?", 
+        options: [
+            {text: "TCP", correct: false},
+            {text: "ICMP", correct: true},
+            {text: "UDP", correct: false}
+        ], 
+        rationale: "ICMP (Internet Control Message Protocol) is used for diagnostics.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-network.html' target='_blank'>📚 SUSE Docs: Network</a>" 
+    },
+    { 
+        type: "FILL", 
+        text: "Which file contains the configuration for DNS nameservers?", 
+        validAnswers: ["/etc/resolv.conf"], 
+        rationale: "/etc/resolv.conf is where you define the 'nameserver' IP addresses." 
+    },
+
+    // -------------------------------------------------------------------------
+    // 17 Software Management
+    // -------------------------------------------------------------------------
+    { 
+        type: "FILL", 
+        text: "Which rpm flag displays a progress bar with hash marks (#) during installation?", 
+        validAnswers: ["-h", "--hash"], 
+        rationale: "-h (hash) prints hashes. -v is just verbose text." 
+    },
+    // Hotspot Simulado para RPM Release
+    { 
+        type: "SINGLE", 
+        text: "In the package name 'bash-4.4-23.1.x86_64.rpm', which part is the Release?", 
+        options: [
+            {text: "4.4", correct: false},
+            {text: "23.1", correct: true},
+            {text: "x86_64", correct: false}
+        ], 
+        rationale: "Format is Name-Version-Release. Release (23.1) is the SUSE build number." 
+    },
+
+    // -------------------------------------------------------------------------
+    // 18 System Logging
+    // -------------------------------------------------------------------------
+    { 
+        type: "FILL", 
+        text: "Enter the command used to generate a log message manually to the syslog system.", 
+        validAnswers: ["logger"], 
+        rationale: "The command is 'logger'. 'log' does not exist." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What mechanism triggers logrotate in SLES 15?", 
+        options: [
+            {text: "Cron daily script", correct: false},
+            {text: "Systemd Timer", correct: true},
+            {text: "Manual execution only", correct: false}
+        ], 
+        rationale: "SLES 15 uses a systemd timer (logrotate.timer) instead of a cron job." 
     }
 ];
+
 
 // =============================================================================
 //  ENGINE LOGIC
@@ -309,71 +716,6 @@ const quiz = {
         if(prevAns) { inp.value = prevAns.userVal; inp.disabled = true; }
         container.appendChild(inp);
     },
-
-    /*renderOrder(q, container, prevAns) {
-
-        // Creamos contenedor flexible
-        const wrap = document.createElement('div'); wrap.className = 'drag-container';
-        
-        // COLUMNA 1: Opciones (Origen)
-        const col1 = document.createElement('div'); col1.className = 'drag-col';
-        col1.innerHTML = `<div class="drag-header">OPTIONS</div>`;
-        const zoneSrc = document.createElement('div'); zoneSrc.className = 'drop-zone';
-        zoneSrc.id = 'drag-src';
-
-        // COLUMNA 2: Tu Respuesta (Destino)
-        const col2 = document.createElement('div'); col2.className = 'drag-col';
-        col2.innerHTML = `<div class="drag-header">YOUR ANSWER</div>`;
-        const zoneTgt = document.createElement('div'); zoneTgt.className = 'drop-zone';
-        zoneTgt.id = 'drag-tgt';
-
-        // Lógica de ítems: Si ya respondiste, mostramos tu orden. Si no, las opciones desordenadas.
-        let srcItems = [], tgtItems = [];
-        if(prevAns) {
-            tgtItems = prevAns.userOrder; 
-        } else {
-            srcItems = [...q.items].sort(() => Math.random() - 0.5); 
-        }
-
-        // Función para crear las "cajitas" arrastrables
-        const createItem = (txt) => {
-            const el = document.createElement('div'); el.className = 'drag-item'; el.innerText = txt;
-            if(!prevAns) {
-                el.draggable = true;
-                el.ondragstart = (e) => { e.dataTransfer.setData('text', txt); };
-            } else {
-                el.style.cursor = 'default'; el.style.opacity = '0.8';
-            }
-            return el;
-        };
-
-        srcItems.forEach(t => zoneSrc.appendChild(createItem(t)));
-        tgtItems.forEach(t => zoneTgt.appendChild(createItem(t)));
-
-        // Eventos de Soltar (Drop) - Solo si no has respondido aún
-        if(!prevAns) {
-            [zoneSrc, zoneTgt].forEach(zone => {
-                zone.ondragover = e => { e.preventDefault(); zone.classList.add('drag-over'); };
-                zone.ondragleave = () => zone.classList.remove('drag-over');
-                zone.ondrop = e => {
-                    e.preventDefault(); zone.classList.remove('drag-over');
-                    const txt = e.dataTransfer.getData('text');
-                    
-                    // Buscamos el elemento que se está arrastrando para moverlo
-                    const allItems = document.querySelectorAll('.drag-item');
-                    let draggedEl;
-                    allItems.forEach(el => { if(el.innerText === txt) draggedEl = el; });
-                    
-                    if(draggedEl) zone.appendChild(draggedEl);
-                };
-            });
-        }
-
-        col1.appendChild(zoneSrc);
-        col2.appendChild(zoneTgt);
-        wrap.appendChild(col1); wrap.appendChild(col2);
-        container.appendChild(wrap);
-    },*/
 
     renderOrder(q, container, prevAns) {
         const wrap = document.createElement('div'); wrap.className = 'drag-container';
@@ -503,54 +845,6 @@ const quiz = {
         }
     },
 
- /*   renderHotspot(q, container, prev) {
-        const wrap = document.createElement('div'); 
-        wrap.style.textAlign = 'center';
-
-        const area = document.createElement('div'); 
-        area.className = 'hotspot-container';
-        
-        // La imagen
-        const img = document.createElement('img');
-        img.src = q.image; 
-        img.className = 'hotspot-img';
-        
-        // El Puntero (Pin)
-        const pin = document.createElement('div');
-        pin.className = 'hotspot-pin';
-        pin.innerHTML = '📍';
-        pin.id = 'user-pin';
-
-        // Si ya respondió, mostramos el pin donde lo dejó
-        if (prev) {
-            pin.classList.add('active');
-            pin.style.left = prev.x + '%';
-            pin.style.top = prev.y + '%';
-            // Si falló, mostramos el correcto en rojo/verde para diferenciar
-            if (!prev.isCorrect) pin.style.background = '#ef4444'; 
-        } else {
-            // Evento CLICK en la imagen para mover el pin
-            area.onclick = (e) => {
-                const rect = area.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                
-                pin.classList.add('active');
-                pin.style.left = x + '%';
-                pin.style.top = y + '%';
-                
-                // Guardamos coordenadas en el dataset para leerlas luego
-                area.dataset.x = x;
-                area.dataset.y = y;
-            };
-        }
-
-        area.appendChild(img);
-        area.appendChild(pin);
-        wrap.appendChild(area);
-        container.appendChild(wrap);
-    },*/
-
     renderHotspot(q, container, prev) {
         const wrap = document.createElement('div'); wrap.style.textAlign = 'center';
         const area = document.createElement('div'); area.className = 'hotspot-container';
@@ -587,84 +881,6 @@ const quiz = {
             else return closest;
         }, { offset: Number.NEGATIVE_INFINITY }).element;
     },
-
-    /*check() {
-        const q = this.list[this.idx];
-        let isCorrect = false;
-        let dataToSave = {};
-
-        if(q.type === 'SINGLE') {
-            const opts = document.querySelectorAll('.opt-btn');
-            let selectedIdx = -1;
-            opts.forEach((o, i) => { if(o.querySelector('input').checked) selectedIdx = i; });
-            if(selectedIdx > -1 && q.options[selectedIdx].correct) isCorrect = true;
-            dataToSave = { userSel: [selectedIdx] };
-        } 
-        else if(q.type === 'MULTI') {
-            const opts = document.querySelectorAll('.opt-btn');
-            let userSel = [];
-            let allGood = true;
-            opts.forEach((o, i) => {
-                const checked = o.querySelector('input').checked;
-                if(checked) userSel.push(i);
-                if(checked !== q.options[i].correct) allGood = false;
-            });
-            if(userSel.length > 0 && allGood) isCorrect = true;
-            dataToSave = { userSel };
-        }
-        else if(q.type === 'FILL') {
-            const val = document.querySelector('.input-fill').value.trim();
-            // Case insensitive check
-            if(q.validAnswers.some(ans => ans.toLowerCase() === val.toLowerCase())) isCorrect = true;
-            dataToSave = { userVal: val };
-        }
-        else if(q.type === 'ORDER') {
-            // CORRECCIÓN: Ahora buscamos la respuesta en la columna derecha 'drag-tgt'
-            const el = document.getElementById('drag-tgt');
-            // Si existe, leemos los hijos. Si no, devolvemos array vacío para evitar error.
-            const current = el ? [...el.children].map(c => c.innerText) : [];
-            
-            if(JSON.stringify(current) === JSON.stringify(q.correct)) isCorrect = true;
-            // Guardamos el orden del usuario para que se mantenga si navegamos
-            dataToSave = { order: current }; 
-        }
-        else if(q.type === 'MATCHING') {
-            const slots = document.querySelectorAll('.match-drop');
-            let hits = 0;
-            let matches = {};
-            slots.forEach(s => {
-                if(s.children.length > 0) {
-                    const txt = s.children[0].innerText;
-                    matches[s.dataset.term] = txt;
-                    const pair = q.pairs.find(p => p.term === s.dataset.term);
-                    if(pair && pair.def === txt) hits++;
-                }
-            });
-            if(hits === q.pairs.length) isCorrect = true;
-            dataToSave = { matches };
-        }
-        else if(q.type === 'HOTSPOT') {
-            const area = document.querySelector('.hotspot-container');
-            const userX = parseFloat(area.dataset.x || -999);
-            const userY = parseFloat(area.dataset.y || -999);
-            
-            // Calculamos la distancia (Tolerancia del 10%)
-            const diffX = Math.abs(userX - q.target.x);
-            const diffY = Math.abs(userY - q.target.y);
-            
-            // Si está a menos de un 10% de distancia del objetivo
-            if(diffX < 10 && diffY < 10) isCorrect= true;
-            
-            dataToSave = { x: userX, y: userY };
-        }
-
-        // Save State
-        this.answers[this.idx] = { isCorrect, ...dataToSave };
-        
-        // Update UI
-        this.showFeedback(isCorrect, q.rationale);
-        this.load(); // Reload to apply "disabled" states
-    },*/
 
     check() {
         const q = this.list[this.idx];
