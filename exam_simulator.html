@@ -310,49 +310,8 @@ const quiz = {
         container.appendChild(inp);
     },
 
-    /* renderOrder(q, container, prevAns) {
-        const box = document.createElement('div'); box.className = 'drag-container';
-        
-        // If already answered, show the correct order statically to avoid confusion, or user's order? 
-        // Let's show user's final order frozen.
-        const items = prevAns ? prevAns.userOrder : [...q.items].sort(() => Math.random() - 0.5);
+    /*renderOrder(q, container, prevAns) {
 
-        const colSrc = document.createElement('div'); colSrc.className = 'drag-col';
-        colSrc.innerHTML = `<div class="drag-header">Drag Items here to Order</div>`;
-        const zone = document.createElement('div'); zone.className = 'drop-zone';
-        zone.id = 'drag-zone';
-        
-        items.forEach(txt => {
-            const el = document.createElement('div'); el.className = 'drag-item';
-            el.innerText = txt; 
-            if(!prevAns) {
-                el.draggable = true;
-                el.ondragstart = (e) => { e.dataTransfer.setData('text/plain', txt); e.target.classList.add('dragging'); };
-                el.ondragend = (e) => e.target.classList.remove('dragging');
-            } else {
-                el.style.cursor = 'default';
-                el.style.borderLeftColor = '#94a3b8'; // grey out
-            }
-            zone.appendChild(el);
-        });
-
-        if(!prevAns) {
-            zone.ondragover = e => { e.preventDefault(); zone.classList.add('drag-over'); 
-                const afterElement = this.getDragAfterElement(zone, e.clientY);
-                const dragging = document.querySelector('.dragging');
-                if(afterElement == null) zone.appendChild(dragging);
-                else zone.insertBefore(dragging, afterElement);
-            };
-            zone.ondragleave = () => zone.classList.remove('drag-over');
-            zone.ondrop = () => zone.classList.remove('drag-over');
-        }
-
-        colSrc.appendChild(zone);
-        box.appendChild(colSrc);
-        container.appendChild(box);
-    },
-*/
-    renderOrder(q, container, prevAns) {
         // Creamos contenedor flexible
         const wrap = document.createElement('div'); wrap.className = 'drag-container';
         
@@ -414,7 +373,65 @@ const quiz = {
         col2.appendChild(zoneTgt);
         wrap.appendChild(col1); wrap.appendChild(col2);
         container.appendChild(wrap);
+    },*/
+
+    renderOrder(q, container, prevAns) {
+        const wrap = document.createElement('div'); wrap.className = 'drag-container';
+        
+        // COLUMNA 1: Opciones
+        const col1 = document.createElement('div'); col1.className = 'drag-col';
+        col1.innerHTML = `<div class="drag-header">OPTIONS</div>`;
+        const zoneSrc = document.createElement('div'); zoneSrc.className = 'drop-zone';
+        zoneSrc.id = 'drag-src';
+
+        // COLUMNA 2: Tu Respuesta
+        const col2 = document.createElement('div'); col2.className = 'drag-col';
+        col2.innerHTML = `<div class="drag-header">YOUR ANSWER</div>`;
+        const zoneTgt = document.createElement('div'); zoneTgt.className = 'drop-zone';
+        zoneTgt.id = 'drag-tgt';
+
+        // LÓGICA DEFENSIVA: Si prevAns.userOrder falla, usamos array vacío []
+        let srcItems = [], tgtItems = [];
+        if(prevAns) {
+            tgtItems = prevAns.userOrder || []; 
+        } else {
+            srcItems = [...(q.items || [])].sort(() => Math.random() - 0.5); 
+        }
+
+        const createItem = (txt) => {
+            const el = document.createElement('div'); el.className = 'drag-item'; el.innerText = txt;
+            if(!prevAns) {
+                el.draggable = true;
+                el.ondragstart = (e) => { e.dataTransfer.setData('text', txt); };
+            } else {
+                el.style.cursor = 'default'; el.style.opacity = '0.8';
+            }
+            return el;
+        };
+
+        srcItems.forEach(t => zoneSrc.appendChild(createItem(t)));
+        tgtItems.forEach(t => zoneTgt.appendChild(createItem(t)));
+
+        if(!prevAns) {
+            [zoneSrc, zoneTgt].forEach(zone => {
+                zone.ondragover = e => { e.preventDefault(); zone.classList.add('drag-over'); };
+                zone.ondragleave = () => zone.classList.remove('drag-over');
+                zone.ondrop = e => {
+                    e.preventDefault(); zone.classList.remove('drag-over');
+                    const txt = e.dataTransfer.getData('text');
+                    const allItems = document.querySelectorAll('.drag-item');
+                    let draggedEl;
+                    allItems.forEach(el => { if(el.innerText === txt) draggedEl = el; });
+                    if(draggedEl) zone.appendChild(draggedEl);
+                };
+            });
+        }
+
+        col1.appendChild(zoneSrc); col2.appendChild(zoneTgt);
+        wrap.appendChild(col1); wrap.appendChild(col2);
+        container.appendChild(wrap);
     },
+
     renderMatch(q, container, prevAns) {
         // MATCHING: 2 Columns. Left = Terms (Static), Right = Drops.
         // Pool of definitions at bottom.
@@ -486,7 +503,7 @@ const quiz = {
         }
     },
 
-    renderHotspot(q, container, prev) {
+ /*   renderHotspot(q, container, prev) {
         const wrap = document.createElement('div'); 
         wrap.style.textAlign = 'center';
 
@@ -532,6 +549,33 @@ const quiz = {
         area.appendChild(pin);
         wrap.appendChild(area);
         container.appendChild(wrap);
+    },*/
+
+    renderHotspot(q, container, prev) {
+        const wrap = document.createElement('div'); wrap.style.textAlign = 'center';
+        const area = document.createElement('div'); area.className = 'hotspot-container';
+        
+        const img = document.createElement('img'); img.src = q.image; img.className = 'hotspot-img';
+        const pin = document.createElement('div'); pin.className = 'hotspot-pin'; pin.innerHTML = '📍';
+
+        if (prev) {
+            pin.classList.add('active');
+            // Protección: Si x/y no existen, usar 0
+            pin.style.left = (prev.x || 0) + '%';
+            pin.style.top = (prev.y || 0) + '%';
+            if (!prev.isCorrect) pin.style.background = '#ef4444'; 
+        } else {
+            area.onclick = (e) => {
+                const rect = area.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                pin.classList.add('active');
+                pin.style.left = x + '%'; pin.style.top = y + '%';
+                area.dataset.x = x; area.dataset.y = y;
+            };
+        }
+        area.appendChild(img); area.appendChild(pin);
+        wrap.appendChild(area); container.appendChild(wrap);
     },
 
     getDragAfterElement(container, y) {
@@ -544,7 +588,7 @@ const quiz = {
         }, { offset: Number.NEGATIVE_INFINITY }).element;
     },
 
-    check() {
+    /*check() {
         const q = this.list[this.idx];
         let isCorrect = false;
         let dataToSave = {};
@@ -620,6 +664,72 @@ const quiz = {
         // Update UI
         this.showFeedback(isCorrect, q.rationale);
         this.load(); // Reload to apply "disabled" states
+    },*/
+
+    check() {
+        const q = this.list[this.idx];
+        let isCorrect = false;
+        let dataToSave = {};
+
+        if(q.type === 'SINGLE') {
+            const opts = document.querySelectorAll('.opt-btn');
+            let s = -1;
+            opts.forEach((o, i) => { if(o.querySelector('input').checked) s = i; });
+            if(s > -1 && q.options[s].correct) isCorrect = true;
+            dataToSave = { userSel: [s] };
+        } 
+        else if(q.type === 'MULTI') {
+            const opts = document.querySelectorAll('.opt-btn');
+            let userSel = []; let allGood = true;
+            opts.forEach((o, i) => {
+                const checked = o.querySelector('input').checked;
+                if(checked) userSel.push(i);
+                if(checked !== q.options[i].correct) allGood = false;
+            });
+            if(userSel.length > 0 && allGood) isCorrect = true;
+            dataToSave = { userSel };
+        }
+        else if(q.type === 'FILL') {
+            const val = document.querySelector('.input-fill').value.trim();
+            if(q.validAnswers.some(ans => ans.toLowerCase() === val.toLowerCase())) isCorrect = true;
+            dataToSave = { userVal: val };
+        }
+        else if(q.type === 'ORDER') {
+            const el = document.getElementById('drag-tgt');
+            const current = el ? [...el.children].map(c => c.innerText) : [];
+            if(JSON.stringify(current) === JSON.stringify(q.correct)) isCorrect = true;
+            dataToSave = { userOrder: current }; // IMPORTANTE: userOrder coincide con renderOrder
+        }
+        else if(q.type === 'MATCHING') {
+            const slots = document.querySelectorAll('.match-drop');
+            let hits = 0; let m = {};
+            slots.forEach(s => {
+                if(s.children.length > 0) {
+                    const txt = s.children[0].innerText;
+                    m[s.dataset.term] = txt;
+                    const pair = q.pairs.find(p => p.term === s.dataset.term);
+                    if(pair && pair.def === txt) hits++;
+                }
+            });
+            if(hits === q.pairs.length) isCorrect = true;
+            dataToSave = { matches: m };
+        }
+        else if(q.type === 'HOTSPOT') {
+            const area = document.querySelector('.hotspot-container');
+            // Protección contra null
+            if(area) {
+                const userX = parseFloat(area.dataset.x || -999);
+                const userY = parseFloat(area.dataset.y || -999);
+                const diffX = Math.abs(userX - q.target.x);
+                const diffY = Math.abs(userY - q.target.y);
+                if(diffX < 10 && diffY < 10) isCorrect = true;
+                dataToSave = { x: userX, y: userY };
+            }
+        }
+
+        this.answers[this.idx] = { isCorrect, ...dataToSave };
+        this.showFeedback(isCorrect, q.rationale);
+        this.load();
     },
 
     showFeedback(isCorrect, text) {
