@@ -308,6 +308,28 @@ const DATA = [
     // -------------------------------------------------------------------------
     // 03 The Command Line
     // -------------------------------------------------------------------------
+        { 
+        type: "SINGLE", 
+        text: "What is the first file executed by a bash login shell?", 
+        options: [
+            {text: "/etc/profile", correct: true},
+            {text: "/etc/profile.alias", correct: false},
+            {text: "~/.profile", correct: false},
+            {text: "/etc/bash.bashrc", correct: false}
+        ], 
+        rationale: "When Bash is invoked as a login shell, it first reads /etc/profile. Then it looks for ~/.bash_profile, ~/.bash_login, or ~/.profile.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Bash Startup</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "After the Kernel has been loaded during the boot process, which component handles hardware detection?", 
+        options: [
+            {text: "udev", correct: true},
+            {text: "devmgr", correct: false},
+            {text: "initramfs", correct: false}, // initramfs loads modules, but udev handles the events/nodes
+            {text: "hal", correct: false}
+        ], 
+        rationale: "The Kernel starts 'systemd-udevd' (udev) to listen to kernel uevents and create device nodes in /dev." 
+    },
     { 
         type: "MULTI", 
         text: "Which bash commands result in a valid arithmetic expansion? (Choose three)", 
@@ -1243,10 +1265,43 @@ const DATA = [
         ], 
         rationale: "SLES 15 supports TLS encryption for VNC. If a connection is not encrypted, the client usually displays a warning '(Connection not encrypted!)'.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-remote-admin.html#sec-vnc-secure' target='_blank'>📚 SUSE Docs: VNC Security</a>" 
     },
+        { 
+        type: "SINGLE", 
+        text: "You want to run a long process on a remote server and keep it running even if your SSH connection drops. Which command allows this?", 
+        options: [
+            {text: "screen", correct: true},
+            {text: "bg", correct: false},
+            {text: "tty-release", correct: false},
+            {text: "detach", correct: false}
+        ], 
+        rationale: "The 'screen' (or 'tmux') command allows you to detach and reattach sessions.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Screen</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What is the default TCP port a VNC Client uses to connect to the first display (:1)?", 
+        options: [
+            {text: "5901", correct: true},
+            {text: "5900", correct: false},
+            {text: "5801", correct: false},
+            {text: "3389", correct: false}
+        ], 
+        rationale: "VNC starts at 5900. Display :0 is 5900, Display :1 is 5901, etc." 
+    },
 
     // -------------------------------------------------------------------------
     // 13 Storage Management Fundamentals
     // -------------------------------------------------------------------------
+    { 
+        type: "SINGLE", 
+        text: "Which command is used to manage Linux Software RAID (md arrays)?", 
+        options: [
+            {text: "mdadm", correct: true},
+            {text: "yast swraid", correct: false},
+            {text: "raidadm", correct: false},
+            {text: "dmraid", correct: false}
+        ], 
+        rationale: "'mdadm' (Multiple Device Admin) is the standard tool for managing software RAID.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-raid.html' target='_blank'>📚 SUSE Docs: Software RAID</a>" 
+    },
     { 
         type: "ORDER", 
         text: "Construct the parted command to create a primary XFS partition using the whole disk.", 
@@ -1348,11 +1403,6 @@ const DATA = [
         validAnswers: ["/etc/resolv.conf"], 
         rationale: "/etc/resolv.conf is where you define the 'nameserver' IP addresses." 
     },
-    // -------------------------------------------------------------------------
-    // 16 Network Management Fundamentals - 20 QUESTIONS
-    // -------------------------------------------------------------------------
-    
-    // --- NETWORK MANAGERS (WICKED vs NETWORKMANAGER) ---
     { 
         type: "SINGLE", 
         text: "What is the default network management service for SUSE Linux Enterprise Server 15 (Server installation)?", 
@@ -1562,6 +1612,28 @@ const DATA = [
     // -------------------------------------------------------------------------
     // 17 Software Management
     // -------------------------------------------------------------------------
+        { 
+        type: "MULTI", 
+        text: "Which statements about 'rpm -U' vs 'rpm -F' are true? (Select 2)", 
+        options: [
+            {text: "-U (Upgrade) installs the package even if not previously installed.", correct: true},
+            {text: "-F (Freshen) installs the package even if not previously installed.", correct: false},
+            {text: "-U removes binaries from the database only.", correct: false},
+            {text: "-F installs the package ONLY if an older version is already installed.", correct: true}
+        ], 
+        rationale: "-U (Upgrade) = Install or Update. -F (Freshen) = Update only (must exist)." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which zypper command lists available patches (updates) needed by your system?", 
+        options: [
+            {text: "zypper lp", correct: true},
+            {text: "zypper patch", correct: false}, // Esto INSTALA los parches
+            {text: "zypper up", correct: false},
+            {text: "zypper list-updates", correct: false}
+        ], 
+        rationale: "'lp' stands for 'list-patches'. 'patch' installs them." 
+    },
     { 
         type: "HOTSPOT", 
         text: "In the filename 'bash-4.4-23.1.x86_64.rpm', click specifically on the 'Release' number.", 
