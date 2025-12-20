@@ -187,26 +187,34 @@ const quiz = {
     timer: null,      // NUEVO: Para guardar el intervalo
     timeLeft: 5400,   // NUEVO: 90 minutos en segundos (90 * 60)
     
-start() {
-        // CAMBIO AQUÍ: Usamos window.examData en vez de DATA
+    start() {
         // Comprobamos si hay preguntas cargadas
         if (!window.examData || window.examData.length === 0) {
             alert("No questions loaded! Check your 'db' folder paths.");
             return;
         }
 
-        // Shuffle and Init
+        // Shuffle and init
         this.list = [...window.examData].sort(() => Math.random() - 0.5);
-        
-        // ... El resto de tu función start() sigue IGUAL ...
         this.idx = 0;
         this.answers = {};
-        
+
+        // Reset timer
         clearInterval(this.timer);
-        this.timeLeft = 90 * 60; 
+        this.timeLeft = 90 * 60;
         this.startTimer();
-        // ... etc ...
+
+        // CAMBIO DE PANTALLAS (ESTO ES CLAVE)
+        document.getElementById('start-screen').classList.remove('active');
+        document.getElementById('quiz-screen').classList.add('active');
+        document.getElementById('result-screen').classList.remove('active');
+        document.getElementById('footer').style.display = 'flex';
+
+        // CARGAR PRIMERA PREGUNTA
+        document.getElementById('total-q').innerText = this.list.length;
+        this.load();
     },
+
 
     startTimer() {
         const display = document.getElementById('timer-display');
