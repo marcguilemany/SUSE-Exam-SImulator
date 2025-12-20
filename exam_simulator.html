@@ -309,6 +309,19 @@ const DATA = [
     // 03 The Command Line
     // -------------------------------------------------------------------------
     { 
+        type: "MULTI", 
+        text: "Which bash commands result in a valid arithmetic expansion? (Choose three)", 
+        options: [
+            {text: "TOTAL=$((5.3+2.2))", correct: false}, // Falso: Bash no soporta decimales
+            {text: "TOTAL=$[8/2]", correct: true},        // Verdadero: Sintaxis antigua pero válida para enteros
+            {text: "TOTAL=$[8.4/2.1]", correct: false},   // Falso: Decimales
+            {text: "TOTAL=$[2.1*4]", correct: false},     // Falso: Decimales
+            {text: "TOTAL=$((5+2))", correct: true},      // Verdadero: Sintaxis estándar POSIX
+            {text: "((TOTAL++))", correct: true}          // Verdadero: Estilo C para incrementar
+        ], 
+        rationale: "Bash arithmetic expansion only supports integers. Operations with decimals (floats) like 5.3 or 2.1 will fail. Valid syntaxes include $((...)), $[...] (legacy), and ((...)).<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html#sec-adm-shell-expansion' target='_blank'>📚 SUSE Docs: Shell Expansion</a>" 
+    },
+    { 
         type: "SINGLE", 
         text: "Which command will display the value of the environment variable named TMPDIR?", 
         options: [
@@ -399,6 +412,20 @@ const DATA = [
     // -------------------------------------------------------------------------
     // 04 The Linux Filesystem
     // -------------------------------------------------------------------------
+    { 
+        type: "MULTI", 
+        text: "Select the valid device types in Linux. (Choose two)", 
+        options: [
+            {text: "Pipe", correct: false},
+            {text: "null", correct: false}, // 'null' es un dispositivo específico, no un TIPO
+            {text: "Redirect", correct: false},
+            {text: "udev", correct: false},
+            {text: "Network", correct: false},
+            {text: "Character", correct: true}, // Dispositivos de caracteres (teclado, ratón, puertos serie)
+            {text: "Block", correct: true}      // Dispositivos de bloques (discos duros, USB)
+        ], 
+        rationale: "In Linux, the main device types handled by the kernel are **Block** devices (storage, buffered) and **Character** devices (streams, unbuffered).<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html' target='_blank'>📚 SUSE Docs: Device Types</a>" 
+    },
     { 
         type: "MULTI", 
         text: "Which type of files are used for inter-process communications (IPC)? (Choose two)", 
