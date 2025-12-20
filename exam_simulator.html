@@ -89,6 +89,19 @@
             .drag-container { flex-direction: column; }
             .match-row { grid-template-columns: 1fr; }
         }
+        /* HOTSPOT / IMAGEN */
+        .hotspot-container { position: relative; display: inline-block; max-width: 100%; overflow: hidden; border-radius: 8px; border: 2px solid var(--border); cursor: crosshair; }
+        .hotspot-img { display: block; width: 100%; height: auto; user-select: none; }
+        .hotspot-pin { 
+            position: absolute; width: 30px; height: 30px; 
+            background: var(--secondary); border: 2px solid white; 
+            border-radius: 50%; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transform: translate(-50%, -50%); /* Para centrar el pin en el click */
+            pointer-events: none; transition: top 0.2s, left 0.2s;
+            display: none; /* Oculto hasta que se hace click */
+            justify-content: center; align-items: center; font-size: 1.2rem;
+        }
+        .hotspot-pin.active { display: flex; }
     </style>
 </head>
 <body>
@@ -190,7 +203,14 @@ const DATA = [
     { type: "SINGLE", text: "Regenerate GRUB2 configuration?", options: [{text:"grub2-mkconfig", correct:true}, {text:"update-grub", correct:false}, {text:"grub-install", correct:false}, {text:"install-grub", correct:false}], rationale: "`grub2-mkconfig -o ...`" },
     { type: "FILL", text: "Command to create a directory and its parents?", validAnswers: ["mkdir -p"], rationale: "`mkdir -p` creates parents if needed." },
     { type: "SINGLE", text: "Which symbol overwrites a file in redirection?", options: [{text:">", correct:true}, {text:">>", correct:false}, {text:"|", correct:false}, {text:"<", correct:false}], rationale: "`>` overwrites, `>>` appends." },
-    { type: "SINGLE", text: "Where is the cron log typically found in SUSE?", options: [{text:"/var/log/cron", correct:false}, {text:"/var/log/messages", correct:true}, {text:"/var/log/syslog", correct:false}, {text:"/var/log/jobs", correct:false}], rationale: "In standard SLES, cron logs to `/var/log/messages` unless configured otherwise." }
+    { type: "SINGLE", text: "Where is the cron log typically found in SUSE?", options: [{text:"/var/log/cron", correct:false}, {text:"/var/log/messages", correct:true}, {text:"/var/log/syslog", correct:false}, {text:"/var/log/jobs", correct:false}], rationale: "In standard SLES, cron logs to `/var/log/messages` unless configured otherwise." },
+    { 
+        type: "HOTSPOT", 
+        text: "Click on the directory where configuration files are stored (/etc).", 
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Standard-unix-filesystem-hierarchy.svg/1200px-Standard-unix-filesystem-hierarchy.svg.png", 
+        target: {x: 35, y: 35}, // Coordenadas aproximadas del /etc en esa imagen
+        rationale: "/etc contains configuration files." 
+    }
 ];
 
 // =============================================================================
@@ -238,6 +258,7 @@ const quiz = {
         else if(q.type === 'FILL') this.renderFill(q, area, answered);
         else if(q.type === 'ORDER') this.renderOrder(q, area, answered);
         else if(q.type === 'MATCHING') this.renderMatch(q, area, answered);
+        else if(q.type === 'HOTSPOT') this.renderHotspot(q, area, prev);
 
         if(answered) this.showFeedback(answered.isCorrect, q.rationale);
     },
@@ -465,6 +486,54 @@ const quiz = {
         }
     },
 
+    renderHotspot(q, container, prev) {
+        const wrap = document.createElement('div'); 
+        wrap.style.textAlign = 'center';
+
+        const area = document.createElement('div'); 
+        area.className = 'hotspot-container';
+        
+        // La imagen
+        const img = document.createElement('img');
+        img.src = q.image; 
+        img.className = 'hotspot-img';
+        
+        // El Puntero (Pin)
+        const pin = document.createElement('div');
+        pin.className = 'hotspot-pin';
+        pin.innerHTML = '📍';
+        pin.id = 'user-pin';
+
+        // Si ya respondió, mostramos el pin donde lo dejó
+        if (prev) {
+            pin.classList.add('active');
+            pin.style.left = prev.x + '%';
+            pin.style.top = prev.y + '%';
+            // Si falló, mostramos el correcto en rojo/verde para diferenciar
+            if (!prev.isCorrect) pin.style.background = '#ef4444'; 
+        } else {
+            // Evento CLICK en la imagen para mover el pin
+            area.onclick = (e) => {
+                const rect = area.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                
+                pin.classList.add('active');
+                pin.style.left = x + '%';
+                pin.style.top = y + '%';
+                
+                // Guardamos coordenadas en el dataset para leerlas luego
+                area.dataset.x = x;
+                area.dataset.y = y;
+            };
+        }
+
+        area.appendChild(img);
+        area.appendChild(pin);
+        wrap.appendChild(area);
+        container.appendChild(wrap);
+    },
+
     getDragAfterElement(container, y) {
         const draggableElements = [...container.querySelectorAll('.drag-item:not(.dragging)')];
         return draggableElements.reduce((closest, child) => {
@@ -529,6 +598,20 @@ const quiz = {
             });
             if(hits === q.pairs.length) isCorrect = true;
             dataToSave = { matches };
+        }
+        else if(q.type === 'HOTSPOT') {
+            const area = document.querySelector('.hotspot-container');
+            const userX = parseFloat(area.dataset.x || -999);
+            const userY = parseFloat(area.dataset.y || -999);
+            
+            // Calculamos la distancia (Tolerancia del 10%)
+            const diffX = Math.abs(userX - q.target.x);
+            const diffY = Math.abs(userY - q.target.y);
+            
+            // Si está a menos de un 10% de distancia del objetivo
+            if(diffX < 10 && diffY < 10) correct = true;
+            
+            save = { x: userX, y: userY };
         }
 
         // Save State
