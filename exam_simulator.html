@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCA SUSE 15 - Simulator Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/mobile-drag-drop@2.3.0/index.min.js"></script>
+    <script>MobileDragDrop.polyfill({dragImageTranslateOverride:0});</script>
+
+    <style>
+        :root { --primary: #0c322c; --secondary: #30ba78; --bg: #f8fafc; --text: #334155; --white: #ffffff; --border: #e2e8f0; --wrong: #ef4444; }
+        * { box-sizing: border-box; outline: none; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
+        
+        .app-container { width: 100%; max-width: 850px; background: var(--white); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 40px; border: 1px solid var(--border); }
+        
+        /* HEADER & PROGRESS */
+        header { background: var(--primary); color: white; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; }
+        h1 { margin: 0; font-size: 1.2rem; font-weight: 600; }
+        .status-badge { background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: 500; }
+        .progress-bar { height: 6px; background: #cbd5e1; width: 100%; }
+        .progress-fill { height: 100%; background: var(--secondary); width: 0%; transition: width 0.3s ease; }
+
+        /* CONTENT AREAS */
+        main { padding: 30px; min-height: 400px; }
+        .screen { display: none; animation: fadeIn 0.3s ease; }
+        .screen.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* START & RESULT */
+        .center-screen { text-align: center; padding: 40px 0; }
+        .big-btn { background: var(--secondary); color: white; border: none; padding: 15px 40px; font-size: 1.2rem; font-weight: 700; border-radius: 8px; cursor: pointer; transition: transform 0.1s; box-shadow: 0 4px 0 #258e5c; }
+        .big-btn:active { transform: translateY(4px); box-shadow: none; }
+        .score-circle { width: 150px; height: 150px; border-radius: 50%; border: 8px solid var(--secondary); display: flex; justify-content: center; align-items: center; font-size: 3rem; font-weight: 800; color: var(--primary); margin: 20px auto; }
+        
+        /* QUESTIONS */
+        .q-tag { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; }
+        .q-text { font-size: 1.35rem; font-weight: 600; color: #0f172a; margin-bottom: 30px; line-height: 1.4; }
+        
+        /* OPTIONS (SINGLE/MULTI) */
+        .opt-list { display: flex; flex-direction: column; gap: 10px; }
+        .opt-btn { background: white; border: 2px solid var(--border); padding: 15px 20px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; transition: all 0.2s; font-size: 1rem; }
+        .opt-btn:hover:not(.disabled) { border-color: #94a3b8; background: #f8fafc; }
+        .opt-btn.selected { border-color: var(--primary); background: #f0fdf4; color: #14532d; font-weight: 500; }
+        .opt-btn input { margin-right: 15px; transform: scale(1.3); accent-color: var(--primary); }
+        .opt-btn.disabled { opacity: 0.7; cursor: not-allowed; }
+
+        /* DRAG & DROP & MATCH */
+        .drag-container { display: flex; gap: 20px; flex-wrap: wrap; }
+        .drag-col { flex: 1; min-width: 280px; }
+        .drag-header { font-weight: 700; color: #64748b; margin-bottom: 10px; text-transform: uppercase; font-size: 0.8rem; }
+        .drop-zone { background: #f1f5f9; border: 2px dashed #cbd5e1; border-radius: 8px; min-height: 200px; padding: 10px; transition: background 0.2s; }
+        .drop-zone.drag-over { background: #dcfce7; border-color: var(--secondary); }
+        .drag-item { background: white; padding: 12px; margin-bottom: 8px; border-radius: 6px; border: 1px solid #cbd5e1; border-left: 4px solid var(--secondary); cursor: grab; font-weight: 500; box-shadow: 0 1px 2px rgba(0,0,0,0.05); user-select: none; }
+        .drag-item:active { cursor: grabbing; }
+
+        /* MATCH SPECIFIC */
+        .match-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px; align-items: center; }
+        .match-static { background: #e2e8f0; padding: 12px; border-radius: 6px; font-weight: 600; font-size: 0.9rem; }
+        .match-drop { min-height: 48px; padding: 4px; border: 2px dashed #cbd5e1; border-radius: 6px; background: white; }
+        
+        /* INPUT FILL */
+        .input-fill { width: 100%; padding: 15px; font-size: 1.1rem; border: 2px solid var(--border); border-radius: 8px; font-family: 'Consolas', monospace; }
+        .input-fill:focus { border-color: var(--secondary); }
+
+        /* FOOTER & FEEDBACK */
+        .feedback { margin-top: 25px; padding: 20px; border-radius: 8px; display: none; animation: fadeIn 0.3s; }
+        .feedback.correct { background: #dcfce7; border: 1px solid #bbf7d0; color: #14532d; }
+        .feedback.wrong { background: #fee2e2; border: 1px solid #fecaca; color: #991b1b; }
+        
+        footer { border-top: 1px solid var(--border); padding: 20px 30px; display: flex; justify-content: space-between; background: #fcfcfc; }
+        .nav-btn { padding: 10px 24px; border-radius: 6px; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
+        .btn-sec { color: #64748b; background: transparent; }
+        .btn-sec:hover { background: #f1f5f9; }
+        .btn-pri { background: var(--primary); color: white; }
+        .btn-pri:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @media (max-width: 600px) {
+            .drag-container { flex-direction: column; }
+            .match-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1>SUSE SCA 15 Simulator</h1>
+        <div class="status-badge"><span id="curr-q">0</span> / <span id="total-q">0</span></div>
+    </header>
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+    <main>
+        <div id="start-screen" class="screen active center-screen">
+            <h2 style="margin-bottom: 10px;">Exam Simulation</h2>
+            <p style="color: #64748b; margin-bottom: 40px;">Mixed questions: Multiple Choice, Drag & Drop, Fill in the blanks.</p>
+            <button class="big-btn" onclick="quiz.start()">START EXAM</button>
+        </div>
+
+        <div id="quiz-screen" class="screen">
+            <div class="q-tag" id="q-type">TYPE</div>
+            <div class="q-text" id="q-text">Loading...</div>
+
+            <div id="render-area"></div>
+
+            <div id="feedback" class="feedback"></div>
+        </div>
+
+        <div id="result-screen" class="screen center-screen">
+            <h2>Exam Completed</h2>
+            <div class="score-circle" id="final-score">0%</div>
+            <p id="final-msg" style="font-size: 1.1rem; color: #64748b; margin-bottom: 30px;"></p>
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <button class="nav-btn btn-sec" onclick="location.reload()">Exit</button>
+                <button class="big-btn" onclick="location.reload()">Retake</button>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer" style="display:none;">
+        <button class="nav-btn btn-sec" id="btn-prev" onclick="quiz.prev()" disabled>Previous</button>
+        <div>
+            <button class="nav-btn btn-pri" id="btn-check" onclick="quiz.check()">Submit Answer</button>
+            <button class="nav-btn btn-pri" id="btn-next" onclick="quiz.next()" style="display:none;">Next Question</button>
+        </div>
+    </footer>
+</div>
+
+<script>
+// =============================================================================
+//  DATA SOURCE (Tus preguntas originales)
+// =============================================================================
+const DATA = [
+    // BASH & CONCEPTS
+    { type: "SINGLE", text: "What is the primary function of the Bash shell?", options: [{text:"Command language interpreter", correct:true}, {text:"Kernel module", correct:false}, {text:"Graphical server", correct:false}, {text:"Compiler for C++", correct:false}], rationale: "Bash (Bourne Again SHell) interprets commands given by the user." },
+    { type: "ORDER", text: "Order Bash command precedence from Highest to Lowest.", items: ["Alias", "Function", "Built-in", "PATH"], correct: ["Alias", "Function", "Built-in", "PATH"], rationale: "Order: Alias -> Function -> Built-in -> Hash/PATH." },
+    { type: "SINGLE", text: "Pressing Tab twice in Bash does what?", options: [{text:"Lists all matching commands", correct:true}, {text:"Auto-completes first match", correct:false}, {text:"Beeps only", correct:false}, {text:"Exits the shell", correct:false}], rationale: "It lists all ambiguities." },
+    
+    // STORAGE
+    { type: "MULTI", text: "Select valid LVM Logical Volume Types (Select 3).", options: [{text:"Linear", correct:true}, {text:"Striped", correct:true}, {text:"Mirrored", correct:true}, {text:"Circular", correct:false}, {text:"Deduplicated", correct:false}, {text:"Z-RAID", correct:false}], rationale: "Common LVM types are Linear (Concatenated), Striped (RAID0-like), and Mirrored (RAID1-like)." },
+    { type: "SINGLE", text: "Which command forces an ext4 check after a specific number of mounts?", options: [{text:"tune2fs -c", correct:true}, {text:"fsck -n", correct:false}, {text:"dumpe2fs", correct:false}, {text:"mount -o check", correct:false}], rationale: "`tune2fs -c [count]` sets the max mount count before check." },
+    { type: "SINGLE", text: "Which LVM command moves data from one Physical Volume to another?", options: [{text:"pvmove", correct:true}, {text:"vgreduce", correct:false}, {text:"pvremove", correct:false}, {text:"lvmove", correct:false}], rationale: "`pvmove` evacuates data from a PV." },
+    { type: "MATCHING", text: "Match the Btrfs concepts.", pairs: [{term:"Snapshot", def:"Point-in-time copy"}, {term:"Subvolume", def:"Independent file tree"}, {term:"CoW", def:"Copy on Write"}], rationale: "Subvolumes act like filesystems, Snapshots are copies of them." },
+    { type: "ORDER", text: "Order the steps to extend an LVM filesystem.", items: ["pvcreate (if new disk)", "vgextend", "lvextend", "resize_fs"], correct: ["pvcreate (if new disk)", "vgextend", "lvextend", "resize_fs"], rationale: "Physical -> Volume Group -> Logical Volume -> Filesystem." },
+    { type: "SINGLE", text: "Default Filesystem for the root partition in SLES 15?", options: [{text:"Btrfs", correct:true}, {text:"XFS", correct:false}, {text:"Ext4", correct:false}, {text:"ReiserFS", correct:false}], rationale: "SLES uses Btrfs for root to enable Snapper rollback." },
+    { type: "FILL", text: "Enter the command to rollback the system using snapper (no arguments).", validAnswers: ["snapper rollback"], rationale: "The command is `snapper rollback`." },
+    
+    // SCENARIOS
+    { type: "SINGLE", text: "Why can't hard links cross partition boundaries?", options: [{text:"Inodes are specific to a filesystem", correct:true}, {text:"Requires root privileges", correct:false}, {text:"Filesystem format issue", correct:false}, {text:"Btrfs limitation", correct:false}], rationale: "Hard links point to an Inode number. Inode numbers are unique only within their own partition." },
+    { type: "SINGLE", text: "What technically grants 'root' privileges to a user?", options: [{text:"UID 0", correct:true}, {text:"Username 'root'", correct:false}, {text:"Group 'wheel'", correct:false}, {text:"Home directory /root", correct:false}], rationale: "The Kernel checks for User ID 0, regardless of the name." },
+    { type: "SINGLE", text: "A user has Read on a directory but NO Execute. What happens?", options: [{text:"Cannot cd into it", correct:true}, {text:"Cannot list files", correct:false}, {text:"Cannot stat files", correct:false}, {text:"Cannot echo", correct:false}], rationale: "Execute permission on a directory is required to traverse (enter) it." },
+    
+    // RPM & TOOLS
+    { type: "SINGLE", text: "What does RPM stand for?", options: [{text:"RPM Package Manager", correct:true}, {text:"Red Hat Package Maker", correct:false}, {text:"Remote Package Monitor", correct:false}, {text:"Rapid Package Mover", correct:false}], rationale: "It is a recursive acronym." },
+    { type: "SINGLE", text: "Which flag installs a package in rpm?", options: [{text:"-i", correct:true}, {text:"-c", correct:false}, {text:"-e", correct:false}, {text:"-r", correct:false}], rationale: "`rpm -i` (install)." },
+    { type: "MULTI", text: "Select 3 valid SLE 15 Product Modules.", options: [{text:"SLES", correct:true}, {text:"SLE HPC", correct:true}, {text:"SLE Real Time", correct:true}, {text:"SLE Macro", correct:false}, {text:"SUSE Cloud", correct:false}, {text:"SLE Home", correct:false}], rationale: "SLES, HPC, and Real Time are core products." },
+    { type: "FILL", text: "Command to install the 'lamp_server' pattern via zypper?", validAnswers: ["zypper in -t pattern lamp_server", "zypper install -t pattern lamp_server"], rationale: "`zypper in -t pattern <name>`." },
+    { type: "SINGLE", text: "Which rpm flag shows a hash progress bar?", options: [{text:"-h", correct:true}, {text:"-b", correct:false}, {text:"-v", correct:false}, {text:"-p", correct:false}], rationale: "`-h` prints hash marks." },
+    { type: "SINGLE", text: "Command to perform a Distribution Upgrade?", options: [{text:"zypper dup", correct:true}, {text:"zypper up", correct:false}, {text:"zypper patch", correct:false}, {text:"yast update", correct:false}], rationale: "`dup` (Distribution Upgrade)." },
+
+    // GENERAL ADMIN
+    { type: "SINGLE", text: "Target for GUI interface in systemd?", options: [{text:"graphical.target", correct:true}, {text:"multi-user.target", correct:false}, {text:"runlevel5", correct:false}, {text:"x11.target", correct:false}], rationale: "graphical.target equates to runlevel 5." },
+    { type: "SINGLE", text: "Command to reload systemd unit files after modification?", options: [{text:"systemctl daemon-reload", correct:true}, {text:"systemctl reload", correct:false}, {text:"systemctl restart", correct:false}, {text:"init q", correct:false}], rationale: "`daemon-reload` reads changes from disk." },
+    { type: "SINGLE", text: "Show logs for the current boot only.", options: [{text:"journalctl -b", correct:true}, {text:"dmesg", correct:false}, {text:"syslog", correct:false}, {text:"less /var/log/boot", correct:false}], rationale: "`-b` filters for current boot." },
+    { type: "SINGLE", text: "Which signal is sent by default with `kill`?", options: [{text:"SIGTERM (15)", correct:true}, {text:"SIGKILL (9)", correct:false}, {text:"SIGHUP (1)", correct:false}, {text:"SIGSTOP (19)", correct:false}], rationale: "SIGTERM asks nicely to stop." },
+    
+    // FILLERS
+    { type: "SINGLE", text: "Which command shows listening sockets?", options: [{text:"ss -l", correct:true}, {text:"netstat -s", correct:false}, {text:"ip link", correct:false}, {text:"nmcli", correct:false}], rationale: "`ss` is the modern replacement for netstat." },
+    { type: "SINGLE", text: "File for local hostname resolution?", options: [{text:"/etc/hosts", correct:true}, {text:"/etc/resolv.conf", correct:false}, {text:"/etc/nsswitch.conf", correct:false}, {text:"/etc/nameserver", correct:false}], rationale: "`/etc/hosts` maps IP to names locally." },
+    { type: "FILL", text: "Which file contains DNS nameserver configuration?", validAnswers: ["/etc/resolv.conf"], rationale: "`resolv.conf` holds nameserver IPs." },
+    { type: "SINGLE", text: "Check connectivity to a host?", options: [{text:"ping", correct:true}, {text:"echo", correct:false}, {text:"curl", correct:false}, {text:"wget", correct:false}], rationale: "ICMP Ping." },
+    { type: "FILL", text: "Command to print kernel release version?", validAnswers: ["uname -r"], rationale: "`uname -r` prints the release." },
+    { type: "SINGLE", text: "List loaded kernel modules?", options: [{text:"lsmod", correct:true}, {text:"modprobe -l", correct:false}, {text:"insmod", correct:false}, {text:"depmod", correct:false}], rationale: "`lsmod`." },
+    { type: "FILL", text: "Command to load a module and its dependencies?", validAnswers: ["modprobe"], rationale: "`modprobe` handles deps; `insmod` does not." },
+    { type: "MATCHING", text: "Match FHS Directories.", pairs: [{term:"/proc", def:"Kernel virtual fs"}, {term:"/dev", def:"Device files"}, {term:"/sys", def:"Hardware/Driver info"}], rationale: "Standard Linux FHS." },
+    { type: "SINGLE", text: "Configuration file for sudo?", options: [{text:"/etc/sudoers", correct:true}, {text:"/etc/su", correct:false}, {text:"/etc/admin", correct:false}, {text:"/etc/users", correct:false}], rationale: "Edited with `visudo`." },
+    { type: "SINGLE", text: "Where are hashed user passwords stored?", options: [{text:"/etc/shadow", correct:true}, {text:"/etc/passwd", correct:false}, {text:"/etc/security", correct:false}, {text:"/etc/master.passwd", correct:false}], rationale: "Shadow file is readable only by root." },
+    { type: "SINGLE", text: "Numerical value of the Sticky Bit?", options: [{text:"1000", correct:true}, {text:"4000", correct:false}, {text:"2000", correct:false}, {text:"0777", correct:false}], rationale: "4=SUID, 2=SGID, 1=Sticky." },
+    { type: "SINGLE", text: "Command to register SLE with SCC?", options: [{text:"SUSEConnect", correct:true}, {text:"yast-register", correct:false}, {text:"subscription-manager", correct:false}, {text:"reg-tool", correct:false}], rationale: "SUSEConnect is the CLI tool." },
+    { type: "SINGLE", text: "Regenerate GRUB2 configuration?", options: [{text:"grub2-mkconfig", correct:true}, {text:"update-grub", correct:false}, {text:"grub-install", correct:false}, {text:"install-grub", correct:false}], rationale: "`grub2-mkconfig -o ...`" },
+    { type: "FILL", text: "Command to create a directory and its parents?", validAnswers: ["mkdir -p"], rationale: "`mkdir -p` creates parents if needed." },
+    { type: "SINGLE", text: "Which symbol overwrites a file in redirection?", options: [{text:">", correct:true}, {text:">>", correct:false}, {text:"|", correct:false}, {text:"<", correct:false}], rationale: "`>` overwrites, `>>` appends." },
+    { type: "SINGLE", text: "Where is the cron log typically found in SUSE?", options: [{text:"/var/log/cron", correct:false}, {text:"/var/log/messages", correct:true}, {text:"/var/log/syslog", correct:false}, {text:"/var/log/jobs", correct:false}], rationale: "In standard SLES, cron logs to `/var/log/messages` unless configured otherwise." }
+];
+
+// =============================================================================
+//  ENGINE LOGIC
+// =============================================================================
+const quiz = {
+    list: [],
+    idx: 0,
+    answers: {}, // Stores user answers by Question Index { 0: {correct: true, val: ...}, ... }
+    
+    start() {
+        // Shuffle and Init
+        this.list = [...DATA].sort(() => Math.random() - 0.5);
+        this.idx = 0;
+        this.answers = {};
+        
+        document.getElementById('total-q').innerText = this.list.length;
+        document.getElementById('start-screen').classList.remove('active');
+        document.getElementById('quiz-screen').classList.add('active');
+        document.getElementById('footer').style.display = 'flex';
+        this.load();
+    },
+
+    load() {
+        const q = this.list[this.idx];
+        const answered = this.answers[this.idx];
+        
+        // UI Updates
+        document.getElementById('curr-q').innerText = this.idx + 1;
+        document.getElementById('progress').style.width = ((this.idx / this.list.length) * 100) + '%';
+        document.getElementById('q-type').innerText = q.type;
+        document.getElementById('q-text').innerText = q.text;
+        
+        // Buttons State
+        document.getElementById('btn-prev').disabled = (this.idx === 0);
+        document.getElementById('btn-check').style.display = answered ? 'none' : 'block';
+        document.getElementById('btn-next').style.display = answered ? 'block' : 'none';
+        
+        // Clear & Render
+        const area = document.getElementById('render-area');
+        area.innerHTML = '';
+        document.getElementById('feedback').style.display = 'none';
+
+        if(q.type === 'SINGLE' || q.type === 'MULTI') this.renderOptions(q, area, answered);
+        else if(q.type === 'FILL') this.renderFill(q, area, answered);
+        else if(q.type === 'ORDER') this.renderOrder(q, area, answered);
+        else if(q.type === 'MATCHING') this.renderMatch(q, area, answered);
+
+        if(answered) this.showFeedback(answered.isCorrect, q.rationale);
+    },
+
+    renderOptions(q, container, prevAns) {
+        const div = document.createElement('div'); div.className = 'opt-list';
+        const isMulti = q.type === 'MULTI';
+        
+        q.options.forEach((opt, i) => {
+            const btn = document.createElement('div');
+            btn.className = 'opt-btn';
+            if(prevAns) btn.classList.add('disabled');
+            
+            // Check logic for previous answer visual state
+            let isChecked = false;
+            if(prevAns && prevAns.userSel.includes(i)) isChecked = true;
+
+            btn.innerHTML = `<input type="${isMulti?'checkbox':'radio'}" name="opt" ${isChecked?'checked':''} ${prevAns?'disabled':''}> ${opt.text}`;
+            
+            if(isChecked) btn.classList.add('selected');
+
+            if(!prevAns) {
+                btn.onclick = (e) => {
+                    const inp = btn.querySelector('input');
+                    if(e.target !== inp) {
+                        if(isMulti) inp.checked = !inp.checked;
+                        else { 
+                            div.querySelectorAll('input').forEach(x => x.checked = false);
+                            div.querySelectorAll('.opt-btn').forEach(x => x.classList.remove('selected'));
+                            inp.checked = true; 
+                        }
+                    }
+                    // Visual update
+                    if(isMulti) btn.classList.toggle('selected', inp.checked);
+                    else btn.classList.add('selected');
+                };
+            }
+            div.appendChild(btn);
+        });
+        container.appendChild(div);
+    },
+
+    renderFill(q, container, prevAns) {
+        const inp = document.createElement('input');
+        inp.type = 'text'; inp.className = 'input-fill';
+        inp.placeholder = 'Type your answer...';
+        inp.autocomplete = 'off';
+        if(prevAns) { inp.value = prevAns.userVal; inp.disabled = true; }
+        container.appendChild(inp);
+    },
+
+    renderOrder(q, container, prevAns) {
+        const box = document.createElement('div'); box.className = 'drag-container';
+        
+        // If already answered, show the correct order statically to avoid confusion, or user's order? 
+        // Let's show user's final order frozen.
+        const items = prevAns ? prevAns.userOrder : [...q.items].sort(() => Math.random() - 0.5);
+
+        const colSrc = document.createElement('div'); colSrc.className = 'drag-col';
+        colSrc.innerHTML = `<div class="drag-header">Drag Items here to Order</div>`;
+        const zone = document.createElement('div'); zone.className = 'drop-zone';
+        zone.id = 'drag-zone';
+        
+        items.forEach(txt => {
+            const el = document.createElement('div'); el.className = 'drag-item';
+            el.innerText = txt; 
+            if(!prevAns) {
+                el.draggable = true;
+                el.ondragstart = (e) => { e.dataTransfer.setData('text/plain', txt); e.target.classList.add('dragging'); };
+                el.ondragend = (e) => e.target.classList.remove('dragging');
+            } else {
+                el.style.cursor = 'default';
+                el.style.borderLeftColor = '#94a3b8'; // grey out
+            }
+            zone.appendChild(el);
+        });
+
+        if(!prevAns) {
+            zone.ondragover = e => { e.preventDefault(); zone.classList.add('drag-over'); 
+                const afterElement = this.getDragAfterElement(zone, e.clientY);
+                const dragging = document.querySelector('.dragging');
+                if(afterElement == null) zone.appendChild(dragging);
+                else zone.insertBefore(dragging, afterElement);
+            };
+            zone.ondragleave = () => zone.classList.remove('drag-over');
+            zone.ondrop = () => zone.classList.remove('drag-over');
+        }
+
+        colSrc.appendChild(zone);
+        box.appendChild(colSrc);
+        container.appendChild(box);
+    },
+
+    renderMatch(q, container, prevAns) {
+        // MATCHING: 2 Columns. Left = Terms (Static), Right = Drops.
+        // Pool of definitions at bottom.
+        
+        // If answered, we lock it.
+        const grid = document.createElement('div');
+        
+        // Terms Rows
+        const userMatches = prevAns ? prevAns.matches : {}; // {term: def}
+
+        q.pairs.forEach(p => {
+            const row = document.createElement('div'); row.className = 'match-row';
+            
+            // Term
+            const term = document.createElement('div'); term.className = 'match-static'; term.innerText = p.term;
+            
+            // Slot
+            const slot = document.createElement('div'); slot.className = 'match-drop drop-zone';
+            slot.dataset.term = p.term;
+
+            // If answered, fill slot
+            if(prevAns && userMatches[p.term]) {
+                const filled = document.createElement('div'); filled.className = 'drag-item'; 
+                filled.innerText = userMatches[p.term]; filled.style.cursor='default';
+                slot.appendChild(filled);
+            }
+
+            if(!prevAns) {
+                slot.ondragover = e => { e.preventDefault(); slot.classList.add('drag-over'); };
+                slot.ondragleave = () => slot.classList.remove('drag-over');
+                slot.ondrop = (e) => {
+                    e.preventDefault(); slot.classList.remove('drag-over');
+                    const txt = e.dataTransfer.getData('text/plain');
+                    if(slot.children.length === 0) {
+                        const el = document.querySelector(`.pool-item[data-val="${txt}"]`);
+                        if(el) slot.appendChild(el);
+                    }
+                };
+            }
+
+            row.appendChild(term); row.appendChild(slot);
+            grid.appendChild(row);
+        });
+        container.appendChild(grid);
+
+        // Pool
+        if(!prevAns) {
+            const pool = document.createElement('div'); 
+            pool.style.marginTop = '20px'; pool.style.display = 'flex'; pool.style.gap='10px'; pool.style.flexWrap='wrap';
+            pool.id = 'match-pool';
+            pool.className = 'drop-zone';
+            
+            q.pairs.map(p => p.def).sort(() => Math.random() - 0.5).forEach(def => {
+                const el = document.createElement('div'); el.className = 'drag-item pool-item';
+                el.draggable = true; el.innerText = def; el.dataset.val = def;
+                el.ondragstart = e => e.dataTransfer.setData('text/plain', def);
+                pool.appendChild(el);
+            });
+            
+            pool.ondragover = e => e.preventDefault();
+            pool.ondrop = e => {
+                e.preventDefault();
+                const txt = e.dataTransfer.getData('text/plain');
+                const el = document.querySelector(`.pool-item[data-val="${txt}"]`);
+                if(el) pool.appendChild(el);
+            }
+            
+            container.appendChild(pool);
+        }
+    },
+
+    getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('.drag-item:not(.dragging)')];
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) return { offset: offset, element: child };
+            else return closest;
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    },
+
+    check() {
+        const q = this.list[this.idx];
+        let isCorrect = false;
+        let dataToSave = {};
+
+        if(q.type === 'SINGLE') {
+            const opts = document.querySelectorAll('.opt-btn');
+            let selectedIdx = -1;
+            opts.forEach((o, i) => { if(o.querySelector('input').checked) selectedIdx = i; });
+            if(selectedIdx > -1 && q.options[selectedIdx].correct) isCorrect = true;
+            dataToSave = { userSel: [selectedIdx] };
+        } 
+        else if(q.type === 'MULTI') {
+            const opts = document.querySelectorAll('.opt-btn');
+            let userSel = [];
+            let allGood = true;
+            opts.forEach((o, i) => {
+                const checked = o.querySelector('input').checked;
+                if(checked) userSel.push(i);
+                if(checked !== q.options[i].correct) allGood = false;
+            });
+            if(userSel.length > 0 && allGood) isCorrect = true;
+            dataToSave = { userSel };
+        }
+        else if(q.type === 'FILL') {
+            const val = document.querySelector('.input-fill').value.trim();
+            // Case insensitive check
+            if(q.validAnswers.some(ans => ans.toLowerCase() === val.toLowerCase())) isCorrect = true;
+            dataToSave = { userVal: val };
+        }
+        else if(q.type === 'ORDER') {
+            const current = [...document.getElementById('drag-zone').children].map(c => c.innerText);
+            if(JSON.stringify(current) === JSON.stringify(q.correct)) isCorrect = true;
+            dataToSave = { userOrder: current };
+        }
+        else if(q.type === 'MATCHING') {
+            const slots = document.querySelectorAll('.match-drop');
+            let hits = 0;
+            let matches = {};
+            slots.forEach(s => {
+                if(s.children.length > 0) {
+                    const txt = s.children[0].innerText;
+                    matches[s.dataset.term] = txt;
+                    const pair = q.pairs.find(p => p.term === s.dataset.term);
+                    if(pair && pair.def === txt) hits++;
+                }
+            });
+            if(hits === q.pairs.length) isCorrect = true;
+            dataToSave = { matches };
+        }
+
+        // Save State
+        this.answers[this.idx] = { isCorrect, ...dataToSave };
+        
+        // Update UI
+        this.showFeedback(isCorrect, q.rationale);
+        this.load(); // Reload to apply "disabled" states
+    },
+
+    showFeedback(isCorrect, text) {
+        const fb = document.getElementById('feedback');
+        fb.style.display = 'block';
+        fb.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
+        fb.innerHTML = `<strong>${isCorrect ? 'Correct!' : 'Incorrect.'}</strong> ${text}`;
+        
+        // Ensure buttons toggle
+        document.getElementById('btn-check').style.display = 'none';
+        document.getElementById('btn-next').style.display = 'block';
+    },
+
+    next() {
+        if(this.idx < this.list.length - 1) {
+            this.idx++;
+            this.load();
+        } else {
+            this.finish();
+        }
+    },
+
+    prev() {
+        if(this.idx > 0) {
+            this.idx--;
+            this.load();
+        }
+    },
+
+    finish() {
+        document.getElementById('quiz-screen').classList.remove('active');
+        document.getElementById('result-screen').classList.add('active');
+        document.getElementById('footer').style.display = 'none';
+
+        const total = this.list.length;
+        const correct = Object.values(this.answers).filter(a => a.isCorrect).length;
+        const pct = Math.round((correct / total) * 100);
+
+        document.getElementById('final-score').innerText = pct + '%';
+        document.getElementById('final-msg').innerText = pct >= 70 ? "PASSED! Great job." : "Failed. Keep practicing.";
+        document.getElementById('final-score').style.color = pct >= 70 ? 'var(--secondary)' : 'var(--wrong)';
+        document.getElementById('final-score').style.borderColor = pct >= 70 ? 'var(--secondary)' : 'var(--wrong)';
+    }
+};
+</script>
+</body>
+</html>
