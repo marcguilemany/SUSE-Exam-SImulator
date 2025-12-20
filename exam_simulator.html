@@ -153,17 +153,23 @@
 // =============================================================================
 //  DATA SOURCE - SCA SLES 15 (2025 Update) - COMPLETO
 // =============================================================================
-// =============================================================================
-//  DATA SOURCE - SCA SLES 15 (2025 Update) - ESTRUCTURA COMPLETA
-// =============================================================================
 const DATA = [
 
     // -------------------------------------------------------------------------
     // 02 Overview of SUSE Linux Enterprise
     // -------------------------------------------------------------------------
-// -------------------------------------------------------------------------
-    // 02 Overview of SUSE Linux Enterprise (NEW QUESTIONS)
-    // -------------------------------------------------------------------------
+    { 
+        type: "MULTI", 
+        text: "The openSUSE Leap version of Linux is designed for which types of user environments? (Select 2)", 
+        options: [
+            {text: "Environments requiring High-Availability", correct: false},
+            {text: "Desktop power users", correct: true},
+            {text: "Users requiring only secure terminal access", correct: false},
+            {text: "Data Center environments", correct: false},
+            {text: "Developers", correct: true}
+        ], 
+        rationale: "openSUSE Leap is a community distribution built from SLES sources, targeted at Developers and Power Users, whereas SLES is for Data Centers and Enterprise workloads." 
+    },
     { 
         type: "SINGLE", 
         text: "What is the standard General Support duration for a major version of SUSE Linux Enterprise Server (excluding LTSS)?", 
@@ -303,6 +309,17 @@ const DATA = [
     // 03 The Command Line
     // -------------------------------------------------------------------------
     { 
+        type: "SINGLE", 
+        text: "Which command will display the value of the environment variable named TMPDIR?", 
+        options: [
+            {text: "val $TMPDIR", correct: false},
+            {text: "echo $TMPDIR", correct: true},
+            {text: "echo TMPDIR", correct: false},
+            {text: "show $TMPDIR", correct: false}
+        ], 
+        rationale: "To view the content of a variable in Bash, use 'echo' with the '$' prefix before the variable name.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html#sec-adm-shell-vars' target='_blank'>📚 SUSE Docs: Variables</a>" 
+    },
+    { 
         type: "MATCHING", 
         text: "Match the File Descriptors (Streams) to their ID numbers.", 
         pairs: [
@@ -382,6 +399,19 @@ const DATA = [
     // -------------------------------------------------------------------------
     // 04 The Linux Filesystem
     // -------------------------------------------------------------------------
+    { 
+        type: "MULTI", 
+        text: "Which type of files are used for inter-process communications (IPC)? (Choose two)", 
+        options: [
+            {text: "Socket", correct: true},
+            {text: "Character", correct: false},
+            {text: "Redirect", correct: false},
+            {text: "Array", correct: false},
+            {text: "Block", correct: false},
+            {text: "Pipe", correct: true}
+        ], 
+        rationale: "Sockets (s) and Named Pipes (p) are special file types used for communication between processes on the same system." 
+    },
     { 
         type: "MULTI", 
         text: "Select the true statements regarding Hard Links vs Symbolic Links (Select 3).", 
@@ -605,6 +635,17 @@ const DATA = [
         ], 
         rationale: "SSH (CLI) and VNC (Graphical) are the standard supported tools. Putty is a 3rd party Windows client." 
     },
+    { 
+        type: "SINGLE", 
+        text: "Regarding VNC security in SLES 15, which statement is true about default connections?", 
+        options: [
+            {text: "VNC is based on Telnet so encryption is impossible.", correct: false},
+            {text: "The VNC Client checks for a TLS encrypted connection by default.", correct: true},
+            {text: "It uses a self-signed SSL certificate automatically trusted by all clients.", correct: false},
+            {text: "The server prompts for a password configured during installation only.", correct: false}
+        ], 
+        rationale: "SLES 15 supports TLS encryption for VNC. If a connection is not encrypted, the client usually displays a warning '(Connection not encrypted!)'.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-remote-admin.html#sec-vnc-secure' target='_blank'>📚 SUSE Docs: VNC Security</a>" 
+    },
 
     // -------------------------------------------------------------------------
     // 13 Storage Management Fundamentals
@@ -678,6 +719,23 @@ const DATA = [
     // 16 Network Management Fundamentals
     // -------------------------------------------------------------------------
     { 
+        type: "FILL", 
+        text: "Which file contains the main configuration for the default NTP service (chrony) in SLES 15?", 
+        validAnswers: ["/etc/chrony.conf"], 
+        rationale: "SLES 15 uses Chrony by default, so the file is /etc/chrony.conf. (Legacy NTP used /etc/ntp.conf).<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-time.html' target='_blank'>📚 SUSE Docs: Time Sync</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which command shows the current routing table?", 
+        options: [
+            {text: "ipconfig -rd", correct: false},
+            {text: "ip route show", correct: true},
+            {text: "cat /etc/sysconfig/routes", correct: false},
+            {text: "netstat -i", correct: false}
+        ], 
+        rationale: "'ip route show' (or 'ip r') is the standard command. 'ipconfig' is Windows. /etc/sysconfig/routes shows static routes, not the live table.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-network.html' target='_blank'>📚 SUSE Docs: Routing</a>" 
+    },
+    { 
         type: "SINGLE", 
         text: "What protocol is used by tools like 'ping' for network troubleshooting?", 
         options: [
@@ -697,6 +755,17 @@ const DATA = [
     // -------------------------------------------------------------------------
     // 17 Software Management
     // -------------------------------------------------------------------------
+    { 
+        type: "SINGLE", 
+        text: "You have added a new directory to /etc/exports. Which command makes it available without restarting the service?", 
+        options: [
+            {text: "exportfs -r", correct: true},
+            {text: "/usr/sbin/rpc.mountd -restart", correct: false},
+            {text: "systemctl restart nfs", correct: false},
+            {text: "mount -a", correct: false}
+        ], 
+        rationale: "'exportfs -r' (reexport) refreshes the list of exported directories from /etc/exports without disconnecting active clients.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-nfs.html' target='_blank'>📚 SUSE Docs: Exporting NFS</a>" 
+    },
     { 
         type: "SINGLE", 
         text: "What is required to access updates for SLE?", 
