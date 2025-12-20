@@ -153,4 +153,59 @@ window.examData.push(
         ], 
         rationale: "The SLE family includes SLES (Server), SLE HPC, SLE Real Time, and SLES for SAP. 'SLE Home' or 'Macro' do not exist as products.<br><br><a href='https://www.suse.com/products/' target='_blank'>📚 SUSE Product Portfolio</a>" 
     },
+        { 
+        type: "SINGLE", 
+        text: "Which statement best describes the relationship between SLES and openSUSE Leap?", 
+        options: [
+            {text: "openSUSE Leap is derived from SLES sources.", correct: true},
+            {text: "SLES is built from openSUSE Leap packages.", correct: false},
+            {text: "They are completely independent distributions.", correct: false},
+            {text: "openSUSE Leap is a rolling release.", correct: false}
+        ], 
+        rationale: "openSUSE Leap shares the same code base as SLES, making it a stable community distribution closely aligned with SUSE Linux Enterprise." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which SUSE Linux Enterprise component is responsible for managing software repositories and system registration?", 
+        options: [
+            {text: "zypper", correct: false},
+            {text: "YaST", correct: false},
+            {text: "SUSE Customer Center (SCC)", correct: true},
+            {text: "PackageHub", correct: false}
+        ], 
+        rationale: "SUSE Customer Center (SCC) manages subscriptions, system registration, and access to update repositories." 
+    },
+    { 
+        type: "MULTI", 
+        text: "Which characteristics apply to SUSE Linux Enterprise Server? (Select 2)", 
+        options: [
+            {text: "Designed for long-term stability", correct: true},
+            {text: "Uses a rolling release model", correct: false},
+            {text: "Certified for enterprise workloads", correct: true},
+            {text: "Unsupported community distribution", correct: false}
+        ], 
+        rationale: "SLES is designed for enterprise environments with long-term support, stability, and certifications." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What is the primary purpose of SUSE Extensions and Modules?", 
+        options: [
+            {text: "To replace the base operating system", correct: false},
+            {text: "To provide additional functionality on top of SLES", correct: true},
+            {text: "To upgrade the kernel automatically", correct: false},
+            {text: "To enable community-only packages", correct: false}
+        ], 
+        rationale: "Extensions and modules extend the functionality of SLES by providing additional software components without replacing the base OS." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which statement about PackageHub on SLES is correct?", 
+        options: [
+            {text: "It is fully supported by SUSE for production systems.", correct: false},
+            {text: "It provides community packages with limited or no SUSE support.", correct: true},
+            {text: "It replaces official SUSE repositories.", correct: false},
+            {text: "It is enabled by default on all systems.", correct: false}
+        ], 
+        rationale: "PackageHub provides additional community packages that are not fully supported by SUSE and are optional." 
+    },
 );
