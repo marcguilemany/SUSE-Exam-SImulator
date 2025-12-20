@@ -109,6 +109,8 @@
 <div class="app-container">
     <header>
         <h1>SUSE SCA 15 Simulator</h1>
+        <div id="timer-display" style="font-family: monospace; font-size: 1.2rem; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 5px;">90:00</div>
+        
         <div class="status-badge"><span id="curr-q">0</span> / <span id="total-q">0</span></div>
     </header>
     <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
@@ -1754,18 +1756,48 @@ const quiz = {
     list: [],
     idx: 0,
     answers: {}, // Stores user answers by Question Index { 0: {correct: true, val: ...}, ... }
+    timer: null,      // NUEVO: Para guardar el intervalo
+    timeLeft: 5400,   // NUEVO: 90 minutos en segundos (90 * 60)
     
     start() {
         // Shuffle and Init
         this.list = [...DATA].sort(() => Math.random() - 0.5);
         this.idx = 0;
         this.answers = {};
-        
+
+        // TIMER INIT (90 min = 5400 sec)
+        clearInterval(this.timer); // Limpiar por si acaso
+        this.timeLeft = 90 * 60; 
+        this.startTimer();
+
         document.getElementById('total-q').innerText = this.list.length;
         document.getElementById('start-screen').classList.remove('active');
         document.getElementById('quiz-screen').classList.add('active');
         document.getElementById('footer').style.display = 'flex';
         this.load();
+    },
+
+    startTimer() {
+        const display = document.getElementById('timer-display');
+
+        this.timer = setInterval(() => {
+            this.timeLeft--;
+
+            // Formatear MM:SS
+            const m = Math.floor(this.timeLeft / 60);
+            const s = this.timeLeft % 60;
+            display.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+
+            // Color rojo si queda menos de 5 min
+            if(this.timeLeft < 300) display.style.background = '#ef4444';
+            else display.style.background = 'rgba(255,255,255,0.2)';
+
+            // SE ACABÓ EL TIEMPO
+            if (this.timeLeft <= 0) {
+                clearInterval(this.timer);
+                this.finish(true); // true = forzado por tiempo
+            }
+        }, 1000);
     },
 
     load() {
@@ -2102,7 +2134,9 @@ const quiz = {
         }
     },
 
-    finish() {
+    finish(forced = false) {
+        clearInterval(this.timer); // Parar reloj
+
         document.getElementById('quiz-screen').classList.remove('active');
         document.getElementById('result-screen').classList.add('active');
         document.getElementById('footer').style.display = 'none';
@@ -2111,10 +2145,32 @@ const quiz = {
         const correct = Object.values(this.answers).filter(a => a.isCorrect).length;
         const pct = Math.round((correct / total) * 100);
 
-        document.getElementById('final-score').innerText = pct + '%';
-        document.getElementById('final-msg').innerText = pct >= 70 ? "PASSED! Great job." : "Failed. Keep practicing.";
-        document.getElementById('final-score').style.color = pct >= 70 ? 'var(--secondary)' : 'var(--wrong)';
-        document.getElementById('final-score').style.borderColor = pct >= 70 ? 'var(--secondary)' : 'var(--wrong)';
+        // Calcular tiempo restante para mostrar
+        const m = Math.floor(this.timeLeft / 60);
+        const s = this.timeLeft % 60;
+        const timeStr = `${m}m ${s}s`;
+
+        const scoreDiv = document.getElementById('final-score');
+        const msgDiv = document.getElementById('final-msg');
+
+        scoreDiv.innerText = pct + '%';
+
+        if (forced) {
+            // Si se acabó el tiempo
+            scoreDiv.style.borderColor = 'var(--wrong)';
+            scoreDiv.style.color = 'var(--wrong)';
+            msgDiv.innerHTML = `<strong style="color:#ef4444">TIME'S UP!</strong><br>You ran out of time.<br>Final Score: ${pct}%`;
+        } else {
+            // Si terminó manual
+            const passed = pct >= 70;
+            scoreDiv.style.color = passed ? 'var(--secondary)' : 'var(--wrong)';
+            scoreDiv.style.borderColor = passed ? 'var(--secondary)' : 'var(--wrong)';
+
+            msgDiv.innerHTML = `
+                <strong>${passed ? 'PASSED! Great job.' : 'Failed. Keep practicing.'}</strong><br>
+                Time remaining: <b>${timeStr}</b>
+            `;
+        }
     }
 };
 </script>
