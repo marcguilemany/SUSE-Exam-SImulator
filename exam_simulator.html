@@ -49,7 +49,17 @@
         .drag-container { display: flex; gap: 20px; flex-wrap: wrap; }
         .drag-col { flex: 1; min-width: 280px; }
         .drag-header { font-weight: 700; color: #64748b; margin-bottom: 10px; text-transform: uppercase; font-size: 0.8rem; }
-        .drop-zone { background: #f1f5f9; border: 2px dashed #cbd5e1; border-radius: 8px; min-height: 200px; padding: 10px; transition: background 0.2s; }
+        .drop-zone { 
+            background: #f1f5f9; 
+            border: 2px dashed #cbd5e1; 
+            border-radius: 8px; 
+            min-height: 250px; /* IMPORTANTE: Esto le da altura para que puedas soltar */
+            padding: 15px; 
+            transition: background 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
         .drop-zone.drag-over { background: #dcfce7; border-color: var(--secondary); }
         .drag-item { background: white; padding: 12px; margin-bottom: 8px; border-radius: 6px; border: 1px solid #cbd5e1; border-left: 4px solid var(--secondary); cursor: grab; font-weight: 500; box-shadow: 0 1px 2px rgba(0,0,0,0.05); user-select: none; }
         .drag-item:active { cursor: grabbing; }
@@ -279,7 +289,7 @@ const quiz = {
         container.appendChild(inp);
     },
 
-    renderOrder(q, container, prevAns) {
+    /* renderOrder(q, container, prevAns) {
         const box = document.createElement('div'); box.className = 'drag-container';
         
         // If already answered, show the correct order statically to avoid confusion, or user's order? 
@@ -320,7 +330,70 @@ const quiz = {
         box.appendChild(colSrc);
         container.appendChild(box);
     },
+*/
+    renderOrder(q, container, prevAns) {
+        // Creamos contenedor flexible
+        const wrap = document.createElement('div'); wrap.className = 'drag-container';
+        
+        // COLUMNA 1: Opciones (Origen)
+        const col1 = document.createElement('div'); col1.className = 'drag-col';
+        col1.innerHTML = `<div class="drag-header">OPTIONS</div>`;
+        const zoneSrc = document.createElement('div'); zoneSrc.className = 'drop-zone';
+        zoneSrc.id = 'drag-src';
 
+        // COLUMNA 2: Tu Respuesta (Destino)
+        const col2 = document.createElement('div'); col2.className = 'drag-col';
+        col2.innerHTML = `<div class="drag-header">YOUR ANSWER</div>`;
+        const zoneTgt = document.createElement('div'); zoneTgt.className = 'drop-zone';
+        zoneTgt.id = 'drag-tgt';
+
+        // Lógica de ítems: Si ya respondiste, mostramos tu orden. Si no, las opciones desordenadas.
+        let srcItems = [], tgtItems = [];
+        if(prevAns) {
+            tgtItems = prevAns.userOrder; 
+        } else {
+            srcItems = [...q.items].sort(() => Math.random() - 0.5); 
+        }
+
+        // Función para crear las "cajitas" arrastrables
+        const createItem = (txt) => {
+            const el = document.createElement('div'); el.className = 'drag-item'; el.innerText = txt;
+            if(!prevAns) {
+                el.draggable = true;
+                el.ondragstart = (e) => { e.dataTransfer.setData('text', txt); };
+            } else {
+                el.style.cursor = 'default'; el.style.opacity = '0.8';
+            }
+            return el;
+        };
+
+        srcItems.forEach(t => zoneSrc.appendChild(createItem(t)));
+        tgtItems.forEach(t => zoneTgt.appendChild(createItem(t)));
+
+        // Eventos de Soltar (Drop) - Solo si no has respondido aún
+        if(!prevAns) {
+            [zoneSrc, zoneTgt].forEach(zone => {
+                zone.ondragover = e => { e.preventDefault(); zone.classList.add('drag-over'); };
+                zone.ondragleave = () => zone.classList.remove('drag-over');
+                zone.ondrop = e => {
+                    e.preventDefault(); zone.classList.remove('drag-over');
+                    const txt = e.dataTransfer.getData('text');
+                    
+                    // Buscamos el elemento que se está arrastrando para moverlo
+                    const allItems = document.querySelectorAll('.drag-item');
+                    let draggedEl;
+                    allItems.forEach(el => { if(el.innerText === txt) draggedEl = el; });
+                    
+                    if(draggedEl) zone.appendChild(draggedEl);
+                };
+            });
+        }
+
+        col1.appendChild(zoneSrc);
+        col2.appendChild(zoneTgt);
+        wrap.appendChild(col1); wrap.appendChild(col2);
+        container.appendChild(wrap);
+    },
     renderMatch(q, container, prevAns) {
         // MATCHING: 2 Columns. Left = Terms (Static), Right = Drops.
         // Pool of definitions at bottom.
