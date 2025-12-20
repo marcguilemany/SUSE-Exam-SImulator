@@ -188,30 +188,33 @@ const quiz = {
     timeLeft: 5400,   // NUEVO: 90 minutos en segundos (90 * 60)
     
     start() {
-        // Comprobamos si hay preguntas cargadas
+        // 1. Verificación de seguridad
         if (!window.examData || window.examData.length === 0) {
-            alert("No questions loaded! Check your 'db' folder paths.");
+            alert("Error: No se han cargado preguntas. Verifica la carpeta 'db'.");
             return;
         }
+        
+        // 2. BARAJAR (Shuffle): Mezclamos TODAS las preguntas disponibles (ej. 148)
+        const allQuestions = [...window.examData].sort(() => Math.random() - 0.5);
 
-        // Shuffle and init
-        this.list = [...window.examData].sort(() => Math.random() - 0.5);
+        // 3. RECORTAR (Slice): Nos quedamos solo con las primeras 70
+        // (Si tienes menos de 70 cargadas, cogerá todas las que haya sin dar error)
+        this.list = allQuestions.slice(0, 70);
+
+        // --- Resto de la inicialización igual que siempre ---
         this.idx = 0;
         this.answers = {};
-
-        // Reset timer
+        
         clearInterval(this.timer);
-        this.timeLeft = 90 * 60;
+        this.timeLeft = 90 * 60; 
         this.startTimer();
 
-        // CAMBIO DE PANTALLAS (ESTO ES CLAVE)
+        // Actualizamos la UI con el número real de preguntas del examen (70)
+        document.getElementById('total-q').innerText = this.list.length;
         document.getElementById('start-screen').classList.remove('active');
         document.getElementById('quiz-screen').classList.add('active');
-        document.getElementById('result-screen').classList.remove('active');
         document.getElementById('footer').style.display = 'flex';
-
-        // CARGAR PRIMERA PREGUNTA
-        document.getElementById('total-q').innerText = this.list.length;
+        
         this.load();
     },
 
