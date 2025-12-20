@@ -506,14 +506,14 @@ const quiz = {
             dataToSave = { userVal: val };
         }
         else if(q.type === 'ORDER') {
-            // CORRECCIÓN: Ahora buscamos la respuesta SOLO en la columna derecha (drag-tgt)
+            // CORRECCIÓN: Ahora buscamos la respuesta en la columna derecha 'drag-tgt'
             const el = document.getElementById('drag-tgt');
-            // Si el elemento existe, cogemos sus hijos. Si no (por seguridad), array vacío.
+            // Si existe, leemos los hijos. Si no, devolvemos array vacío para evitar error.
             const current = el ? [...el.children].map(c => c.innerText) : [];
             
-            // Comparamos el orden actual con el correcto
-            if(JSON.stringify(current) === JSON.stringify(q.correct)) isCorrect = true;
-            dataToSave = { userOrder: current };
+            if(JSON.stringify(current) === JSON.stringify(q.correct)) correct = true;
+            // Guardamos el orden del usuario para que se mantenga si navegamos
+            save = { order: current }; 
         }
         else if(q.type === 'MATCHING') {
             const slots = document.querySelectorAll('.match-drop');
