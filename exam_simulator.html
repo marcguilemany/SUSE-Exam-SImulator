@@ -258,7 +258,7 @@ const quiz = {
         else if(q.type === 'FILL') this.renderFill(q, area, answered);
         else if(q.type === 'ORDER') this.renderOrder(q, area, answered);
         else if(q.type === 'MATCHING') this.renderMatch(q, area, answered);
-        else if(q.type === 'HOTSPOT') this.renderHotspot(q, area, prev);
+        else if(q.type === 'HOTSPOT') this.renderHotspot(q, area, answered);
 
         if(answered) this.showFeedback(answered.isCorrect, q.rationale);
     },
@@ -580,9 +580,9 @@ const quiz = {
             // Si existe, leemos los hijos. Si no, devolvemos array vacío para evitar error.
             const current = el ? [...el.children].map(c => c.innerText) : [];
             
-            if(JSON.stringify(current) === JSON.stringify(q.correct)) correct = true;
+            if(JSON.stringify(current) === JSON.stringify(q.correct)) isCorrect = true;
             // Guardamos el orden del usuario para que se mantenga si navegamos
-            save = { order: current }; 
+            dataToSave = { order: current }; 
         }
         else if(q.type === 'MATCHING') {
             const slots = document.querySelectorAll('.match-drop');
@@ -609,9 +609,9 @@ const quiz = {
             const diffY = Math.abs(userY - q.target.y);
             
             // Si está a menos de un 10% de distancia del objetivo
-            if(diffX < 10 && diffY < 10) correct = true;
+            if(diffX < 10 && diffY < 10) isCorrect= true;
             
-            save = { x: userX, y: userY };
+            dataToSave = { x: userX, y: userY };
         }
 
         // Save State
