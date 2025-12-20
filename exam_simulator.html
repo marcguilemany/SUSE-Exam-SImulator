@@ -506,7 +506,12 @@ const quiz = {
             dataToSave = { userVal: val };
         }
         else if(q.type === 'ORDER') {
-            const current = [...document.getElementById('drag-zone').children].map(c => c.innerText);
+            // CORRECCIÓN: Ahora buscamos la respuesta SOLO en la columna derecha (drag-tgt)
+            const el = document.getElementById('drag-tgt');
+            // Si el elemento existe, cogemos sus hijos. Si no (por seguridad), array vacío.
+            const current = el ? [...el.children].map(c => c.innerText) : [];
+            
+            // Comparamos el orden actual con el correcto
             if(JSON.stringify(current) === JSON.stringify(q.correct)) isCorrect = true;
             dataToSave = { userOrder: current };
         }
