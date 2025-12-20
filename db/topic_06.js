@@ -14,6 +14,6 @@ window.examData.push(
         image: "assets/img/id_command_output.png", 
         target: {x: 90, y: 50}, 
         rationale: "Secondary groups appear at the very end of the 'id' command output.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-users.html' target='_blank'>📚 SUSE Docs: User Identity</a>" 
-    }
+    },
 
 );

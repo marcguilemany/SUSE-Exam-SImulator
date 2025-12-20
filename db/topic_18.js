@@ -44,6 +44,6 @@ window.examData.push(
             {text: "rsyslog / syslog-ng", correct: true} 
         ], 
         rationale: "SLES uses rsyslog or syslog-ng (depending on version/config), but syslog-ng is the traditional robust answer for SLES." 
-    }
+    },
 
 );

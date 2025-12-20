@@ -24,6 +24,6 @@ window.examData.push(
         items: ["mkpart", "primary", "xfs", "0%", "100%"], 
         correct: ["mkpart", "primary", "xfs", "0%", "100%"], 
         rationale: "Syntax: mkpart [type] [fs-type] [start] [end]." 
-    }
+    },
 
 );

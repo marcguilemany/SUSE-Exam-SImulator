@@ -97,6 +97,6 @@ window.examData.push(
             {text: "x86_64", correct: false}
         ], 
         rationale: "Format is Name-Version-Release. Release (23.1) is the SUSE build number." 
-    }
+    },
 
 );

@@ -81,6 +81,6 @@ window.examData.push(
         image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Standard-unix-filesystem-hierarchy.svg/800px-Standard-unix-filesystem-hierarchy.svg.png", 
         target: {x: 35, y: 35}, 
         rationale: "/etc contains configuration files." 
-    }
+    },
 
 );

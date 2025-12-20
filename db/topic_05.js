@@ -273,6 +273,6 @@ window.examData.push(
             {text: "Shift+v", correct: false}
         ], 
         rationale: "'v' is character visual, 'V' is line visual, 'Ctrl+v' is block visual." 
-    }
+    },
 
 );

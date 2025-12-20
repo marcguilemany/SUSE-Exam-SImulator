@@ -50,6 +50,6 @@ window.examData.push(
             {text: "3389", correct: false}
         ], 
         rationale: "VNC starts at 5900. Display :0 is 5900, Display :1 is 5901, etc." 
-    }
+    },
 
 );

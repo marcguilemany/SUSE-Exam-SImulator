@@ -245,6 +245,6 @@ window.examData.push(
             {text: "ipv6", correct: false}
         ], 
         rationale: "udev rules are responsible for consistent device naming based on firmware/topology." 
-    }
+    },
 
 );

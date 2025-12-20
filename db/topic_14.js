@@ -44,6 +44,6 @@ window.examData.push(
         image: "assets/img/lvm_types_diagram.png", 
         target: {x: 50, y: 80}, 
         rationale: "Striped volumes distribute data evenly across multiple disks simultaneously to improve performance.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-lvm.html' target='_blank'>📚 SUSE Docs: LVM Striping</a>" 
-    }
+    },
 
 );

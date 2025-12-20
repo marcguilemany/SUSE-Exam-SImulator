@@ -152,5 +152,5 @@ window.examData.push(
             {text: "SLE Home", correct: false}
         ], 
         rationale: "The SLE family includes SLES (Server), SLE HPC, SLE Real Time, and SLES for SAP. 'SLE Home' or 'Macro' do not exist as products.<br><br><a href='https://www.suse.com/products/' target='_blank'>📚 SUSE Product Portfolio</a>" 
-    }
+    },
 );

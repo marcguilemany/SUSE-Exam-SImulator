@@ -28,6 +28,6 @@ window.examData.push(
         text: "Command to edit the current user's crontab?", 
         validAnswers: ["crontab -e"], 
         rationale: "crontab -e opens the editor defined in $EDITOR." 
-    }
+    },
 
 );

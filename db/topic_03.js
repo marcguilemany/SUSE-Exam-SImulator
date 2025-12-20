@@ -128,6 +128,6 @@ window.examData.push(
             {term: "cp -r", def: "Copies directories"}
         ], 
         rationale: "rmdir only works on empty folders. mv is used for renaming." 
-    }
+    },
 
 );

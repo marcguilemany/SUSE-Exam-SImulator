@@ -365,6 +365,6 @@ window.examData.push(
             {text: "There is no such option.", correct: false}
         ],
         rationale: "Capital 'X' adds execute permission only if the target is a directory or already has execute set for someone. It prevents making text files executable accidentally."
-    }
+    },
 
 );

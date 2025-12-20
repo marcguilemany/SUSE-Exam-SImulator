@@ -32,6 +32,6 @@ window.examData.push(
         text: "What command is used to find the PID of a process by its name?", 
         validAnswers: ["pidof", "pgrep"], 
         rationale: "pidof or pgrep are the correct tools. 'pid' is not a command." 
-    }
+    },
 
 );
