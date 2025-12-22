@@ -77,8 +77,8 @@ window.examData.push(
     },
     { 
         type: "HOTSPOT", 
-        text: "Click on the directory where configuration files are stored (/etc).", 
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Standard-unix-filesystem-hierarchy.svg/800px-Standard-unix-filesystem-hierarchy.svg.png", 
+        text: "Click on the directory where configuration files are stored", 
+        image: "assets/img/etc_img.png", 
         target: {x: 35, y: 35}, 
         rationale: "/etc contains configuration files." 
     },
