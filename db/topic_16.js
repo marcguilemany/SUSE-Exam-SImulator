@@ -247,4 +247,123 @@ window.examData.push(
         rationale: "udev rules are responsible for consistent device naming based on firmware/topology." 
     },
 
+    {
+        type: "SINGLE",
+        text: "Which naming convention is used by default for network interfaces in SLES 15?",
+        options: [
+            {text: "eth0, eth1", correct: false},
+            {text: "net0, net1", correct: false},
+            {text: "Predictable Network Interface Names", correct: true},
+            {text: "biosdevname only", correct: false}
+        ],
+        rationale: "SLES uses Predictable Network Interface Names such as enp0s3 or ens160."
+    },
+
+    {
+        type: "SINGLE",
+        text: "Which tool is the default network configuration framework in SLES?",
+        options: [
+            {text: "NetworkManager", correct: false},
+            {text: "wicked", correct: true},
+            {text: "ifup", correct: false},
+            {text: "netctl", correct: false}
+        ],
+        rationale: "SLES uses wicked as the default network configuration service."
+    },
+
+    {
+        type: "MULTI",
+        text: "Which methods can be used to configure networking in SLES? (Select 2)",
+        options: [
+            {text: "YaST", correct: true},
+            {text: "wicked configuration files", correct: true},
+            {text: "netplan", correct: false},
+            {text: "nmcli", correct: false}
+        ],
+        rationale: "Networking can be configured using YaST or directly via wicked configuration files."
+    },
+
+    {
+        type: "SINGLE",
+        text: "Where are wicked network configuration files stored?",
+        options: [
+            {text: "/etc/sysconfig/network", correct: true},
+            {text: "/etc/network", correct: false},
+            {text: "/etc/wicked", correct: false},
+            {text: "/usr/lib/network", correct: false}
+        ],
+        rationale: "wicked configuration files are located in /etc/sysconfig/network."
+    },
+
+    {
+        type: "SINGLE",
+        text: "Which command is commonly used to test basic network connectivity?",
+        options: [
+            {text: "ss", correct: false},
+            {text: "ping", correct: true},
+            {text: "ip route", correct: false},
+            {text: "wicked show", correct: false}
+        ],
+        rationale: "ping tests basic IP connectivity between hosts."
+    },
+
+    {
+        type: "SINGLE",
+        text: "Which file is used for local hostname to IP address resolution?",
+        options: [
+            {text: "/etc/nsswitch.conf", correct: false},
+            {text: "/etc/resolv.conf", correct: false},
+            {text: "/etc/hosts", correct: true},
+            {text: "/etc/hostname", correct: false}
+        ],
+        rationale: "/etc/hosts provides static hostname to IP mappings."
+    },
+
+    {
+        type: "MULTI",
+        text: "Which information is typically defined in /etc/resolv.conf? (Select 2)",
+        options: [
+            {text: "DNS servers", correct: true},
+            {text: "Search domains", correct: true},
+            {text: "Default gateway", correct: false},
+            {text: "Network interface name", correct: false}
+        ],
+        rationale: "/etc/resolv.conf defines DNS servers and search domains."
+    },
+
+    {
+        type: "SINGLE",
+        text: "Which YaST module is used to configure network settings?",
+        options: [
+            {text: "YaST System Services", correct: false},
+            {text: "YaST Network Settings", correct: true},
+            {text: "YaST Firewall", correct: false},
+            {text: "YaST Hardware Info", correct: false}
+        ],
+        rationale: "YaST Network Settings manages interfaces, routing and DNS."
+    },
+
+    {
+        type: "MATCHING",
+        text: "Match the network command with its purpose.",
+        pairs: [
+            {term: "ip addr", def: "Display IP address information"},
+            {term: "ip route", def: "Show routing table"},
+            {term: "ping", def: "Test network connectivity"}
+        ],
+        rationale: "These are core commands for basic network diagnostics."
+    },
+
+    {
+        type: "SINGLE",
+        text: "Which service must be running for wicked-managed networking to function?",
+        options: [
+            {text: "NetworkManager", correct: false},
+            {text: "wickedd", correct: true},
+            {text: "systemd-networkd", correct: false},
+            {text: "firewalld", correct: false}
+        ],
+        rationale: "The wickedd service manages network interfaces in SLES."
+    }
+
 );

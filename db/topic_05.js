@@ -274,5 +274,111 @@ window.examData.push(
         ], 
         rationale: "'v' is character visual, 'V' is line visual, 'Ctrl+v' is block visual." 
     },
+    { 
+        type: "SINGLE", 
+        text: "Which Vim mode allows you to insert or append text?", 
+        options: [
+            {text: "Normal Mode", correct: false},
+            {text: "Insert Mode", correct: true},
+            {text: "Command-Line Mode", correct: false},
+            {text: "Visual Mode", correct: false}
+        ], 
+        rationale: "Insert mode is used to input text. You can enter it using 'i', 'I', 'a', or 'A'.<br><br><a href='https://vimhelp.org/usr_01.txt.html' target='_blank'>📚 Vim Docs: Insert Mode</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What command in Normal Mode deletes the current line in Vim?", 
+        options: [
+            {text: "dd", correct: true},
+            {text: "D", correct: false},
+            {text: "x", correct: false},
+            {text: "dl", correct: false}
+        ], 
+        rationale: "'dd' deletes the entire current line including the newline character." 
+    },
+    { 
+        type: "MULTI", 
+        text: "Select the commands that move the cursor to the beginning of a line in Normal Mode.", 
+        options: [
+            {text: "^", correct: true},
+            {text: "0", correct: true},
+            {text: "$", correct: false},
+            {text: "gg", correct: false},
+            {text: "H", correct: false}
+        ], 
+        rationale: "0 moves to column 1, ^ moves to first non-blank character, $ to end, gg to top of file." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which command in Normal Mode allows you to undo the last change?", 
+        options: [
+            {text: "u", correct: true},
+            {text: "Ctrl+r", correct: false},
+            {text: ":redo", correct: false},
+            {text: "zz", correct: false}
+        ], 
+        rationale: "'u' undoes the last change; 'Ctrl+r' redoes it." 
+    },
+    { 
+        type: "FILL", 
+        text: "Fill in the blank: To search for the next occurrence of a pattern in Vim, you use the command '/' followed by the ______.", 
+        validAnswers: ["pattern", "text", "string"], 
+        rationale: "Use '/' followed by the search pattern to find occurrences. Press 'n' for next match." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which Vim command writes the file to disk and quits the editor?", 
+        options: [
+            {text: ":w", correct: false},
+            {text: ":q", correct: false},
+            {text: ":wq", correct: true},
+            {text: ":x!", correct: false}
+        ], 
+        rationale: ":wq writes changes and exits Vim." 
+    },
+    { 
+        type: "MULTI", 
+        text: "Which of the following commands can be used to move multiple lines in Vim?", 
+        options: [
+            {text: "V to select lines and then :m", correct: true},
+            {text: "dd followed by p", correct: true},
+            {text: ":move", correct: true},
+            {text: ":copy", correct: false}
+        ], 
+        rationale: "You can visually select lines (V) and move them, or cut (dd) and paste (p), or use :move command." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "You want to replace all occurrences of 'foo' with 'bar' in the entire file. Which command do you use?", 
+        options: [
+            {text: ":%s/foo/bar/g", correct: true},
+            {text: ":s/foo/bar", correct: false},
+            {text: ":g/foo/bar", correct: false},
+            {text: ":%replace foo bar", correct: false}
+        ], 
+        rationale: ":%s/foo/bar/g replaces all occurrences in the file; ':s' alone affects only the current line." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which command allows you to visually select text character by character in Vim?", 
+        options: [
+            {text: "v", correct: true},
+            {text: "V", correct: false},
+            {text: "Ctrl+v", correct: false},
+            {text: "gg", correct: false}
+        ], 
+        rationale: "'v' enters character-wise Visual Mode; 'V' is line-wise, 'Ctrl+v' is block-wise." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "How do you enter Command-Line Mode from Normal Mode?", 
+        options: [
+            {text: "Press ':'", correct: true},
+            {text: "Press '/'", correct: false},
+            {text: "Press 'i'", correct: false},
+            {text: "Press 'v'", correct: false}
+        ], 
+        rationale: "':' enters Command-Line Mode to execute commands like :w, :q, :s etc." 
+    },
 
 );

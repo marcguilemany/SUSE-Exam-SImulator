@@ -82,5 +82,126 @@ window.examData.push(
         target: {x: 35, y: 35}, 
         rationale: "/etc contains configuration files." 
     },
+        { 
+        type: "SINGLE", 
+        text: "You delete a file, but disk space is not freed. What is the most likely reason?", 
+        options: [
+            {text: "The file is compressed", correct: false},
+            {text: "A process still has the file open", correct: true},
+            {text: "The filesystem is read-only", correct: false},
+            {text: "The inode table is full", correct: false}
+        ], 
+        rationale: "Disk space is released only when the last file descriptor is closed." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which command displays inode numbers for files?", 
+        options: [
+            {text: "ls -l", correct: false},
+            {text: "ls -i", correct: true},
+            {text: "stat --inode", correct: false},
+            {text: "df -i", correct: false}
+        ], 
+        rationale: "The -i option shows inode numbers." 
+    },
+    { 
+        type: "MULTI", 
+        text: "Which characteristics apply to symbolic links? (Select 3)", 
+        options: [
+            {text: "They have a different inode than the target", correct: true},
+            {text: "They can point to directories", correct: true},
+            {text: "They break if the target is deleted", correct: true},
+            {text: "They share disk blocks with the target", correct: false}
+        ], 
+        rationale: "Symbolic links are independent files that reference a path." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which filesystem feature is primarily used by Snapper on SLES?", 
+        options: [
+            {text: "XFS quotas", correct: false},
+            {text: "Btrfs subvolumes and snapshots", correct: true},
+            {text: "LVM striping", correct: false},
+            {text: "EXT4 journaling", correct: false}
+        ], 
+        rationale: "Snapper relies on Btrfs snapshots and subvolumes." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which directory contains runtime system information such as process details?", 
+        options: [
+            {text: "/sys", correct: false},
+            {text: "/proc", correct: true},
+            {text: "/run", correct: false},
+            {text: "/var", correct: false}
+        ], 
+        rationale: "/proc is a virtual filesystem exposing kernel and process information." 
+    },
+    { 
+        type: "MULTI", 
+        text: "Which directories are typically mounted as separate filesystems on SLES? (Select 2)", 
+        options: [
+            {text: "/boot", correct: true},
+            {text: "/home", correct: true},
+            {text: "/bin", correct: false},
+            {text: "/etc", correct: false}
+        ], 
+        rationale: "/boot and /home are commonly separated for stability and data protection." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What happens if the root filesystem (/) becomes full?", 
+        options: [
+            {text: "Only user processes fail", correct: false},
+            {text: "The system may become unstable or unbootable", correct: true},
+            {text: "Only log files stop growing", correct: false},
+            {text: "The kernel automatically cleans space", correct: false}
+        ], 
+        rationale: "A full root filesystem can prevent essential system operations." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which file defines persistent filesystem mounts?", 
+        options: [
+            {text: "/etc/mtab", correct: false},
+            {text: "/proc/mounts", correct: false},
+            {text: "/etc/fstab", correct: true},
+            {text: "/usr/lib/mounts", correct: false}
+        ], 
+        rationale: "/etc/fstab defines static mount configuration." 
+    },
+    { 
+        type: "MULTI", 
+        text: "Which information can be found in /etc/fstab? (Select 3)", 
+        options: [
+            {text: "Mount point", correct: true},
+            {text: "Filesystem type", correct: true},
+            {text: "Mount options", correct: true},
+            {text: "Current disk usage", correct: false}
+        ], 
+        rationale: "fstab defines how filesystems are mounted, not their usage." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which mount option prevents execution of binaries on a filesystem?", 
+        options: [
+            {text: "nosuid", correct: false},
+            {text: "noexec", correct: true},
+            {text: "nodev", correct: false},
+            {text: "ro", correct: false}
+        ], 
+        rationale: "noexec blocks execution of binaries." 
+    },
+    { 
+        type: "MULTI", 
+        text: "Which mount options improve filesystem security? (Select 2)", 
+        options: [
+            {text: "nosuid", correct: true},
+            {text: "nodev", correct: true},
+            {text: "rw", correct: false},
+            {text: "defaults", correct: false}
+        ], 
+        rationale: "nosuid and nodev enhance security by restricting special permissions and device files." 
+    },
 
 );

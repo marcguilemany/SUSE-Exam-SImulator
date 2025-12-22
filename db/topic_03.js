@@ -129,5 +129,210 @@ window.examData.push(
         ], 
         rationale: "rmdir only works on empty folders. mv is used for renaming." 
     },
+        { 
+        type: "SINGLE", 
+        text: "You run a command that produces an error message. You want to save ONLY the error output to a file. What should you do?", 
+        options: [
+            {text: "command > error.txt", correct: false},
+            {text: "command 2> error.txt", correct: true},
+            {text: "command &> error.txt", correct: false},
+            {text: "command | error.txt", correct: false}
+        ], 
+        rationale: "File descriptor 2 corresponds to STDERR. Redirecting 2> sends only error messages to a file." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "A command succeeds only if the previous command was successful. Which operator should be used?", 
+        options: [
+            {text: "||", correct: false},
+            {text: "&&", correct: true},
+            {text: ";", correct: false},
+            {text: "|", correct: false}
+        ], 
+        rationale: "The && operator ensures the second command runs only if the first returns exit code 0." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which exit code indicates that a command executed successfully?", 
+        options: [
+            {text: "1", correct: false},
+            {text: "127", correct: false},
+            {text: "0", correct: true},
+            {text: "-1", correct: false}
+        ], 
+        rationale: "In Linux/UNIX systems, an exit code of 0 means success." 
+    },
+    { 
+        type: "MULTI", 
+        text: "Which actions can be performed using command history? (Select 3)", 
+        options: [
+            {text: "Re-execute previous commands", correct: true},
+            {text: "Edit a previous command before running it", correct: true},
+            {text: "Search for commands interactively", correct: true},
+            {text: "Recover deleted files", correct: false},
+            {text: "Modify system logs", correct: false}
+        ], 
+        rationale: "History allows re-running, editing, and searching previous commands using arrow keys, Ctrl+R, or history expansion." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which key combination searches backward through command history interactively?", 
+        options: [
+            {text: "Ctrl+C", correct: false},
+            {text: "Ctrl+R", correct: true},
+            {text: "Ctrl+D", correct: false},
+            {text: "Ctrl+Z", correct: false}
+        ], 
+        rationale: "Ctrl+R performs a reverse incremental search in Bash history." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "You need to temporarily set an environment variable for a single command execution. Which syntax is correct?", 
+        options: [
+            {text: "export VAR=value", correct: false},
+            {text: "VAR=value command", correct: true},
+            {text: "command VAR=value", correct: false},
+            {text: "set VAR=value command", correct: false}
+        ], 
+        rationale: "Prefixing VAR=value before a command sets the variable only for that command execution." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which command displays the full path of the executable that would be run?", 
+        options: [
+            {text: "locate", correct: false},
+            {text: "find", correct: false},
+            {text: "which", correct: true},
+            {text: "whereis -s", correct: false}
+        ], 
+        rationale: "'which' shows the executable path resolved via the PATH variable." 
+    },
+    { 
+        type: "MULTI", 
+        text: "Which statements about the PATH environment variable are true? (Select 2)", 
+        options: [
+            {text: "It defines directories searched for executables", correct: true},
+            {text: "It is read from /etc/passwd", correct: false},
+            {text: "Order of directories matters", correct: true},
+            {text: "It can only be modified by root", correct: false}
+        ], 
+        rationale: "PATH is an ordered list of directories searched for commands and can be modified per user." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What happens if you run a command that is not found in any PATH directory?", 
+        options: [
+            {text: "The command runs with limited privileges", correct: false},
+            {text: "The shell returns exit code 127", correct: true},
+            {text: "The shell exits immediately", correct: false},
+            {text: "The command is searched in /tmp", correct: false}
+        ], 
+        rationale: "Exit code 127 indicates a command was not found." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which command allows you to view a text file page by page?", 
+        options: [
+            {text: "cat", correct: false},
+            {text: "less", correct: true},
+            {text: "head", correct: false},
+            {text: "tail", correct: false}
+        ], 
+        rationale: "'less' allows interactive, paginated viewing of text files." 
+    },
+    { 
+        type: "MULTI", 
+        text: "Which commands can be safely interrupted without terminating the shell session? (Select 2)", 
+        options: [
+            {text: "A long-running ping command", correct: true},
+            {text: "A foreground process using Ctrl+C", correct: true},
+            {text: "The bash shell itself", correct: false},
+            {text: "systemd", correct: false}
+        ], 
+        rationale: "Ctrl+C sends SIGINT to the foreground process without closing the shell." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What signal is sent when pressing Ctrl+C?", 
+        options: [
+            {text: "SIGTERM", correct: false},
+            {text: "SIGINT", correct: true},
+            {text: "SIGKILL", correct: false},
+            {text: "SIGHUP", correct: false}
+        ], 
+        rationale: "Ctrl+C sends SIGINT (interrupt signal) to the foreground process." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "You want to run a command even if the previous one fails. Which operator should you use?", 
+        options: [
+            {text: "&&", correct: false},
+            {text: "||", correct: false},
+            {text: ";", correct: true},
+            {text: "|", correct: false}
+        ], 
+        rationale: "The semicolon (;) executes commands sequentially regardless of success or failure." 
+    },
+    { 
+        type: "FILL", 
+        text: "Which built-in command displays the exit status of the last executed command?", 
+        validAnswers: ["echo $?"], 
+        rationale: "The variable $? contains the exit code of the previously executed command." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which tool provides help pages for shell built-in commands?", 
+        options: [
+            {text: "man", correct: false},
+            {text: "info", correct: false},
+            {text: "help", correct: true},
+            {text: "apropos", correct: false}
+        ], 
+        rationale: "The 'help' command provides documentation for Bash built-ins." 
+    },
+    { 
+        type: "MULTI", 
+        text: "Which statements about aliases are correct? (Select 2)", 
+        options: [
+            {text: "Aliases are expanded by the shell", correct: true},
+            {text: "Aliases can replace complex commands", correct: true},
+            {text: "Aliases persist without configuration files", correct: false},
+            {text: "Aliases are executed before shell parsing", correct: false}
+        ], 
+        rationale: "Aliases are shell expansions and must be defined in shell configuration files to persist." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which file is commonly used to define system-wide environment variables for login shells?", 
+        options: [
+            {text: "/etc/profile", correct: true},
+            {text: "~/.bashrc", correct: false},
+            {text: "/etc/environment", correct: false},
+            {text: "~/.profile", correct: false}
+        ], 
+        rationale: "/etc/profile defines system-wide settings for login shells." 
+    },
+    { 
+        type: "MATCHING", 
+        text: "Match the commands to their typical usage.", 
+        pairs: [
+            {term: "head", def: "Display the beginning of a file"},
+            {term: "tail", def: "Display the end of a file"},
+            {term: "wc", def: "Count lines, words, or characters"},
+            {term: "sort", def: "Order lines of text"}
+        ], 
+        rationale: "These commands are commonly used together in pipelines." 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Why is quoting a variable important in shell scripts?", 
+        options: [
+            {text: "To increase execution speed", correct: false},
+            {text: "To prevent word splitting and globbing", correct: true},
+            {text: "To export the variable automatically", correct: false},
+            {text: "To make the variable read-only", correct: false}
+        ], 
+        rationale: "Quoting prevents unintended word splitting and filename expansion." 
+    },
 
 );

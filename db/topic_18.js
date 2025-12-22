@@ -46,4 +46,64 @@ window.examData.push(
         rationale: "SLES uses rsyslog or syslog-ng (depending on version/config), but syslog-ng is the traditional robust answer for SLES." 
     },
 
+    {
+        type: "MATCHING",
+        text: "Match the logging component to its primary role.",
+        pairs: [
+            {term: "journald", def: "Captures structured logs from the kernel and services"},
+            {term: "rsyslog", def: "Processes and forwards traditional syslog messages"},
+            {term: "logrotate", def: "Manages log file rotation and retention"},
+            {term: "supportconfig", def: "Collects system configuration and logs for support"}
+        ],
+        rationale: "journald is systemd native. rsyslog handles syslog format. logrotate rotates logs. supportconfig packages info for SUSE support."
+    },
+
+    {
+        type: "MATCHING",
+        text: "Match the log file type with its typical location.",
+        pairs: [
+            {term: "Kernel logs", def: "/var/log/messages"},
+            {term: "Service logs (systemd)", def: "Accessed via journalctl"},
+            {term: "Rotated logs", def: "/var/log/*.gz"},
+            {term: "Support archive", def: "/var/tmp/supportconfig/"}
+        ],
+        rationale: "Kernel and messages go to /var/log, rotated logs are compressed, supportconfig generates archives."
+    },
+
+    {
+        type: "MATCHING",
+        text: "Match the logging concept to its meaning.",
+        pairs: [
+            {term: "Forwarding", def: "Sending logs to a remote server"},
+            {term: "Filtering", def: "Selecting messages based on priority or facility"},
+            {term: "Persistence", def: "Whether logs survive a reboot"},
+            {term: "Compression", def: "Reducing size of old logs"}
+        ],
+        rationale: "journald can filter, compress via logrotate, forward via rsyslog, and store persistent logs."
+    },
+
+    {
+        type: "MATCHING",
+        text: "Match the systemd logging option with its effect.",
+        pairs: [
+            {term: "Storage=persistent", def: "Logs are saved across reboots"},
+            {term: "Storage=volatile", def: "Logs are kept in memory only"},
+            {term: "ForwardToSyslog=yes", def: "Sends logs to traditional syslog daemon"},
+            {term: "Compress=yes", def: "Compresses old journal files"}
+        ],
+        rationale: "Persistent/volatile controls disk vs RAM, ForwardToSyslog links to rsyslog, Compress handles journal size."
+    },
+
+    {
+        type: "MATCHING",
+        text: "Match supportconfig options with their purpose.",
+        pairs: [
+            {term: "-f", def: "Force overwrite existing archive"},
+            {term: "-t", def: "Test archive creation without sending"},
+            {term: "-o", def: "Specify output file name"},
+            {term: "-r", def: "Include only recent logs"}
+        ],
+        rationale: "supportconfig uses these flags to control archive creation and contents."
+    }
+
 );
