@@ -144,6 +144,13 @@
 
     <footer id="footer" style="display:none;">
         <button class="nav-btn btn-sec" id="btn-prev" onclick="quiz.prev()" disabled>Previous</button>
+
+        <button class="nav-btn btn-sec" 
+                style="color: #ef4444; border: 1px solid #ef4444; margin: 0 10px;" 
+                onclick="if(confirm('Are you sure? Unanswered questions will count as WRONG.')) quiz.finish()">
+            🏁 Finish Now
+        </button>
+
         <div>
             <button class="nav-btn btn-pri" id="btn-check" onclick="quiz.check()">Submit Answer</button>
             <button class="nav-btn btn-pri" id="btn-next" onclick="quiz.next()" style="display:none;">Next Question</button>
@@ -564,20 +571,5 @@ const quiz = {
     }
 };
 </script>
-
-<footer id="footer" style="display:none;">
-        <button class="nav-btn btn-sec" id="btn-prev" onclick="quiz.prev()" disabled>Previous</button>
-
-        <button class="nav-btn btn-sec" 
-                style="color: #ef4444; border: 1px solid #ef4444; margin: 0 10px;" 
-                onclick="if(confirm('Are you sure? Unanswered questions will count as WRONG.')) quiz.finish()">
-            🏁 Finish Now
-        </button>
-
-        <div>
-            <button class="nav-btn btn-pri" id="btn-check" onclick="quiz.check()">Submit Answer</button>
-            <button class="nav-btn btn-pri" id="btn-next" onclick="quiz.next()" style="display:none;">Next Question</button>
-        </div>
-    </footer>
 </body>
 </html>
