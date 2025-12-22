@@ -1,8 +1,4 @@
-// Aseguramos que el array global existe, si no, lo creamos
-window.examData = window.examData || [];
-
-// Añadimos las preguntas de este tema
-window.examData.push(
+window.loadTopic("03 The Command Line", [
 
    // -------------------------------------------------------------------------
     // 03 The Command Line
@@ -335,4 +331,4 @@ window.examData.push(
         rationale: "Quoting prevents unintended word splitting and filename expansion." 
     },
 
-);
+]);

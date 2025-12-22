@@ -1,8 +1,4 @@
-// Aseguramos que el array global existe, si no, lo creamos
-window.examData = window.examData || [];
-
-// Añadimos las preguntas de este tema
-window.examData.push(
+window.loadTopic("14 Logical Volume Management", [
 
   // -------------------------------------------------------------------------
     // 14 Logical Volume Management
@@ -161,4 +157,4 @@ window.examData.push(
     }
 
 
-);
+]);

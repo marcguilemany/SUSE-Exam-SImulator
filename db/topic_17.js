@@ -1,8 +1,4 @@
-// Aseguramos que el array global existe, si no, lo creamos
-window.examData = window.examData || [];
-
-// Añadimos las preguntas de este tema
-window.examData.push(
+window.loadTopic("17 Software Management", [
 
       // -------------------------------------------------------------------------
     // 17 Software Management
@@ -263,4 +259,4 @@ window.examData.push(
         rationale: "Configuration files are preserved unless erased."
     }
 
-);
+]);

@@ -1,8 +1,4 @@
-// Aseguramos que el array global existe, si no, lo creamos
-window.examData = window.examData || [];
-
-// Añadimos las preguntas de este tema
-window.examData.push(
+window.loadTopic("02 Overview & Install", [
 
     // -------------------------------------------------------------------------
     // 02 Overview of SUSE Linux Enterprise
@@ -208,4 +204,5 @@ window.examData.push(
         ], 
         rationale: "PackageHub provides additional community packages that are not fully supported by SUSE and are optional." 
     },
-);
+    
+]);

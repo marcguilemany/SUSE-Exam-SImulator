@@ -1,8 +1,4 @@
-// Aseguramos que el array global existe, si no, lo creamos
-window.examData = window.examData || [];
-
-// Añadimos las preguntas de este tema
-window.examData.push(
+window.loadTopic("10 Task Scheduling", [
 
        // -------------------------------------------------------------------------
     // 10 Task Scheduling
@@ -255,4 +251,4 @@ window.examData.push(
         rationale: "Cron logs are stored in /var/log/cron."
     }
 
-);
+]);

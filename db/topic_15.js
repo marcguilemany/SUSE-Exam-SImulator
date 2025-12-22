@@ -1,8 +1,4 @@
-// Aseguramos que el array global existe, si no, lo creamos
-window.examData = window.examData || [];
-
-// Añadimos las preguntas de este tema
-window.examData.push(
+window.loadTopic("15 Btrfs Management", [
 
 // -------------------------------------------------------------------------
 // 15 Btrfs Management
@@ -108,4 +104,4 @@ window.examData.push(
         rationale: "These concepts are fundamental to Btrfs management in SLES."
     }
 
-);
+]);

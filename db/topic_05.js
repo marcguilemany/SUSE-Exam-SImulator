@@ -1,8 +1,4 @@
-// Aseguramos que el array global existe, si no, lo creamos
-window.examData = window.examData || [];
-
-// Añadimos las preguntas de este tema
-window.examData.push(
+window.loadTopic("05 Text Editors (Vim)", [
 
 
   // -------------------------------------------------------------------------
@@ -381,4 +377,4 @@ window.examData.push(
         rationale: "':' enters Command-Line Mode to execute commands like :w, :q, :s etc." 
     },
 
-);
+]);

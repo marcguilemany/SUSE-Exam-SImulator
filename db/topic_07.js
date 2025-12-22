@@ -1,8 +1,4 @@
-// Aseguramos que el array global existe, si no, lo creamos
-window.examData = window.examData || [];
-
-// Añadimos las preguntas de este tema
-window.examData.push(
+window.loadTopic("07 Standard Permissions", [
 
       // -------------------------------------------------------------------------
     // 07 Standard Permissions
@@ -367,4 +363,4 @@ window.examData.push(
         rationale: "Capital 'X' adds execute permission only if the target is a directory or already has execute set for someone. It prevents making text files executable accidentally."
     },
 
-);
+]);

@@ -1,8 +1,7 @@
 // -------------------------------------------------------------------------
 // 06 Users and Groups
 // -------------------------------------------------------------------------
-window.examData = window.examData || [];
-window.examData.push(
+window.loadTopic("06 Users and Groups", [
 
     { 
         type: "SINGLE", 
@@ -228,4 +227,4 @@ window.examData.push(
         rationale: "Root has UID 0, unlimited privileges, cannot be deleted. Shell is configurable, can have secondary groups." 
     }
 
-);
+]);

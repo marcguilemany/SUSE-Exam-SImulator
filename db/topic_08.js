@@ -1,10 +1,6 @@
-// Aseguramos que el array global existe, si no, lo creamos
-window.examData = window.examData || [];
+window.loadTopic("08 Process Management", [
 
-// Añadimos las preguntas de este tema
-window.examData.push(
-
-       // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // 08 Process Management
     // -------------------------------------------------------------------------
     { 
@@ -149,4 +145,4 @@ window.examData.push(
 
 
 
-);
+]);

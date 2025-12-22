@@ -1,9 +1,7 @@
 // -------------------------------------------------------------------------
 // 09 Privilege Delegation
 // -------------------------------------------------------------------------
-window.examData = window.examData || [];
-window.examData.push(
-
+window.loadTopic("09 Privilege Delegation", [
     {
         type: "SINGLE",
         text: "Which identifier determines the permissions a running process actually has?",
@@ -118,4 +116,4 @@ window.examData.push(
         rationale: "Each mechanism handles privilege delegation differently."
     }
 
-);
+]);

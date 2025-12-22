@@ -1,8 +1,4 @@
-// Aseguramos que el array global existe, si no, lo creamos
-window.examData = window.examData || [];
-
-// Añadimos las preguntas de este tema
-window.examData.push(
+window.loadTopic("18 System Logging", [
 
    // -------------------------------------------------------------------------
     // 18 System Logging
@@ -106,4 +102,4 @@ window.examData.push(
         rationale: "supportconfig uses these flags to control archive creation and contents."
     }
 
-);
+]);

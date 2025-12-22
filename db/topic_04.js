@@ -1,8 +1,4 @@
-// Aseguramos que el array global existe, si no, lo creamos
-window.examData = window.examData || [];
-
-// Añadimos las preguntas de este tema
-window.examData.push(
+window.loadTopic("04 The Linux Filesystem", [
 
    // -------------------------------------------------------------------------
     // 04 The Linux Filesystem
@@ -203,5 +199,4 @@ window.examData.push(
         ], 
         rationale: "nosuid and nodev enhance security by restricting special permissions and device files." 
     },
-
-);
+]);

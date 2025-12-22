@@ -1,8 +1,4 @@
-// Aseguramos que el array global existe, si no, lo creamos
-window.examData = window.examData || [];
-
-// Añadimos las preguntas de este tema
-window.examData.push(
+window.loadTopic("13 Storage Management Fundamentals", [
 
     // -------------------------------------------------------------------------
     // 13 Storage Management Fundamentals
@@ -140,4 +136,4 @@ window.examData.push(
     }
 
 
-);
+]);
