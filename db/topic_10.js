@@ -49,7 +49,7 @@ window.loadTopic("10 Task Scheduling", [
             {text: "@hourlyy", correct: false},
             {text: "@monthy", correct: false}
         ],
-        rationale: "Valid shortcuts: @reboot, @daily, @weekly, @monthly, @yearly. Typos are invalid."
+        rationale: "Valid shortcuts: @reboot, @daily, @weekly, @monthly, @yearly. Typos are invalid. https://linux.die.net/man/5/crontab"
     },
 
     // MATCHING: cron vs at

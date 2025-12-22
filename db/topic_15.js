@@ -88,8 +88,8 @@ window.loadTopic("15 Btrfs Management", [
     {
         type: "HOTSPOT",
         text: "Click on the filesystem type used for the root (/) filesystem in the lsblk output.",
-        image: "assets/img/lsblk_btrfs.png",
-        target: {x: 65, y: 30},
+        image: "assets/img/lsblk_btrfs.svg",
+        target: {x: 23, y: 68},
         rationale: "On SLES, the root filesystem is typically formatted as Btrfs."
     },
 
