@@ -1,0 +1,29 @@
+<svg width="800" height="320" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#1e1e1e"/>
+  
+  <rect width="100%" height="25" fill="#333333"/>
+  <circle cx="15" cy="12.5" r="5" fill="#ff5f56"/>
+  <circle cx="35" cy="12.5" r="5" fill="#ffbd2e"/>
+  <circle cx="55" cy="12.5" r="5" fill="#27c93f"/>
+  <text x="350" y="17" font-family="monospace" font-size="12" fill="#aaaaaa">tux@sles15: ~</text>
+
+  <text x="15" y="55" font-family="Consolas, Monaco, monospace" font-size="15" fill="#27c93f" font-weight="bold">tux@sles15:~&gt;<tspan fill="#ffffff" font-weight="normal"> mount</tspan></text>
+  
+  <text x="15" y="90" font-family="Consolas, Monaco, monospace" font-size="15" fill="#cccccc">sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)</text>
+  <text x="15" y="115" font-family="Consolas, Monaco, monospace" font-size="15" fill="#cccccc">proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)</text>
+  <text x="15" y="140" font-family="Consolas, Monaco, monospace" font-size="15" fill="#cccccc">udev on /dev type devtmpfs (rw,nosuid,relatime,size=4096k,nr_inodes=1024000,mode=755)</text>
+
+  <text x="15" y="165" font-family="Consolas, Monaco, monospace" font-size="15" fill="#cccccc">/dev/sda3 on / type btrfs (rw,relatime,ssd,space_cache,subvolid=5,subvol=/)</text>
+  
+  <text x="15" y="190" font-family="Consolas, Monaco, monospace" font-size="15" fill="#cccccc">securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)</text>
+  <text x="15" y="215" font-family="Consolas, Monaco, monospace" font-size="15" fill="#cccccc">tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)</text>
+  <text x="15" y="240" font-family="Consolas, Monaco, monospace" font-size="15" fill="#cccccc">/dev/sda1 on /boot/efi type vfat (rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)</text>
+  <text x="15" y="265" font-family="Consolas, Monaco, monospace" font-size="15" fill="#cccccc">cgroup2 on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate)</text>
+
+  <text x="15" y="300" font-family="Consolas, Monaco, monospace" font-size="15" fill="#27c93f" font-weight="bold">tux@sles15:~&gt;<tspan fill="#ffffff" font-weight="normal" class="cursor"> _</tspan></text>
+
+  <style>
+    .cursor { animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+  </style>
+</svg>

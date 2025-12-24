@@ -67,14 +67,14 @@ window.loadTopic("04 The Linux Filesystem", [
     { 
         type: "HOTSPOT", 
         text: "In the mount command output, click on the Mount Options to check if the filesystem is Read-Only (ro) or Read-Write (rw).", 
-        image: "assets/img/mount_output.png", 
+        image: "assets/img/mount_output.svg", 
         target: {x: 85, y: 50}, 
         rationale: "Mount options (rw, ro, nosuid) are displayed inside parentheses at the end of the line.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html' target='_blank'>📚 SUSE Docs: Mounting</a>" 
     },
     { 
         type: "HOTSPOT", 
         text: "Click on the directory where configuration files are stored", 
-        image: "assets/img/etc_img.png", 
+        image: "assets/img/etc_img.svg", 
         target: {x: 35, y: 35}, 
         rationale: "/etc contains configuration files." 
     },
