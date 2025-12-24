@@ -1,0 +1,36 @@
+<svg width="800" height="380" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#1e1e1e"/>
+  
+  <rect width="100%" height="25" fill="#333333"/>
+  <text x="400" y="17" font-family="Segoe UI, sans-serif" font-size="12" fill="#aaaaaa" text-anchor="middle">root@sles15:~</text>
+
+  <g transform="translate(15, 50)" font-family="Consolas, 'Liberation Mono', Menlo, monospace" font-size="14" fill="#cccccc">
+      
+      <text y="0"><tspan fill="#ff5f56" font-weight="bold">sles15:~ #</tspan> btrfs filesystem usage /</text>
+      
+      <text y="30">Overall:</text>
+      <text y="50">    Device size:                  40.00GiB</text>
+      <text y="70">    Device allocated:              6.02GiB</text>
+      <text y="90">    Device unallocated:           33.98GiB</text>
+      <text y="110">    Device missing:                  0.00B</text>
+      <text y="130">    Used:                          4.12GiB</text>
+      <text y="150">    Free (estimated):             34.50GiB</text>
+      <text y="170">    GlobalReserve,single:         52.00MiB</text>
+
+      <text y="210"><tspan fill="#bae6fd" font-weight="bold">Data,single:</tspan> Size=5.00GiB, Used=3.80GiB (76.00%)</text>
+      <text y="230">   /dev/sda3       5.00GiB</text>
+
+      <text y="260"><tspan fill="#bae6fd" font-weight="bold">Metadata,DUP:</tspan> Size=1.00GiB, Used=320.00MiB (31.25%)</text>
+      <text y="280">   /dev/sda3       2.00GiB</text>
+
+      <text y="310"><tspan fill="#bae6fd" font-weight="bold">System,DUP:</tspan> Size=32.00MiB, Used=16.00KiB (0.05%)</text>
+      <text y="330">   /dev/sda3      64.00MiB</text>
+
+      <text y="370"><tspan fill="#ff5f56" font-weight="bold">sles15:~ #</tspan><tspan class="cursor"> _</tspan></text>
+  </g>
+
+  <style>
+    .cursor { animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+  </style>
+</svg>

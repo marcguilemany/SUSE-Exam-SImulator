@@ -102,6 +102,13 @@ window.loadTopic("15 Btrfs Management", [
             {term: "Snapper", def: "Tool to manage Btrfs snapshots"}
         ],
         rationale: "These concepts are fundamental to Btrfs management in SLES."
-    }
+    },
+    {
+        type: "HOTSPOT",
+        text: "In the btrfs usage output, click on the line that shows the RAID profile used for Metadata.",
+        image: "assets/img/btrfs_usage.svg",
+        target: {x: 25, y: 75}, // Apunta a "Metadata,DUP:..."
+        rationale: "On a default SLES installation with a single disk, Btrfs is configured to use the <b>DUP</b> profile for Metadata (duplicating it for safety) while using the <b>single</b> profile for Data."
+    },
 
 ]);
