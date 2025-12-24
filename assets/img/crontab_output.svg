@@ -1,0 +1,30 @@
+<svg width="800" height="320" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#1e1e1e"/>
+  
+  <rect width="100%" height="25" fill="#333333"/>
+  <circle cx="15" cy="12.5" r="5" fill="#ff5f56"/>
+  <circle cx="35" cy="12.5" r="5" fill="#ffbd2e"/>
+  <circle cx="55" cy="12.5" r="5" fill="#27c93f"/>
+  <text x="350" y="17" font-family="monospace" font-size="12" fill="#aaaaaa">tux@sles15: ~</text>
+
+  <text x="15" y="55" font-family="Consolas, Monaco, monospace" font-size="15" fill="#27c93f" font-weight="bold">tux@sles15:~&gt;<tspan fill="#ffffff" font-weight="normal"> date</tspan></text>
+  <text x="15" y="80" font-family="Consolas, Monaco, monospace" font-size="15" fill="#cccccc">Fri Dec 22 10:00:00 CET 2023</text>
+
+  <text x="15" y="115" font-family="Consolas, Monaco, monospace" font-size="15" fill="#27c93f" font-weight="bold">tux@sles15:~&gt;<tspan fill="#ffffff" font-weight="normal"> crontab -l</tspan></text>
+  
+  <text x="15" y="145" font-family="Consolas, Monaco, monospace" font-size="15" fill="#64748b"># Daily Backup (Ran at 8am - PAST)</text>
+  <text x="15" y="165" font-family="Consolas, Monaco, monospace" font-size="15" fill="#cccccc">00 08 * * * /root/scripts/backup_daily.sh</text>
+  
+  <text x="15" y="195" font-family="Consolas, Monaco, monospace" font-size="15" fill="#64748b"># Log Sync (Runs at 10:15am - NEXT)</text>
+  <text x="15" y="215" font-family="Consolas, Monaco, monospace" font-size="15" fill="#cccccc">15 10 * * * /usr/bin/rsync -av /var/log /mnt/backup</text>
+  
+  <text x="15" y="245" font-family="Consolas, Monaco, monospace" font-size="15" fill="#64748b"># Weekly Maintenance (Runs at 12pm - FUTURE)</text>
+  <text x="15" y="265" font-family="Consolas, Monaco, monospace" font-size="15" fill="#cccccc">00 12 * * 0 /root/scripts/weekly_maint.sh</text>
+
+  <text x="15" y="300" font-family="Consolas, Monaco, monospace" font-size="15" fill="#27c93f" font-weight="bold">tux@sles15:~&gt;<tspan fill="#ffffff" font-weight="normal" class="cursor"> _</tspan></text>
+
+  <style>
+    .cursor { animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+  </style>
+</svg>
