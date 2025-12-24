@@ -197,7 +197,7 @@ window.loadTopic("06 Users and Groups", [
     { 
         type: "HOTSPOT", 
         text: "Click on the part of the 'id' command output that shows the secondary groups.", 
-        image: "assets/img/id_command_output.png", 
+        image: "assets/img/id_command_output.svg", 
         target: {x: 90, y: 50}, 
         rationale: "Secondary groups are listed after 'groups=' at the end of the 'id' output." 
     },
