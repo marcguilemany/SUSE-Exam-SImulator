@@ -1,0 +1,28 @@
+<svg width="900" height="220" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#1e1e1e"/>
+  
+  <rect width="100%" height="25" fill="#333333"/>
+  <text x="450" y="17" font-family="Segoe UI, sans-serif" font-size="12" fill="#aaaaaa" text-anchor="middle">root@sles15:~</text>
+
+  <g transform="translate(15, 50)" font-family="Consolas, 'Liberation Mono', Menlo, monospace" font-size="14" fill="#cccccc">
+      
+      <text y="0"><tspan fill="#27c93f" font-weight="bold">sles15:~ #</tspan> systemctl list-timers</text>
+      
+      <text y="30" fill="#aaaaaa">NEXT                         LEFT          LAST                         PASSED       UNIT                         ACTIVATES</text>
+      
+      <text y="55">Fri 2023-12-22 10:30:00 CET  15min left    Fri 2023-12-22 09:30:00 CET  45min ago    snapper-timeline.timer       snapper-timeline.service</text>
+      
+      <text y="80">Fri 2023-12-22 12:00:00 CET  1h 45min left Thu 2023-12-21 12:00:00 CET  22h ago      mandb.timer                  mandb.service</text>
+      
+      <text y="105">Sat 2023-12-23 00:00:00 CET  13h left      Fri 2023-12-22 00:00:00 CET  10h ago      logrotate.timer              logrotate.service</text>
+      
+      <text y="135" fill="#aaaaaa">3 timers listed.</text>
+
+      <text y="160"><tspan fill="#27c93f" font-weight="bold">sles15:~ #</tspan><tspan class="cursor"> _</tspan></text>
+  </g>
+
+  <style>
+    .cursor { animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+  </style>
+</svg>

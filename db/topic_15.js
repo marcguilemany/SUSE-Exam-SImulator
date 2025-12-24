@@ -67,8 +67,8 @@ window.loadTopic("15 Btrfs Management", [
     {
         type: "HOTSPOT",
         text: "In the Snapper list output, identify the CURRENT snapshot used by the running system.",
-        image: "assets/img/snapper_list.png",
-        target: {x: 20, y: 45},
+        image: "assets/img/snapper_list.svg",
+        target: {x: 4, y: 56},
         rationale: "The current snapshot is marked as 'current' and represents the active system state."
     },
 

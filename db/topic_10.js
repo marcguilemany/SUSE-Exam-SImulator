@@ -95,7 +95,7 @@ window.loadTopic("10 Task Scheduling", [
     {
         type: "HOTSPOT",
         text: "Click on the next scheduled job in the crontab output.",
-        image: "assets/img/crontab_output.png",
+        image: "assets/img/crontab_output.svg",
         target: {x: 40, y: 60},
         rationale: "Understanding the timing and order of jobs is key; the next execution is shown in the first upcoming time slot."
     },
@@ -168,8 +168,8 @@ window.loadTopic("10 Task Scheduling", [
     {
         type: "HOTSPOT",
         text: "Click on the next activation time for the systemd timer.",
-        image: "assets/img/systemd_timer.png",
-        target: {x: 55, y: 50},
+        image: "assets/img/systemd_timers.svg",
+        target: {x: 15, y: 35},
         rationale: "systemd timers show NEXT= column, indicating the next execution time."
     },
 

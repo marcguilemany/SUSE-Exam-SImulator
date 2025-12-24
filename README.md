@@ -101,13 +101,14 @@ El usuario debe arrastrar los ítems a la columna derecha en el orden correcto.
 ```
 6. Hotspot / Imagen (HOTSPOT)
 El usuario debe hacer clic en una zona de la imagen. El margen de error es del 10%.
+Las imagenes se han de añadir en .svg
 
 ```javaScript
 
 {
     type: "HOTSPOT",
     text: "Haz clic en la carpeta /etc.",
-    image: "URL_DE_LA_IMAGEN.png",
+    image: "URL_DE_LA_IMAGEN.svg",
     target: {x: 35, y: 35}, // Coordenadas X e Y en porcentaje (0-100)
     rationale: "/etc contiene configuraciones."
 }
