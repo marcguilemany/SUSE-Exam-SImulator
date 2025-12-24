@@ -37,7 +37,7 @@ window.loadTopic("14 Logical Volume Management", [
         type: "HOTSPOT", 
         text: "Identify the Striped Logical Volume (RAID 0) layout in the diagram.", 
         // --- AQUÍ VA TU IMAGEN DE LVM ---
-        image: "assets/img/lvm_types_diagram.png", 
+        image: "assets/img/lvm_types_diagram.svg", 
         target: {x: 50, y: 80}, 
         rationale: "Striped volumes distribute data evenly across multiple disks simultaneously to improve performance.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-lvm.html' target='_blank'>📚 SUSE Docs: LVM Striping</a>" 
     },
