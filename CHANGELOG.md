@@ -4,6 +4,9 @@ Todas las modificaciones notables de este proyecto serán documentadas en este a
 
 El formato se basa en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2025-12-24 (Add more questions) 
+- **Añadimos mas Preguntas:** Añadimos mas preguntas.
+
 ## [1.0.1] - 2025-12-24 (BugFix Questions Hotspot Release) 
 - **Preguntas Hotspot:** Cambiamos las imagenes a .svg y arreglamos un error que no dejaba ver las imagenes en el navegador.
 
