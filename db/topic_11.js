@@ -178,4 +178,16 @@ window.loadTopic("11 Privilege Delegation", [
         ],
         rationale: "<b>Why B is correct:</b><br>1. <b>Wants=...:</b> This is the standard way for a Target to 'pull in' or group other units (app and db) without causing a critical failure if one is missing (unlike <code>Requires</code>).<br>2. <b>After=network-online.target:</b> Explicitly meets the requirement to wait for full network connectivity.<br>3. <b>WantedBy=multi-user.target:</b> Meets the requirement to be active in the multi-user runlevel (runlevel 3 equivalent).<br><br><b>Why others are wrong:</b><br>- <b>A:</b> Uses <code>network.target</code> (too early, usually just means service started, not IP assigned) and targets <code>graphical.target</code>.<br>- <b>C:</b> <code>After=app.service</code> would mean the target waits for the app to finish starting before the target considers itself 'started', which is often backwards for a grouping target logic."
     },
+    {
+        type: "SINGLE",
+        text: "Which system initialization system is used in SLES 15?",
+        options: [
+            { text: "undev", correct: false },
+            { text: "init", correct: false },
+            { text: "System V", correct: false },
+            { text: "systemd", correct: true },
+            { text: "UEFI", correct: false }
+        ],
+        rationale: "<b>Why systemd is correct:</b> SUSE Linux Enterprise Server 15 uses <b>systemd</b> as its default system and service manager. It replaced the older System V (SysV) init system starting with SLES 12 to provide faster boot times, parallel service startup, and better dependency management.<br><br><b>Why others are incorrect:</b><br>- <b>System V:</b> Was used in SLES 11 and earlier.<br>- <b>UEFI:</b> Is the system firmware (BIOS replacement), not the OS initialization process.<br>- <b>undev:</b> Likely a distractor (a typo for 'udev', which manages devices, not init)."
+    },
 ]);

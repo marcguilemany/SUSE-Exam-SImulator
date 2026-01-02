@@ -143,5 +143,6 @@ window.loadTopic("15 Btrfs Management", [
         ],
         rationale: "<b>Why C is correct:</b> The process of replicating Btrfs data involves three steps: <br>1. Create a snapshot of the source subvolume (usually with <code>-r</code> for read-only, though the option text omits it, it is the implied correct workflow).<br>2. Use <code>btrfs send</code> to generate a data stream from that snapshot.<br>3. Pipe that stream to <code>ssh</code> which executes <code>btrfs receive</code> on the remote end.<br><br><b>Why others are incorrect:</b><br>- <b>A:</b> You cannot run <code>btrfs send</code> directly on a live, changing read-write subvolume; you must snapshot it first.<br>- <b>B:</b> <code>btrfs send</code> does not use a <code>-r</code> flag; the read-only property belongs to the snapshot, not the send command.<br>- <b>D:</b> Missing the destination component (the pipe to ssh)."
     },
+    
 
 ]);

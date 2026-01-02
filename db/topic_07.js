@@ -406,6 +406,19 @@ window.loadTopic("07 Standard Permissions", [
         ],
         rationale: "<b>Why A is correct:</b> The first character in the permissions string of <code>ls -l</code> identifies the file type:<br><ul><li><b>c:</b> Character device (handles data as a stream of bytes).</li><li><b>b:</b> Block device (handles data in blocks, like hard drives).</li><li><b>-:</b> Regular file.</li><li><b>l:</b> Symbolic link.</li></ul><br><b>/dev/null</b> is a special character device (often called the 'bit bucket') that discards everything written to it and returns EOF on reads."
     },
+    {
+        type: "MULTIPLE",
+        text: "For programs to leverage PolKit they are split into two separate processes. Which statements below are true regarding these two PolKit processes? (Choose two)",
+        options: [
+            { text: "The Policy Agent process runs in the System Context.", correct: false },
+            { text: "The Policy Agent process runs in the User Session.", correct: true },
+            { text: "The Mechanism process runs in the System Context.", correct: true },
+            { text: "The Mechanism process runs in the User Session.", correct: false },
+            { text: "The Authentication Agent runs in the System Context.", correct: false },
+            { text: "The D-Bus runs in the User Session.", correct: false }
+        ],
+        rationale: "<b>Why B and C are correct:</b> PolKit is designed to separate privileged operations from the user interface:<br>1. <b>The Mechanism (Option C):</b> This is the privileged helper (daemon) that actually performs the restricted action (like formatting a disk). It must run in the <b>System Context</b> (usually as root) to have the necessary permissions.<br>2. <b>The Policy Agent/Subject (Option B):</b> This is the unprivileged user-facing application (UI). It runs in the <b>User Session</b>. It communicates with the Mechanism via D-Bus to request actions, triggering the PolKit authority to check if the user is authorized."
+    },
 
 
 ]);

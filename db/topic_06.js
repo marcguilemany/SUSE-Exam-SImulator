@@ -239,5 +239,17 @@ window.loadTopic("06 Users and Groups", [
         ],
         rationale: "<b>Daemons</b> are background processes that usually start at boot time (launched by the system, e.g., via systemd). <br>Key characteristics:<br>1. They are <b>not</b> associated with a terminal (TTY).<br>2. They run in the background waiting for specific events or requests (like a web server waiting for a connection).<br>3. They do not accept direct user input from a shell."
     },
+    {
+        type: "SINGLE",
+        text: "Which file contains information about secondary groups on the system?",
+        options: [
+            { text: "/etc/second.grp", correct: false },
+            { text: "/var/share/group", correct: false },
+            { text: "etc/sysconflg/group", correct: false },
+            { text: "/etc/group", correct: true },
+            { text: "/var/lib/group", correct: false }
+        ],
+        rationale: "<b>Why D is correct:</b> The <code>/etc/group</code> file defines the groups on the system. Each line contains the group name, password placeholder, GID, and a comma-separated list of users who are members of this group (which constitutes their <b>secondary</b> group membership).<br><br><b>Why others are incorrect:</b><br>- <b>A, B, E:</b> These paths do not exist in a standard Linux FHS (Filesystem Hierarchy Standard).<br>- <b>C:</b> Contains a typo ('sysconflg') and refers to a non-standard location."
+    },
 
 ]);

@@ -395,5 +395,31 @@ window.loadTopic("16 Network Management Fundamentals", [
         ],
         rationale: "<b>Why A is correct:</b> When multiple routes exist for the exact same destination (like the default route <code>0.0.0.0/0</code>), the Linux kernel uses the <b>Metric</b> value as the tie-breaker. The route with the <b>lowest metric</b> is considered the highest priority (lowest 'cost') and is chosen for the traffic.<br><br><b>Note:</b> Interface speed is not automatically factored into the metric in standard Linux networking (unlike OSPF in routers) unless configured by the administrator."
     },
+    {
+        type: "SINGLE",
+        text: "Which Network Interface type supported by SLES is used for link aggregation?",
+        options: [
+            { text: "Basic", correct: false },
+            { text: "Bridge", correct: false },
+            { text: "VPN", correct: false },
+            { text: "Bond", correct: true },
+            { text: "Custom", correct: false }
+        ],
+        rationale: "<b>Why D is correct:</b> A <b>Bond</b> interface is specifically designed for Link Aggregation. It combines multiple physical network interfaces (slaves) into a single logical interface (bond0) to provide redundancy (fault tolerance) and/or increased throughput (load balancing).<br><br><b>Why others are incorrect:</b><br>- <b>Bridge:</b> Used to connect two different network segments (often used in virtualization), not primarily for aggregation.<br>- <b>Basic:</b> Refers to a standard single physical interface (eth0).<br>- <b>VPN:</b> Is a virtual tunnel for secure remote connections, not link aggregation."
+    },
+    {
+        type: "MULTIPLE",
+        text: "Firewalld maintains two separate configurations. What are they named? (Choose two)",
+        options: [
+            { text: "Runtime", correct: true },
+            { text: "Temporary", correct: false },
+            { text: "Production", correct: false },
+            { text: "Permanent", correct: true },
+            { text: "Static", correct: false },
+            { text: "Testing", correct: false },
+            { text: "Fixed", correct: false }
+        ],
+        rationale: "<b>Why A and D are correct:</b> Firewalld uses a dual-configuration model:<br>1. <b>Runtime Configuration (A):</b> This is the configuration currently active in the kernel. Changes made here take effect immediately but are lost upon reboot or service reload.<br>2. <b>Permanent Configuration (D):</b> This is the configuration stored in XML files on the disk (e.g., in <code>/etc/firewalld/</code>). Changes made here do not affect the running system immediately (unless you reload) but are persistent across reboots.<br><br><b>Key Command:</b> To make a rule persistent, you must use the <code>--permanent</code> flag (e.g., <code>firewall-cmd --permanent --add-port=80/tcp</code>)."
+    },
 
 ]);

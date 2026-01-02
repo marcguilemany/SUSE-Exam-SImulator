@@ -196,6 +196,30 @@ window.loadTopic("12 Remote Administration", [
         ],
         rationale: "<b>A is correct:</b> Strong passwords are the first line of defense against brute-force attacks, which are very common on RDP ports.<br><br><b>Why the others are insecure:</b><br>- <b>B:</b> Port 3389 should be restricted via firewall to specific IPs or VPNs, never open to the entire internet.<br>- <b>C:</b> Network Level Authentication (NLA) should be <b>enabled</b>, as it authenticates the user before a session is created.<br>- <b>D:</b> Follow the Principle of Least Privilege: only grant access to users who specifically need it."
     },
+    {
+        type: "MULTIPLE",
+        text: "What types of VNC sessions does SUSE Linux Enterprise Server support? (Choose two)",
+        options: [
+            { text: "Automatic Sessions", correct: false },
+            { text: "One-time Sessions", correct: true },
+            { text: "Server-initiated Sessions", correct: false },
+            { text: "Persistent Sessions", correct: true },
+            { text: "Timed Sessions", correct: false }
+        ],
+        rationale: "<b>Why B and D are correct:</b> SUSE Linux Enterprise Server distinguishes between two main VNC modes:<br>1. <b>One-time Sessions (B):</b> These are started on demand (usually via a browser or vncviewer to a specific port managed by systemd/xinetd). They present a login screen (XDM/GDM), and the session terminates automatically when the user logs out or disconnects.<br>2. <b>Persistent Sessions (D):</b> These are started manually (or via script) using the <code>vncserver</code> command. They run independently of the client connection. You can disconnect, go home, reconnect later, and your windows/applications will still be open exactly as you left them."
+    },
+    {
+        type: "SINGLE",
+        text: "You want to restrict access to your server via SSH to just a few specific users. What will you need to do to accomplish this?",
+        options: [
+            { text: "Modify the Authorized option in the /etc/ssh/sshd_config file.", correct: false },
+            { text: "Modify the Permitted option in the ~/.ssh/sshd_config file", correct: false },
+            { text: "Modify the Permitted option is the /ssh/sshd_config file.", correct: false },
+            { text: "Modify the AllowUsers option in the /etc/ssh/sshd_config file.", correct: true },
+            { text: "Modify the Authorized option in the /var/ssh/config file.", correct: false }
+        ],
+        rationale: "<b>Why D is correct:</b> The main configuration file for the SSH daemon (server) is located at <code>/etc/ssh/sshd_config</code>. To restrict access to specific users, you use the <b>AllowUsers</b> directive (e.g., <code>AllowUsers alice bob</code>). This creates a whitelist; anyone not listed is denied access.<br><br><b>Why others are incorrect:</b><br>- <b>Authorized/Permitted:</b> These are not valid configuration directives for user filtering in sshd.<br>- <b>File Locations:</b> <code>~/.ssh/</code> is for user-specific keys and client config, not server global config. <code>/var/ssh/</code> is not a standard path for configuration."
+    },
 
 
 ]);
