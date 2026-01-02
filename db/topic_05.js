@@ -105,17 +105,6 @@ window.loadTopic("05 Text Editors (Vim)", [
         validAnswers: ["gg", "1G"], 
         rationale: "'gg' immediately jumps to the top of the file." 
     },
-    { 
-        type: "MATCHING", 
-        text: "Match the navigation keys.", 
-        pairs: [
-            {term: "h", def: "Left"},
-            {term: "j", def: "Down"},
-            {term: "k", def: "Up"},
-            {term: "l", def: "Right"}
-        ], 
-        rationale: "Standard Vi navigation keys." 
-    },
 
     // --- EDITING (COPY / PASTE / DELETE) ---
     { 
@@ -247,6 +236,15 @@ window.loadTopic("05 Text Editors (Vim)", [
             {text: "False", correct: false}
         ], 
         rationale: "Yes, using :e filename, :split, :vsplit or opening with 'vim file1 file2'." 
+    },
+    {
+        type: "SINGLE",
+        text: "True or false: It is not possible to open more than one file in Vim without running a second instance.",
+        options: [
+            { text: "True", correct: false },
+            { text: "False", correct: true }
+        ],
+        rationale: "<b>False.</b> Vim allows you to open and edit multiple files within a single instance using several methods:<br>1. <b>Buffers:</b> You can load multiple files and switch between them (`:bnext`, `:bprev`).<br>2. <b>Windows:</b> You can split the screen to see files simultaneously (`:split`, `:vsplit`).<br>3. <b>Tabs:</b> You can use tabs to organize open files (`:tabnew`)."
     },
     { 
         type: "SINGLE", 

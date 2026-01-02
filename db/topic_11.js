@@ -144,6 +144,17 @@ window.loadTopic("11 Privilege Delegation", [
             {text: "Improved accountability", correct: false}
         ],
         rationale: "Poor privilege management can lead to escalation, unauthorized changes, and loss of traceability."
-    }
+    },
+    {
+        type: "SINGLE",
+        text: "In a systemd service unit, which of the following directives indicates a dependency where the service tries to start the specified units (weak dependency), but does not fail if they are missing?",
+        options: [
+            { text: "After=", correct: false },
+            { text: "Wants=", correct: true },
+            { text: "ConditionPathExists=", correct: false },
+            { text: "OnFailure=", correct: false }
+        ],
+        rationale: "<b>Why B is correct:</b> The <code>Wants=</code> directive configures a 'weak' dependency. If Unit A <i>Wants</i> Unit B, systemd will try to start Unit B when Unit A starts. However, if Unit B fails to start, Unit A will <b>continue</b> running (unlike <code>Requires=</code>, which is a strong dependency).<br><br><b>Why others are incorrect:</b><br>- <code>After=</code>: Only controls <b>ordering</b> (wait until X has started), it does not <i>trigger</i> the start of X.<br>- <code>ConditionPathExists=</code>: Checks if a file exists before starting, it's not a unit dependency.<br>- <code>OnFailure=</code>: Specifies units to activate only when this unit fails."
+    },
 
 ]);

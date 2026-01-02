@@ -225,6 +225,19 @@ window.loadTopic("06 Users and Groups", [
             {text: "Cannot belong to secondary groups", correct: false}
         ], 
         rationale: "Root has UID 0, unlimited privileges, cannot be deleted. Shell is configurable, can have secondary groups." 
-    }
+    },
+    {
+        type: "MULTI",
+        text: "Which statements are true regarding a daemon? (Choose three)",
+        options: [
+            { text: "A daemon process is associated to the system terminal.", correct: false },
+            { text: "A daemon process is associated to the user that launched the process.", correct: false },
+            { text: "A daemon will wait for some event to occur to trigger action on the part of the daemon.", correct: true },
+            { text: "A daemon process is launched by the system.", correct: true },
+            { text: "A daemon process is not associated with a terminal or a graphical environment.", correct: true },
+            { text: "The user that launched the daemon will control what the daemon does based on the user's input.", correct: false }
+        ],
+        rationale: "<b>Daemons</b> are background processes that usually start at boot time (launched by the system, e.g., via systemd). <br>Key characteristics:<br>1. They are <b>not</b> associated with a terminal (TTY).<br>2. They run in the background waiting for specific events or requests (like a web server waiting for a connection).<br>3. They do not accept direct user input from a shell."
+    },
 
 ]);

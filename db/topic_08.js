@@ -141,7 +141,8 @@ window.loadTopic("08 Process Management", [
             {term: "systemd timer", def: "Event-based or time-based scheduling integrated with systemd"}
         ],
         rationale: "Each tool serves a different scheduling use case in SLES."
-    }
+    },
+    
 
 
 

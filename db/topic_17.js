@@ -257,6 +257,42 @@ window.loadTopic("17 Software Management", [
             {term: "Removal", def: "Files are removed but configs may remain"}
         ],
         rationale: "Configuration files are preserved unless erased."
-    }
+    },
+    {
+        type: "SINGLE",
+        text: "What is the command and options to remove repository number 4?",
+        options: [
+            { text: "yumrepo -del 4", correct: false },
+            { text: "zypper rr 4", correct: true },
+            { text: "libzypp --remove-repo 4", correct: false },
+            { text: "yast repo-manag", correct: false },
+            { text: "rpm -rr 4", correct: false }
+        ],
+        rationale: "To remove a repository in SUSE, you use the <b>zypper</b> command with the <code>removerepo</code> action, which can be abbreviated as <code>rr</code>. You can specify the repository by its alias, name, or number.<br><br>Command: <code>zypper rr 4</code>"
+    },
+    {
+        type: "MULTI",
+        text: "What are the basic components of RPM? (Choose two)",
+        options: [
+            { text: "RPM Compiler", correct: false },
+            { text: "RPM Database", correct: true },
+            { text: "RPM Package Manager", correct: true },
+            { text: "RPM Packager", correct: false },
+            { text: "RPM Editor", correct: false }
+        ],
+        rationale: "The RPM system consists primarily of two main components:<br>1. <b>The RPM Database:</b> Stores information about all installed packages, their files, and dependencies (located in <code>/var/lib/rpm</code>).<br>2. <b>The RPM Package Manager:</b> The suite of programs (like the <code>rpm</code> command) that allows you to install, query, verify, and remove packages using the data in the database."
+    },
+    {
+        type: "SINGLE",
+        text: "If a system administrator needs to install a group of related packages (often called a Pattern in SUSE) using Zypper, which command acts as the standard install command to achieve this?",
+        options: [
+            { text: "zypper install --group package_group_name", correct: false },
+            { text: "zypper in package_group_name", correct: true },
+            { text: "zypper install --bundle package_group_name", correct: false },
+            { text: "zypper install --set-group package_group_name", correct: false }
+        ],
+        rationale: "<b>Why B is correct:</b> The command <code>zypper install</code> (or its abbreviation <code>zypper in</code>) is the universal command to install software. Zypper automatically searches for packages, patterns, or capabilities that match the name provided.<br><br><b>Note:</b> While you can be more specific using <code>zypper in -t pattern &lt;name&gt;</code>, the options A, C, and D contain flags (`--group`, `--bundle`) that do not exist in the standard zypper syntax."
+    },
+    
 
 ]);

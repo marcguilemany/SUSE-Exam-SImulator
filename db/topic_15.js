@@ -110,5 +110,16 @@ window.loadTopic("15 Btrfs Management", [
         target: {x: 25, y: 75}, // Apunta a "Metadata,DUP:..."
         rationale: "On a default SLES installation with a single disk, Btrfs is configured to use the <b>DUP</b> profile for Metadata (duplicating it for safety) while using the <b>single</b> profile for Data."
     },
+    {
+        type: "SINGLE",
+        text: "In a SLE201v15 lab (or SLES 15 environment), you are configuring a system to use Btrfs with snapshots for system recovery. Given that you ran the command <code>snapper create --type pre</code> before a system update, which command restores the system to the pre-update state?",
+        options: [
+            { text: "btrfs subvolume snapshot", correct: false },
+            { text: "snapper undochange", correct: false },
+            { text: "snapper --config root restore", correct: false },
+            { text: "snapper rollback", correct: true }
+        ],
+        rationale: "<b>Why D is correct:</b> The <b>snapper rollback</b> command is designed to revert the entire system (root filesystem) to a previous snapshot state. It works by setting the default Btrfs subvolume to the specified snapshot, so the system boots into that state on the next restart.<br><br><b>Why B is incorrect:</b> <code>snapper undochange</code> reverts modifications to specific files within the currently running system but does not switch the bootable root subvolume."
+    },
 
 ]);

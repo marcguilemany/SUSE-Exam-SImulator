@@ -314,6 +314,18 @@ window.loadTopic("16 Network Management Fundamentals", [
         ],
         rationale: "/etc/hosts provides static hostname to IP mappings."
     },
+    {
+        type: "SINGLE",
+        text: "What does the file /etc/hosts provide?",
+        options: [
+            { text: "Local name resolution", correct: true },
+            { text: "The hostname of this system", correct: false },
+            { text: "A list of DNS servers to use", correct: false },
+            { text: "List of domains to search", correct: false },
+            { text: "List of routes to take to remote hosts", correct: false }
+        ],
+        rationale: "The <b>/etc/hosts</b> file is a static table used to map IP addresses to hostnames. It provides <b>local name resolution</b> without needing a DNS server. <br><br>Note: DNS servers are defined in <code>/etc/resolv.conf</code>, and the system hostname is in <code>/etc/hostname</code>."
+    },
 
     {
         type: "MULTI",
@@ -360,6 +372,17 @@ window.loadTopic("16 Network Management Fundamentals", [
             {text: "firewalld", correct: false}
         ],
         rationale: "The wickedd service manages network interfaces in SLES."
-    }
+    },
+    {
+        type: "SINGLE",
+        text: "To test the network connectivity specifically to a remote host and ensure that the expected response time is within acceptable limits, which command would you most appropriately use?",
+        options: [
+            { text: "ping -c 10", correct: true },
+            { text: "traceroute", correct: false },
+            { text: "nslookup", correct: false },
+            { text: "netstat -r", correct: false }
+        ],
+        rationale: "<b>Why A is correct:</b> The <b>ping</b> command is the standard tool to verify reachability and measure <b>Round-Trip Time (RTT)</b>. Adding <code>-c 10</code> sends a fixed sample of 10 packets, which provides a meaningful average response time to verify if it's within limits.<br><br><b>Why others are incorrect:</b><br>- <b>traceroute:</b> Shows the path (hops), not the consistent response time of the final target.<br>- <b>nslookup:</b> Only checks DNS resolution, not connectivity or speed.<br>- <b>netstat -r:</b> Just shows your local routing table."
+    },
 
 ]);

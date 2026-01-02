@@ -330,5 +330,17 @@ window.loadTopic("03 The Command Line", [
         ], 
         rationale: "Quoting prevents unintended word splitting and filename expansion." 
     },
+    {
+        type: "SINGLE",
+        text: "What does the following command allow you to do?<br><code>alias c='clear'</code>",
+        options: [
+            { text: "You can type clear to run the c command.", correct: false },
+            { text: "You can type c to run the clear command.", correct: true },
+            { text: "Nothing, since there is not a command named alias.", correct: false },
+            { text: "It launches a second Login Shell and allows you to rename the clear command to just c.", correct: false },
+            { text: "It allows you to rename the clear command to just c and then deletes the clear command.", correct: false }
+        ],
+        rationale: "The <b>alias</b> command creates a shortcut or 'custom name' for a command. <br>The syntax is <code>alias name='command'</code>.<br>Therefore, <code>alias c='clear'</code> instructs the shell to execute the <code>clear</code> command whenever the user types <code>c</code>."
+    },
 
 ]);

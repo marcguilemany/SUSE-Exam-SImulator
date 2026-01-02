@@ -154,7 +154,41 @@ window.loadTopic("14 Logical Volume Management", [
             {term: "LV", def: "Usable logical block device"}
         ],
         rationale: "LVM abstracts physical storage into flexible logical volumes."
-    }
+    },
+    {
+        type: "SINGLE",
+        text: "In a situation where you need to revert a logical volume 'data_lv' back to its previous state after making changes, which command would you use if a snapshot named 'data_snapshot' was created?",
+        options: [
+            { text: "lvmerge data_snapshot", correct: false },
+            { text: "lvconvert --merge data_snapshot", correct: true },
+            { text: "lvremove data_snapshot", correct: false },
+            { text: "lvsnapshot --restore data_snapshot", correct: false }
+        ],
+        rationale: "<b>Why B is correct:</b> The <code>lvconvert --merge</code> command is the standard method to revert changes in LVM. It takes the snapshot and 'merges' it back into the original volume, effectively rolling back the state. Once the merge is complete, the snapshot is automatically removed.<br><br><b>Note:</b> Commands like <code>lvsnapshot</code> or <code>lvmerge</code> (in this context) do not exist or are not used for restoration."
+    },
+    {
+        type: "SINGLE",
+        text: "In a high-availability setup, you must ensure that your LVM configuration survives a system crash. Which command should you run to ensure that your changes are saved (restored) to the metadata area on the disk from a backup?",
+        options: [
+            { text: "lvscan", correct: false },
+            { text: "lvmdiskscan", correct: false },
+            { text: "vgextend", correct: false },
+            { text: "vgcfgrestore", correct: true }
+        ],
+        rationale: "<b>Why D is correct:</b> LVM automatically backs up metadata to <code>/etc/lvm/backup/</code> whenever a change is made. However, if a crash corrupts the on-disk metadata headers, you use <b>vgcfgrestore</b> to write that text-based backup back onto the physical volume's metadata area, restoring the configuration.<br><br><b>Why others are incorrect:</b><br>- <code>lvscan</code> and <code>lvmdiskscan</code> are read-only tools to find volumes/disks.<br>- <code>vgextend</code> is used to add new physical disks to a volume group."
+    },
+    {
+        type: "SINGLE",
+        text: "What is the primary purpose of the /etc/lvm/lvm.conf file in a SUSE Linux environment?",
+        options: [
+            { text: "It stores user-defined volume group names.", correct: false },
+            { text: "It defines the physical volumes available to the system.", correct: false },
+            { text: "It logs all LVM-related commands executed.", correct: false },
+            { text: "It contains configuration settings for LVM operations.", correct: true }
+        ],
+        rationale: "The <b>/etc/lvm/lvm.conf</b> file is the central configuration file for LVM. It controls <b>global behavior</b> such as device scanning filters (which disks LVM allows), locking mechanisms, and logging levels.<br><br><b>Why others are incorrect:</b><br>- <b>A & B:</b> Volume names and physical volume definitions are stored in the <b>metadata headers</b> on the disks themselves, not in a text file.<br>- <b>C:</b> Command history is usually part of the shell history or archived in <code>/etc/lvm/archive</code>, but <code>lvm.conf</code> is for settings, not logging actions."
+    },
+    
 
 
 ]);

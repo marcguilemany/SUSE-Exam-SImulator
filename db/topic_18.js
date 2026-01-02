@@ -100,6 +100,28 @@ window.loadTopic("18 System Logging", [
             {term: "-r", def: "Include only recent logs"}
         ],
         rationale: "supportconfig uses these flags to control archive creation and contents."
+    },
+    {
+        type: "SINGLE",
+        text: "On a SUSE Linux Enterprise Server 15 SP5 system, you are investigating a disk space issue caused by large log files. The <code>/etc/logrotate.conf</code> is configured with 'weekly' and 'rotate 4', but <code>/etc/logrotate.d/syslog</code> specifies 'daily' and 'rotate 7' for <code>/var/log/messages</code>.<br><br>A recent spike in logging activity caused <code>/var/log/messages</code> to grow to 2GB before rotation. Which command would you run to manually trigger log rotation for <code>/var/log/messages</code> and verify the rotation occurred?",
+        options: [
+            { text: "logrotate -f /etc/logrotate.conf", correct: false },
+            { text: "systemctl restart logrotate", correct: false },
+            { text: "logrotate -v /etc/logrotate.d/syslog", correct: true },
+            { text: "logrotate -d /etc/logrotate.d/syslog", correct: false }
+        ],
+        rationale: "<b>Why C is correct:</b><br>1. <b>Target Specificity:</b> Running logrotate against the specific config file (<code>/etc/logrotate.d/syslog</code>) isolates the action to the problematic log, avoiding side effects on the rest of the system (unlike Option A).<br>2. <b>Verification:</b> The <code>-v</code> (verbose) flag prints the actions taken, satisfying the requirement to 'verify the rotation occurred'.<br><br><b>Why others are incorrect:</b><br>- <b>D:</b> The <code>-d</code> flag is 'debug' or 'dry-run'; it simulates the rotation but <b>does not</b> actually perform it.<br>- <b>B:</b> <code>logrotate</code> is not a daemon service; it is triggered by a timer/cron, so restarting it doesn't trigger an immediate rotation logic."
+    },
+    {
+        type: "SINGLE",
+        text: "You are managing a SUSE Linux Enterprise Server 15 SP6 system hosting a web application. The application logs are managed by rsyslog, and you need to ensure that all logs with a priority of 'warning' or higher from the application (facility local0) are sent to a dedicated file /var/log/webapp.log, while other logs continue to /var/log/messages.<br><br>Which configuration snippet should you add to /etc/rsyslog.conf to achieve this without disrupting existing logging?",
+        options: [
+            { text: "local0.warning /var/log/webapp.log<br>*.* /var/log/messages", correct: false },
+            { text: "local0.>=warning /var/log/webapp.log<br>*.*;local0.none /var/log/messages", correct: true },
+            { text: "local0.* /var/log/webapp.log<br>*.* /var/log/messages", correct: false },
+            { text: "local0.warning /var/log/webapp.log<br>stop", correct: false }
+        ],
+        rationale: "<b>Why B is correct:</b><br>1. <b>Capture:</b> <code>local0.>=warning</code> (or simply <code>local0.warning</code>) captures messages of priority warning and higher.<br>2. <b>Exclusion (Crucial):</b> The second line <code>*.*;local0.none</code> directs all other logs to <code>/var/log/messages</code> but explicitly <b>excludes</b> <code>local0</code> (using <code>.none</code>). Without this exclusion, your application logs would appear in BOTH files (duplication), which is generally not desired when asking for a 'dedicated' log file."
     }
 
 ]);

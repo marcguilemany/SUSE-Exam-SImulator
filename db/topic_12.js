@@ -159,7 +159,43 @@ window.loadTopic("12 Remote Administration", [
             {term: "RDP", def: "Windows-compatible remote desktop access"}
         ],
         rationale: "Each tool is suited to a different remote administration scenario."
-    }
+    },
+    {
+        type: "MULTI",
+        text: "How are the scripts in the /etc/grub.d directory used? (Choose two)",
+        options: [
+            { text: "The contents of these scripts are incorporated into the /boot/grub2/custom.cfg file.", correct: false },
+            { text: "The contents of these scripts are incorporated into the /etc/grub2.d/configFile.", correct: false },
+            { text: "The contents of these scripts are incorporated into the /boot/grub2/grub.cfg file.", correct: true },
+            { text: "These scripts are taken as input by the mkinitrd command.", correct: false },
+            { text: "These scripts are taken as input by the grub2-init command.", correct: false },
+            { text: "These scripts are taken as input by the grub2-mkconfig command.", correct: true }
+        ],
+        rationale: "The <b>grub2-mkconfig</b> command generates the main configuration file (<b>/boot/grub2/grub.cfg</b>). It does this by combining the settings from <code>/etc/default/grub</code> with the executable scripts located in <b>/etc/grub.d/</b>."
+    },
+    {
+        type: "SINGLE",
+        text: "Which command would you run to create an updated initial file system, if your server hardware requires additional drivers to be available for the Kernel at boot up?",
+        options: [
+            { text: "modinitd", correct: false },
+            { text: "mkinitrd", correct: true },
+            { text: "newinitfs", correct: false },
+            { text: "makeinitfs", correct: false },
+            { text: "updinitrd", correct: false }
+        ],
+        rationale: "The <b>mkinitrd</b> command creates an initial RAM disk image (initrd). This image is loaded by the boot loader and makes kernel modules (drivers) available so the kernel can mount the root filesystem. <br><br>If you add hardware drivers or change kernel configurations, you must run <code>mkinitrd</code> to rebuild this image."
+    },
+    {
+        type: "SINGLE",
+        text: "In a scenario where you are configuring remote access via RDP (Remote Desktop Protocol), which of the following security measures should you implement to protect the server from unauthorized access?",
+        options: [
+            { text: "Use a strong password policy for RDP users", correct: true },
+            { text: "Allow all incoming connections on port 3389", correct: false },
+            { text: "Disable network-level authentication", correct: false },
+            { text: "Allow RDP access for all users", correct: false }
+        ],
+        rationale: "<b>A is correct:</b> Strong passwords are the first line of defense against brute-force attacks, which are very common on RDP ports.<br><br><b>Why the others are insecure:</b><br>- <b>B:</b> Port 3389 should be restricted via firewall to specific IPs or VPNs, never open to the entire internet.<br>- <b>C:</b> Network Level Authentication (NLA) should be <b>enabled</b>, as it authenticates the user before a session is created.<br>- <b>D:</b> Follow the Principle of Least Privilege: only grant access to users who specifically need it."
+    },
 
 
 ]);

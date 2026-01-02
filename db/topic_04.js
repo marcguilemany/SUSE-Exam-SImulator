@@ -199,4 +199,15 @@ window.loadTopic("04 The Linux Filesystem", [
         ], 
         rationale: "nosuid and nodev enhance security by restricting special permissions and device files." 
     },
+    {
+        type: "SINGLE",
+        text: "In a SUSE Linux Enterprise Server 15 environment, you are auditing a script that processes user input files. The script uses the <code>cut</code> command to extract specific fields from a CSV file located at <code>/data/users.csv</code>.<br><br>The script snippet is:<br><code>cut -d',' -f1,3 /data/users.csv > /tmp/user_info.txt</code><br><br>You notice that some usernames contain commas (e.g., \"Doe, John\"), causing incorrect field extraction. How should you modify the command to robustly extract only the username and home directory fields, handling commas within fields correctly?",
+        options: [
+            { text: "Use <code>awk -F',' '{print $1 \",\" $3}' /data/users.csv > /tmp/user_info.txt</code>", correct: false },
+            { text: "Preprocess the file with <code>sed 's/,\"[^\"]*\",/,/g'</code> ...", correct: false },
+            { text: "Replace <code>cut</code> with <code>csvcut -c 1,3 /data/users.csv > /tmp/user_info.txt</code>", correct: true },
+            { text: "Use <code>cut -d',' --complement -f2,4 /data/users.csv > /tmp/user_info.txt</code>", correct: false }
+        ],
+        rationale: "<b>Why C is correct:</b> Standard text tools like <code>cut</code> and simple <code>awk</code> treat <i>every</i> comma as a separator, failing when data fields themselves contain commas (even if quoted).<br><br><b>csvcut</b> (part of the <code>csvkit</code> package) is a specialized tool designed to parse RFC 4180 compliant CSVs. It correctly handles quoted fields containing delimiters (e.g., <code>\"Doe, John\",1001,...</code>), which is impossible for standard <code>cut</code> to do reliably."
+    },
 ]);
