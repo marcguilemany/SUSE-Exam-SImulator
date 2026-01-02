@@ -134,6 +134,17 @@ window.loadTopic("13 Storage Management Fundamentals", [
         ],
         rationale: "Each tool provides different storage-related information."
     },
+    {
+        type: "SINGLE",
+        text: "You need to mount a filesystem at boot time with specific options for 'noexec' and 'nodev'. Which configuration file should be modified, and what would the correct line look like for the device /dev/sdb1 mounted at /mnt/data?",
+        options: [
+            { text: "/etc/mtab /dev/sdb1 /mnt/data ext4 defaults,noexec,nodev 0 2", correct: false },
+            { text: "/etc/fstab /dev/sdb1 /mnt/data ext4 defaults,noexec,nodev 0 2", correct: true },
+            { text: "/etc/fstab /mnt/data /dev/sdb1 ext4 defaults,noexec,nodev 0 2", correct: false },
+            { text: "/etc/mtab /mnt/data /dev/sdb1 ext4 defaults,noexec,nodev 0 2", correct: false }
+        ],
+        rationale: "<b>Why B is correct:</b><br>1. <b>File:</b> The file <code>/etc/fstab</code> is used for persistent mount configuration (boot time). <code>/etc/mtab</code> is a dynamic file maintained by the system to list currently mounted filesystems and should not be edited manually.<br>2. <b>Syntax Order:</b> The correct column order in fstab is: <code>[Device] [Mount Point] [Type] [Options] [Dump] [Pass]</code>.<br>Option C reverses the device and mount point, which is incorrect syntax."
+    },
     
 
 

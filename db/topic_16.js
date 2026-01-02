@@ -384,5 +384,16 @@ window.loadTopic("16 Network Management Fundamentals", [
         ],
         rationale: "<b>Why A is correct:</b> The <b>ping</b> command is the standard tool to verify reachability and measure <b>Round-Trip Time (RTT)</b>. Adding <code>-c 10</code> sends a fixed sample of 10 packets, which provides a meaningful average response time to verify if it's within limits.<br><br><b>Why others are incorrect:</b><br>- <b>traceroute:</b> Shows the path (hops), not the consistent response time of the final target.<br>- <b>nslookup:</b> Only checks DNS resolution, not connectivity or speed.<br>- <b>netstat -r:</b> Just shows your local routing table."
     },
+    {
+        type: "SINGLE",
+        text: "In a multi-homed system, how does the kernel determine which route to use for outgoing packets when multiple default gateways are configured?",
+        options: [
+            { text: "It selects the gateway with the lowest metric.", correct: true },
+            { text: "It uses the first defined gateway.", correct: false },
+            { text: "It randomly selects a gateway.", correct: false },
+            { text: "It prioritizes the gateway based on interface speed.", correct: false }
+        ],
+        rationale: "<b>Why A is correct:</b> When multiple routes exist for the exact same destination (like the default route <code>0.0.0.0/0</code>), the Linux kernel uses the <b>Metric</b> value as the tie-breaker. The route with the <b>lowest metric</b> is considered the highest priority (lowest 'cost') and is chosen for the traffic.<br><br><b>Note:</b> Interface speed is not automatically factored into the metric in standard Linux networking (unlike OSPF in routers) unless configured by the administrator."
+    },
 
 ]);

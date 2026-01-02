@@ -142,6 +142,39 @@ window.loadTopic("08 Process Management", [
         ],
         rationale: "Each tool serves a different scheduling use case in SLES."
     },
+    {
+        type: "SINGLE",
+        text: "While trying to terminate an unresponsive process, you notice that it is in a 'stopped' state (status T). What command would you use to resume its execution regardless of whether it is a shell job or a background daemon?",
+        options: [
+            { text: "kill -CONT <PID>", correct: true },
+            { text: "fg", correct: false },
+            { text: "bg", correct: false },
+            { text: "resume <PID>", correct: false }
+        ],
+        rationale: "<b>Why A is correct:</b> The command <code>kill -CONT</code> sends the <b>SIGCONT</b> signal (Signal 18) to the process. This is the specific kernel signal required to wake up a process from a Stopped (T) state.<br><br><b>Why others are incorrect:</b><br>- <b>fg/bg:</b> These are shell built-ins that only work on 'jobs' started within the <i>current</i> shell session. They cannot resume a daemon or a process owned by another user/session.<br>- <b>resume:</b> This is not a standard Linux command for process management."
+    },
+    {
+        type: "SINGLE",
+        text: "You are developing a script that needs to run a command in the background and immediately return control to the terminal (shell). Which of the following syntax would you use to accomplish this?",
+        options: [
+            { text: "command > /dev/null", correct: false },
+            { text: "command &", correct: true },
+            { text: "command;", correct: false },
+            { text: "command & disown", correct: false }
+        ],
+        rationale: "<b>Why B is correct:</b> Appending the ampersand (<b>&</b>) to a command causes the shell to run the command in the background as a subshell or job, immediately returning the prompt to the user so they can continue working.<br><br><b>Why others are incorrect:</b><br>- <b>A:</b> Redirects output to null, but the shell still waits for the command to finish.<br>- <b>C:</b> The semicolon simply marks the end of a command (like a newline); it runs sequentially.<br>- <b>D:</b> While <code>& disown</code> also backgrounds the task, <code>disown</code> is a separate step used specifically to remove the job from the shell's job table (so it survives the shell closing). The primary operator for background execution is just <code>&</code>."
+    },
+    {
+        type: "SINGLE",
+        text: "You are debugging a process with PID 45678 on a SUSE Linux Enterprise Server 15 system that is not responding to SIGTERM. You need to send a SIGABRT signal to generate a core dump for analysis. Which command sends this signal?",
+        options: [
+            { text: "kill -INT 45678", correct: false },
+            { text: "kill -TERM 45678", correct: false },
+            { text: "kill -HUP 45678", correct: false },
+            { text: "kill -ABRT 45678", correct: true }
+        ],
+        rationale: "<b>Why D is correct:</b> The command <code>kill -ABRT</code> (or <code>kill -6</code>) sends the <b>SIGABRT</b> signal. This signal is specifically designed to tell a process to abort execution immediately and (usually) generate a core dump file for debugging purposes.<br><br><b>Why others are incorrect:</b><br>- <b>INT:</b> (Signal 2) Equivalent to pressing Ctrl+C.<br>- <b>TERM:</b> (Signal 15) The default 'polite' kill signal.<br>- <b>HUP:</b> (Signal 1) Hangup, often used to reload configuration files."
+    },
     
 
 

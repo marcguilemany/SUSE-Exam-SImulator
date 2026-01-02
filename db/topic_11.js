@@ -156,5 +156,26 @@ window.loadTopic("11 Privilege Delegation", [
         ],
         rationale: "<b>Why B is correct:</b> The <code>Wants=</code> directive configures a 'weak' dependency. If Unit A <i>Wants</i> Unit B, systemd will try to start Unit B when Unit A starts. However, if Unit B fails to start, Unit A will <b>continue</b> running (unlike <code>Requires=</code>, which is a strong dependency).<br><br><b>Why others are incorrect:</b><br>- <code>After=</code>: Only controls <b>ordering</b> (wait until X has started), it does not <i>trigger</i> the start of X.<br>- <code>ConditionPathExists=</code>: Checks if a file exists before starting, it's not a unit dependency.<br>- <code>OnFailure=</code>: Specifies units to activate only when this unit fails."
     },
-
+    {
+        type: "SINGLE",
+        text: "In a systemd service unit, which of the following directives configures a 'weak' dependency, meaning this service will try to start the specified units, but will not fail if those units are missing or fail to start?",
+        options: [
+            { text: "After=", correct: false },
+            { text: "Wants=", correct: true },
+            { text: "ConditionPathExists=", correct: false },
+            { text: "OnFailure=", correct: false }
+        ],
+        rationale: "<b>Correction from source:</b> The original dump text describes the behavior of <code>Requisite=</code> (fail if not active) but marks <code>Wants=</code> as correct. To make the question valid:<br><br><b>Wants= (Option B)</b> creates a <b>weak dependency</b>. It attempts to start the referenced unit, but does not strictly require it to succeed.<br><br><b>Comparison:</b><br>- <b>Requires=:</b> Strong dependency (fails if the other unit fails).<br>- <b>After=:</b> Ordering only (waits for the other unit, but doesn't trigger it).<br>- <b>Requisite=:</b> Fails immediately if the other unit is not <i>already</i> active."
+    },
+    {
+        type: "SINGLE",
+        text: "You are managing a SUSE Linux Enterprise Server 15 system where a critical application service (app.service) must be part of a custom systemd target (app-stack.target).<br><br>The target should pull in app.service and db.service, ensuring they start after network-online.target. The target must be active in the multi-user.target runlevel.<br><br>Which target unit file configuration is correct?",
+        options: [
+            { text: "[Unit] Requires=app.service db.service, After=network.target<br>[Install] WantedBy=graphical.target", correct: false },
+            { text: "[Unit] Wants=app.service db.service, After=network-online.target<br>[Install] WantedBy=multi-user.target", correct: true },
+            { text: "[Unit] After=app.service db.service, Requires=network-online.target<br>[Unit] PartOf=multi-user.target", correct: false },
+            { text: "[Unit] Wants=network-online.target, Requires=app.service db.service<br>[Install] WantedBy=default.target", correct: false }
+        ],
+        rationale: "<b>Why B is correct:</b><br>1. <b>Wants=...:</b> This is the standard way for a Target to 'pull in' or group other units (app and db) without causing a critical failure if one is missing (unlike <code>Requires</code>).<br>2. <b>After=network-online.target:</b> Explicitly meets the requirement to wait for full network connectivity.<br>3. <b>WantedBy=multi-user.target:</b> Meets the requirement to be active in the multi-user runlevel (runlevel 3 equivalent).<br><br><b>Why others are wrong:</b><br>- <b>A:</b> Uses <code>network.target</code> (too early, usually just means service started, not IP assigned) and targets <code>graphical.target</code>.<br>- <b>C:</b> <code>After=app.service</code> would mean the target waits for the app to finish starting before the target considers itself 'started', which is often backwards for a grouping target logic."
+    },
 ]);

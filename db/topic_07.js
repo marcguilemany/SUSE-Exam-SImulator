@@ -395,6 +395,17 @@ window.loadTopic("07 Standard Permissions", [
         ],
         rationale: "<b>Why A is correct:</b> The first character in the <code>ls -l</code> output indicates the file type:<br><ul><li><b>c</b>: Character device (provides a serial stream of input/output).</li><li><b>b</b>: Block device (stores data in blocks, like hard drives).</li><li><b>-</b>: Regular file.</li><li><b>l</b>: Symbolic link.</li></ul><br><b>/dev/null</b> is a special character device known as the 'bit bucket' that accepts and immediately discards all input written to it."
     },
+    {
+        type: "SINGLE",
+        text: "In a SUSE Linux Enterprise Server 15 environment, you are auditing file types and find a file <code>/dev/null</code> with a <b>c</b> in its <code>ls -l</code> output. What type of file is this, and what is its primary use?",
+        options: [
+            { text: "Character device; discards data", correct: true },
+            { text: "Block device; stores data", correct: false },
+            { text: "Regular file; logs errors", correct: false },
+            { text: "Symbolic link; redirects data", correct: false }
+        ],
+        rationale: "<b>Why A is correct:</b> The first character in the permissions string of <code>ls -l</code> identifies the file type:<br><ul><li><b>c:</b> Character device (handles data as a stream of bytes).</li><li><b>b:</b> Block device (handles data in blocks, like hard drives).</li><li><b>-:</b> Regular file.</li><li><b>l:</b> Symbolic link.</li></ul><br><b>/dev/null</b> is a special character device (often called the 'bit bucket') that discards everything written to it and returns EOF on reads."
+    },
 
 
 ]);

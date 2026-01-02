@@ -122,6 +122,17 @@ window.loadTopic("18 System Logging", [
             { text: "local0.warning /var/log/webapp.log<br>stop", correct: false }
         ],
         rationale: "<b>Why B is correct:</b><br>1. <b>Capture:</b> <code>local0.>=warning</code> (or simply <code>local0.warning</code>) captures messages of priority warning and higher.<br>2. <b>Exclusion (Crucial):</b> The second line <code>*.*;local0.none</code> directs all other logs to <code>/var/log/messages</code> but explicitly <b>excludes</b> <code>local0</code> (using <code>.none</code>). Without this exclusion, your application logs would appear in BOTH files (duplication), which is generally not desired when asking for a 'dedicated' log file."
-    }
+    },
+    {
+        type: "SINGLE",
+        text: "On a SUSE Linux Enterprise Server 15 SP6 system, you are tasked with ensuring that systemd-journald logs are forwarded to a remote rsyslog server at 192.168.1.200 over UDP port 514. The journald configuration must remain persistent, and local journal logs should also be retained on disk.<br><br>Which configuration changes should you make to <code>/etc/systemd/journald.conf</code> and <code>/etc/rsyslog.conf</code> to achieve this?",
+        options: [
+            { text: "<b>journald.conf:</b> ForwardToSyslog=yes, Storage=persistent<br><b>rsyslog.conf:</b> *.* @192.168.1.200:514", correct: true },
+            { text: "<b>journald.conf:</b> ForwardToSyslog=no, Storage=persistent<br><b>rsyslog.conf:</b> *.* @192.168.1.200:514", correct: false },
+            { text: "<b>journald.conf:</b> ForwardToSyslog=yes, Storage=volatile<br><b>rsyslog.conf:</b> *.* @192.168.1.200:514", correct: false },
+            { text: "<b>journald.conf:</b> ForwardToSyslog=yes, Storage=persistent<br><b>rsyslog.conf:</b> *.* @@192.168.1.200:514", correct: false }
+        ],
+        rationale: "<b>Why A is correct:</b><br>1. <b>ForwardToSyslog=yes:</b> Ensures journald passes its data to the rsyslog daemon (local socket).<br>2. <b>Storage=persistent:</b> Ensures logs are saved to disk in <code>/var/log/journal</code> (surviving reboots), satisfying the retention requirement.<br>3. <b>@192...:</b> In rsyslog syntax, a single <code>@</code> denotes <b>UDP</b> forwarding. (Double <code>@@</code> is used for TCP).<br><br><b>Why others are incorrect:</b><br>- <b>B:</b> Stops journald from talking to rsyslog.<br>- <b>C:</b> <code>volatile</code> stores logs only in RAM (tmpfs), so they vanish on reboot.<br>- <b>D:</b> Uses <code>@@</code> which forces TCP, contradicting the UDP requirement."
+    },
 
 ]);
