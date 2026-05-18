@@ -14,7 +14,6 @@ window.loadTopic("15 Btrfs Management", [
         ], 
         rationale: "BtrFS subvolumes act like independent file trees and can be mounted individually." 
     },
-
     {
         type: "SINGLE",
         text: "Why does SLES use Btrfs as the default filesystem for the root (/) filesystem?",
@@ -62,8 +61,6 @@ window.loadTopic("15 Btrfs Management", [
         ],
         rationale: "YaST Snapper provides graphical snapshot management."
     },
-
-    // --- HOTSPOT 1 ---
     {
         type: "HOTSPOT",
         text: "In the Snapper list output, identify the CURRENT snapshot used by the running system.",
@@ -71,7 +68,6 @@ window.loadTopic("15 Btrfs Management", [
         target: {x: 4, y: 56},
         rationale: "The current snapshot is marked as 'current' and represents the active system state."
     },
-
     {
         type: "SINGLE",
         text: "What happens when you rollback to a previous Btrfs snapshot?",
@@ -83,8 +79,6 @@ window.loadTopic("15 Btrfs Management", [
         ],
         rationale: "Rollback reverts the filesystem state to the chosen snapshot."
     },
-
-    // --- HOTSPOT 2 ---
     {
         type: "HOTSPOT",
         text: "Click on the filesystem type used for the root (/) filesystem in the lsblk output.",
@@ -92,7 +86,6 @@ window.loadTopic("15 Btrfs Management", [
         target: {x: 23, y: 68},
         rationale: "On SLES, the root filesystem is typically formatted as Btrfs."
     },
-
     {
         type: "MATCHING",
         text: "Match the Btrfs feature with its description.",
