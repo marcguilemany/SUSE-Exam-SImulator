@@ -114,6 +114,17 @@ window.loadTopic("09 Privilege Delegation", [
             {term: "sudo", def: "Temporary privilege escalation with auditing"}
         ],
         rationale: "Each mechanism handles privilege delegation differently."
+    },
+    { 
+        type: "SINGLE", 
+        text: "You want to completely prevent a specific service from being started, either automatically at boot or manually by any user or other dependent service. Which command achieves this?", 
+        options: [
+            {text: "systemctl mask <service_name>", correct: true},
+            {text: "systemctl disable <service_name>", correct: false},
+            {text: "systemctl stop <service_name>", correct: false},
+            {text: "systemctl unmount <service_name>", correct: false}
+        ], 
+        rationale: "`systemctl mask` links the unit file to `/dev/null`, preventing it from being started under any circumstance. `disable` only removes boot symlinks, but it can still be started manually.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-systemd.html' target='_blank'>📚 SUSE Docs: Masking Units</a>" 
     }
 
 ]);
