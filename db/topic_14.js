@@ -188,6 +188,17 @@ window.loadTopic("14 Logical Volume Management", [
         ],
         rationale: "The <b>/etc/lvm/lvm.conf</b> file is the central configuration file for LVM. It controls <b>global behavior</b> such as device scanning filters (which disks LVM allows), locking mechanisms, and logging levels.<br><br><b>Why others are incorrect:</b><br>- <b>A & B:</b> Volume names and physical volume definitions are stored in the <b>metadata headers</b> on the disks themselves, not in a text file.<br>- <b>C:</b> Command history is usually part of the shell history or archived in <code>/etc/lvm/archive</code>, but <code>lvm.conf</code> is for settings, not logging actions."
     },
+    { 
+        type: "SINGLE", 
+        text: "What is the critical sequence of commands required to safely reduce the storage allocation size of an LVM logical volume formatted with an ext4 filesystem?", 
+        options: [
+            {text: "Unmount the volume -> resize2fs (shrink filesystem) -> lvreduce (shrink logical volume)", correct: true},
+            {text: "lvreduce (shrink logical volume) -> resize2fs (shrink filesystem) -> mount", correct: false},
+            {text: "vgreduce -> lvreduce -> resize_fs", correct: false},
+            {text: "LVM logical volumes cannot be reduced once formatted; they must be recreated.", correct: false}
+        ], 
+        rationale: "You must always reduce the filesystem *before* reducing the Logical Volume container. If you truncate the LV first, you will physically slice off your data block references and corrupt the filesystem.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-lvm.html' target='_blank'>📚 SUSE Docs: LVM Operations</a>" 
+    }
     
 
 
