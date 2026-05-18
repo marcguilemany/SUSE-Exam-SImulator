@@ -210,4 +210,26 @@ window.loadTopic("04 The Linux Filesystem", [
         ],
         rationale: "<b>Why C is correct:</b> Standard text tools like <code>cut</code> and simple <code>awk</code> treat <i>every</i> comma as a separator, failing when data fields themselves contain commas (even if quoted).<br><br><b>csvcut</b> (part of the <code>csvkit</code> package) is a specialized tool designed to parse RFC 4180 compliant CSVs. It correctly handles quoted fields containing delimiters (e.g., <code>\"Doe, John\",1001,...</code>), which is impossible for standard <code>cut</code> to do reliably."
     },
+   { 
+        type: "SINGLE", 
+        text: "If you create a hard link to a file and then delete the original file, what happens to the data and the hard link?", 
+        options: [
+            {text: "The data remains accessible through the hard link because the inode link count is greater than 0.", correct: true},
+            {text: "The hard link becomes broken and points to a non-existent target.", correct: false},
+            {text: "The data is deleted immediately, and the hard link is automatically removed.", correct: false},
+            {text: "The system generates a filesystem error upon the next mount.", correct: false}
+        ], 
+        rationale: "A hard link points directly to the inode number. Deleting the original file only decreases the link count. The data is only removed when the link count reaches zero.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Managing Links</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "According to the Filesystem Hierarchy Standard (FHS) used in SLES 15, what type of data is stored in the volatile /run directory?", 
+        options: [
+            {text: "System state information since the boot process, such as PID files and active sockets.", correct: true},
+            {text: "Site-specific data served by the system servers.", correct: false},
+            {text: "Variable log files and mail spools.", correct: false},
+            {text: "Essential system administration binaries.", correct: false}
+        ], 
+        rationale: "The `/run` directory is a transient, volatile runtime directory stored in a temporary RAM filesystem (tmpfs) that keeps tracking data since the system booted.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-fhs.html' target='_blank'>📚 SUSE Docs: FHS Structure</a>" 
+    }
 ]);
