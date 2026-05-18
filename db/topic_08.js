@@ -223,6 +223,17 @@ window.loadTopic("08 Process Management", [
         ],
         rationale: "<b>Why B is correct:</b> In Linux process management, the <b>nice</b> value ranges from <b>-20</b> (highest priority) to <b>+19</b> (lowest priority). The logic is inverted: a 'nicer' process (positive number) yields CPU time to others, while a 'less nice' process (negative number) demands more CPU time. Therefore, <b>-15</b> represents a significantly higher priority than 7.<br><br><b>Why C is incorrect:</b> The values -15 and 7 are both well within the valid range of -20 to +19."
     },
+    { 
+        type: "SINGLE", 
+        text: "An unprivileged regular user attempts to alter the priority of an already running process using the renice command. What restriction applies?", 
+        options: [
+            {text: "The user can only increase the nice value (lowering the priority of the process).", correct: true},
+            {text: "The user can set any nice value between -20 and 19.", correct: false},
+            {text: "The user cannot use renice; it requires absolute root execution privileges.", correct: false},
+            {text: "The user can lower the nice value to negative numbers to accelerate processing.", correct: false}
+        ], 
+        rationale: "Regular users can only 'be nice' to others by increasing their process's nice value (making it less urgent for the scheduler). Only root can lower a nice value (increase real priority).<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Process Monitoring</a>" 
+    }
 
 
 
