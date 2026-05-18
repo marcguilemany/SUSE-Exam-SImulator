@@ -25,7 +25,6 @@ window.loadTopic("10 Task Scheduling", [
         validAnswers: ["crontab -e"], 
         rationale: "crontab -e opens the editor defined in $EDITOR." 
     },
-    // SINGLE: cron basic syntax
     {
         type: "SINGLE",
         text: "Which field is the third in a standard crontab entry?",
@@ -37,8 +36,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "Crontab fields: minute, hour, day of month, month, day of week."
     },
-
-    // MULTI: crontab shortcuts
     {
         type: "MULTI",
         text: "Select valid crontab shortcuts. (Select 3)",
@@ -51,8 +48,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "Valid shortcuts: @reboot, @daily, @weekly, @monthly, @yearly. Typos are invalid. https://linux.die.net/man/5/crontab"
     },
-
-    // MATCHING: cron vs at
     {
         type: "MATCHING",
         text: "Match the scheduler command to its description.",
@@ -63,8 +58,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "cron=recurring, at=one-shot, systemd timers=modern alternative integrated with systemd."
     },
-
-    // SINGLE: user crontab location
     {
         type: "SINGLE",
         text: "Where is a user's personal crontab stored?",
@@ -76,8 +69,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "User crontabs are stored in /var/spool/cron/tabs/<username>."
     },
-
-    // MULTI: crontab special characters
     {
         type: "MULTI",
         text: "Which special characters can be used in crontab entries? (Select 3)",
@@ -90,8 +81,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "* for any, / for step, , for multiple values."
     },
-
-    // HOTSPOT: identify next scheduled job
     {
         type: "HOTSPOT",
         text: "Click on the next scheduled job in the crontab output.",
@@ -99,8 +88,6 @@ window.loadTopic("10 Task Scheduling", [
         target: {x: 40, y: 60},
         rationale: "Understanding the timing and order of jobs is key; the next execution is shown in the first upcoming time slot."
     },
-
-    // SINGLE: at command usage
     {
         type: "SINGLE",
         text: "Which command schedules a job using 'at' to run at 6 PM today?",
@@ -112,8 +99,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "'at 18:00 today' schedules a one-time job for 6 PM."
     },
-
-    // MULTI: systemd timer types
     {
         type: "MULTI",
         text: "Select valid systemd timer types. (Select 2)",
@@ -125,8 +110,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "Valid timer options include OnBootSec, OnCalendar, OnUnitActiveSec, OnUnitInactiveSec."
     },
-
-    // MATCHING: timer vs cron fields
     {
         type: "MATCHING",
         text: "Match cron fields to systemd timer equivalents.",
@@ -137,8 +120,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "systemd timers can replicate cron schedules using OnCalendar format."
     },
-
-    // SINGLE: disabling a cron job
     {
         type: "SINGLE",
         text: "How can you disable a user's cron job without deleting it?",
@@ -150,8 +131,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "Prepending '#' to the line comments it out without deleting it."
     },
-
-    // MULTI: checking scheduled jobs
     {
         type: "MULTI",
         text: "Which commands show currently scheduled jobs? (Select 2)",
@@ -163,8 +142,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "crontab -l lists user cron jobs; atq lists queued at jobs."
     },
-
-    // HOTSPOT: next timer activation
     {
         type: "HOTSPOT",
         text: "Click on the next activation time for the systemd timer.",
@@ -172,8 +149,6 @@ window.loadTopic("10 Task Scheduling", [
         target: {x: 15, y: 35},
         rationale: "systemd timers show NEXT= column, indicating the next execution time."
     },
-
-    // SINGLE: run at specific date
     {
         type: "SINGLE",
         text: "How do you schedule a job with 'at' for 3 PM on December 31?",
@@ -185,8 +160,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "The 'at' command uses 'at HH:MM Month Day' syntax."
     },
-
-    // MULTI: cron environment variables
     {
         type: "MULTI",
         text: "Which environment variables are commonly set in a cron job? (Select 3)",
@@ -198,8 +171,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "SHELL, PATH, and HOME are standard environment variables for cron jobs."
     },
-
-    // MATCHING: at command states
     {
         type: "MATCHING",
         text: "Match 'at' command job states to their meaning.",
@@ -211,8 +182,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "at jobs can be queued, running, completed, or failed."
     },
-
-    // SINGLE: cron syntax trick
     {
         type: "SINGLE",
         text: "Which of the following cron lines will run at 5:30 PM every Friday?",
@@ -237,8 +206,6 @@ window.loadTopic("10 Task Scheduling", [
         ],
         rationale: "disable prevents auto-start, stop halts running instance, mask prevents manual start."
     },
-
-    // SINGLE: cron log location
     {
         type: "SINGLE",
         text: "Where are cron logs typically stored in SLES 15?",
@@ -261,5 +228,4 @@ window.loadTopic("10 Task Scheduling", [
         ], 
         rationale: "If `cron.allow` exists, the system checks it exclusively. If a user is not inside it, access is denied, regardless of whether `cron.deny` exists or not.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-cron.html' target='_blank'>📚 SUSE Docs: Cron Access Control</a>" 
     },
-
 ]);
