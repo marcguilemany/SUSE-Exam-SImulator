@@ -419,6 +419,17 @@ window.loadTopic("07 Standard Permissions", [
         ],
         rationale: "<b>Why B and C are correct:</b> PolKit is designed to separate privileged operations from the user interface:<br>1. <b>The Mechanism (Option C):</b> This is the privileged helper (daemon) that actually performs the restricted action (like formatting a disk). It must run in the <b>System Context</b> (usually as root) to have the necessary permissions.<br>2. <b>The Policy Agent/Subject (Option B):</b> This is the unprivileged user-facing application (UI). It runs in the <b>User Session</b>. It communicates with the Mechanism via D-Bus to request actions, triggering the PolKit authority to check if the user is authorized."
     },
+    { 
+        type: "SINGLE", 
+        text: "When evaluating a file with an Extended ACL, what parameter acts as the ceiling configuration, defining the maximum possible permissions any named user or group entry can actually receive?", 
+        options: [
+            {text: "The ACL mask", correct: true},
+            {text: "The owner permissions", correct: false},
+            {text: "The other permissions group", correct: false},
+            {text: "The default system umask", correct: false}
+        ], 
+        rationale: "The ACL mask defines the maximum effective rights for named users and groups. Even if a user is granted `rwx`, if the mask is `r--`, their effective permission is limited to read-only.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-security-acls.html' target='_blank'>📚 SUSE Docs: Understanding ACL Masks</a>" 
+    },
 
 
 ]);
