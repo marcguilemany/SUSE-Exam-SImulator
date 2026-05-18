@@ -143,6 +143,17 @@ window.loadTopic("15 Btrfs Management", [
         ],
         rationale: "<b>Why C is correct:</b> The process of replicating Btrfs data involves three steps: <br>1. Create a snapshot of the source subvolume (usually with <code>-r</code> for read-only, though the option text omits it, it is the implied correct workflow).<br>2. Use <code>btrfs send</code> to generate a data stream from that snapshot.<br>3. Pipe that stream to <code>ssh</code> which executes <code>btrfs receive</code> on the remote end.<br><br><b>Why others are incorrect:</b><br>- <b>A:</b> You cannot run <code>btrfs send</code> directly on a live, changing read-write subvolume; you must snapshot it first.<br>- <b>B:</b> <code>btrfs send</code> does not use a <code>-r</code> flag; the read-only property belongs to the snapshot, not the send command.<br>- <b>D:</b> Missing the destination component (the pipe to ssh)."
     },
+    { 
+        type: "SINGLE", 
+        text: "Due to the Copy-on-Write (CoW) architectural design of the Btrfs filesystem, what operational risk must an administrator monitor when keeping multiple Snapper checkpoints?", 
+        options: [
+            {text: "Modifying existing data blocks writes new allocations elsewhere, locking the old blocks and consuming additional storage space.", correct: true},
+            {text: "Taking a snapshot causes the primary read-only volume to freeze execution for several minutes.", correct: false},
+            {text: "Snapper clones the entire system data block array every time a snapshot is executed.", correct: false},
+            {text: "System metadata becomes scrambled if the kernel experiences an unexpected power outage.", correct: false}
+        ], 
+        rationale: "Btrfs snapshots take 0 space initially. However, when files are altered later, the modifications are saved in new blocks, while the old blocks remain preserved to safeguard the snapshot history, increasing overall storage usage.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-snapper.html' target='_blank'>📚 SUSE Docs: Btrfs Snapshots</a>" 
+    }
     
 
 ]);
