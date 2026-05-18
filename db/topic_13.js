@@ -155,8 +155,6 @@ window.loadTopic("13 Storage Management Fundamentals", [
             {text: "mount --status", correct: false}
         ], 
         rationale: "`blkid` specifically identifies block device properties (UUID, Labels, Filesystem format), whereas `df` only interacts with currently mounted filesystems.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html' target='_blank'>📚 SUSE Docs: Block Device Identification</a>" 
-    }
-    
-
+    },
 
 ]);
