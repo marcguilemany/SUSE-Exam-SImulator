@@ -342,5 +342,27 @@ window.loadTopic("03 The Command Line", [
         ],
         rationale: "The <b>alias</b> command creates a shortcut or 'custom name' for a command. <br>The syntax is <code>alias name='command'</code>.<br>Therefore, <code>alias c='clear'</code> instructs the shell to execute the <code>clear</code> command whenever the user types <code>c</code>."
     },
+   { 
+        type: "SINGLE", 
+        text: "You have modified a local variable in your current Bash session and want it to be inherited by any subsequent subshells or scripts launched from this terminal. Which built-in command must you use?", 
+        options: [
+            {text: "export", correct: true},
+            {text: "set", correct: false},
+            {text: "env", correct: false},
+            {text: "local", correct: false}
+        ], 
+        rationale: "The `export` command marks a shell variable to be passed to child processes. Without export, variables are strictly local to the current shell instance.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Shell Environment</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "An administrator accidentally locked screen output in a terminal session by pressing Ctrl+S. Which keyboard shortcut must be used to resume terminal output according to standard terminal flow control?", 
+        options: [
+            {text: "Ctrl+Q", correct: true},
+            {text: "Ctrl+Z", correct: false},
+            {text: "Ctrl+C", correct: false},
+            {text: "Ctrl+D", correct: false}
+        ], 
+        rationale: "In Linux terminal emulators, `Ctrl+S` suspends data transmission to the screen (XOFF), and `Ctrl+Q` resumes it (XON).<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Terminal Shortcuts</a>" 
+    },
 
 ]);
