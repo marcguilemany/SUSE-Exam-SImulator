@@ -100,8 +100,6 @@ window.loadTopic("16 Network Management Fundamentals", [
         ], 
         rationale: "/etc/nsswitch.conf controls the order (hosts: files dns)." 
     },
-
-    // --- IP COMMAND (IPROUTE2) ---
     { 
         type: "SINGLE", 
         text: "Which command has replaced 'ifconfig' and 'route' in modern Linux distributions?", 
@@ -137,8 +135,6 @@ window.loadTopic("16 Network Management Fundamentals", [
         ], 
         rationale: "'ip route show' is the modern command. 'route' and 'netstat' are legacy." 
     },
-
-    // --- HOSTNAME & DNS ---
     { 
         type: "FILL", 
         text: "Which command allows you to permanently set the system hostname (modifying /etc/hostname)?", 
@@ -167,8 +163,6 @@ window.loadTopic("16 Network Management Fundamentals", [
         ], 
         rationale: "'dig' and 'host' are standard DNS query tools. 'nslookup' is also valid but older." 
     },
-
-    // --- TROUBLESHOOTING & PORTS ---
     { 
         type: "SINGLE", 
         text: "Which command replaces 'netstat' to display listening sockets and ports?", 
@@ -197,8 +191,6 @@ window.loadTopic("16 Network Management Fundamentals", [
         ], 
         rationale: "Standard IANA ports." 
     },
-
-    // --- FIREWALL & OTHERS ---
     { 
         type: "SINGLE", 
         text: "What is the default Firewall management tool in SLES 15?", 
