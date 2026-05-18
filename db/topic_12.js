@@ -232,5 +232,4 @@ window.loadTopic("12 Remote Administration", [
         rationale: "A One-time VNC session spawns a graphical interface upon connection and tears it down completely when the client disconnects, preserving server resources.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-vnc.html' target='_blank'>📚 SUSE Docs: VNC Sessions</a>" 
     },
 
-
 ]);
