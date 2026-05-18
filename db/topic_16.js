@@ -421,5 +421,16 @@ window.loadTopic("16 Network Management Fundamentals", [
         ],
         rationale: "<b>Why A and D are correct:</b> Firewalld uses a dual-configuration model:<br>1. <b>Runtime Configuration (A):</b> This is the configuration currently active in the kernel. Changes made here take effect immediately but are lost upon reboot or service reload.<br>2. <b>Permanent Configuration (D):</b> This is the configuration stored in XML files on the disk (e.g., in <code>/etc/firewalld/</code>). Changes made here do not affect the running system immediately (unless you reload) but are persistent across reboots.<br><br><b>Key Command:</b> To make a rule persistent, you must use the <code>--permanent</code> flag (e.g., <code>firewall-cmd --permanent --add-port=80/tcp</code>)."
     },
+    { 
+        type: "SINGLE", 
+        text: "SUSE Linux Enterprise Server 15 uses the Wicked framework by default for network management. In which configuration file are the persistent network interface variables (IPADDR, NETMASK) stored?", 
+        options: [
+            {text: "/etc/sysconfig/network/ifcfg-<interface_name>", correct: true},
+            {text: "/etc/wicked/interfaces.conf", correct: false},
+            {text: "/etc/network/interfaces", correct: false},
+            {text: "/etc/sysconfig/network/routes", correct: false}
+        ], 
+        rationale: "Wicked reads standard legacy configuration scripts located inside `/etc/sysconfig/network/`, evaluating files prefixed with `ifcfg-` coupled with the device name.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-network.html' target='_blank'>📚 SUSE Docs: Wicked Network Files</a>" 
+    }
 
 ]);
