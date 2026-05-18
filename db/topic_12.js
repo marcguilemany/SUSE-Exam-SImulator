@@ -220,6 +220,17 @@ window.loadTopic("12 Remote Administration", [
         ],
         rationale: "<b>Why D is correct:</b> The main configuration file for the SSH daemon (server) is located at <code>/etc/ssh/sshd_config</code>. To restrict access to specific users, you use the <b>AllowUsers</b> directive (e.g., <code>AllowUsers alice bob</code>). This creates a whitelist; anyone not listed is denied access.<br><br><b>Why others are incorrect:</b><br>- <b>Authorized/Permitted:</b> These are not valid configuration directives for user filtering in sshd.<br>- <b>File Locations:</b> <code>~/.ssh/</code> is for user-specific keys and client config, not server global config. <code>/var/ssh/</code> is not a standard path for configuration."
     },
+    { 
+        type: "SINGLE", 
+        text: "In SLES 15 remote desktop management, what defines a 'One-time VNC Session' generated via YaST?", 
+        options: [
+            {text: "The VNC server terminates the desktop session automatically as soon as the client disconnects.", correct: true},
+            {text: "The session is persistent and remains active in background even if the client logs out.", correct: false},
+            {text: "The password is valid for a single utilization and expires after 10 minutes.", correct: false},
+            {text: "The session can only handle text interface tools.", correct: false}
+        ], 
+        rationale: "A One-time VNC session spawns a graphical interface upon connection and tears it down completely when the client disconnects, preserving server resources.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-vnc.html' target='_blank'>📚 SUSE Docs: VNC Sessions</a>" 
+    }
 
 
 ]);
