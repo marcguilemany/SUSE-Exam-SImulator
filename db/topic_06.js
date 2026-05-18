@@ -251,5 +251,27 @@ window.loadTopic("06 Users and Groups", [
         ],
         rationale: "<b>Why D is correct:</b> The <code>/etc/group</code> file defines the groups on the system. Each line contains the group name, password placeholder, GID, and a comma-separated list of users who are members of this group (which constitutes their <b>secondary</b> group membership).<br><br><b>Why others are incorrect:</b><br>- <b>A, B, E:</b> These paths do not exist in a standard Linux FHS (Filesystem Hierarchy Standard).<br>- <b>C:</b> Contains a typo ('sysconflg') and refers to a non-standard location."
     },
+    { 
+        type: "SINGLE", 
+        text: "Which configuration file defines the system-wide default values for shadow password suites, such as password aging limits and minimum UID parameters?", 
+        options: [
+            {text: "/etc/login.defs", correct: true},
+            {text: "/etc/default/useradd", correct: false},
+            {text: "/etc/security/limits.conf", correct: false},
+            {text: "/etc/shadow.defaults", correct: false}
+        ], 
+        rationale: "`/etc/login.defs` configures the shadow password suite parameters applied during account creation.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-users.html' target='_blank'>📚 SUSE Docs: User Defaults</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What command should an administrator use to enforce a password change policy that forces a specific user to change their password upon their next login attempt?", 
+        options: [
+            {text: "chage -d 0 <username>", correct: true},
+            {text: "passwd -l <username>", correct: false},
+            {text: "usermod -e 0 <username>", correct: false},
+            {text: "chage -M 0 <username>", correct: false}
+        ], 
+        rationale: "Setting the 'last password change' date to 0 with `chage -d 0` tells the PAM system that the password has expired, forcing an immediate reset on login.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-users.html' target='_blank'>📚 SUSE Docs: Password Aging</a>" 
+    }
 
 ]);
