@@ -198,8 +198,6 @@ window.loadTopic("14 Logical Volume Management", [
             {text: "LVM logical volumes cannot be reduced once formatted; they must be recreated.", correct: false}
         ], 
         rationale: "You must always reduce the filesystem *before* reducing the Logical Volume container. If you truncate the LV first, you will physically slice off your data block references and corrupt the filesystem.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-lvm.html' target='_blank'>📚 SUSE Docs: LVM Operations</a>" 
-    }
-    
-
+    },
 
 ]);
