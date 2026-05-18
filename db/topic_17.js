@@ -303,7 +303,6 @@ window.loadTopic("17 Software Management", [
             {text: "'zypper patches' requires absolute registration with SMT servers.", correct: false}
         ], 
         rationale: "`zypper patches` is the enterprise-recommended strategy because it targets specific fixed bugs or CVE issues tracked by maintenance channels. `zypper updates` pulls newer package versions regardless of whether they fix a specific tracking bug.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-sw-cl.html' target='_blank'>📚 SUSE Docs: Patches vs Updates</a>" 
-    }
-    
+    },    
 
 ]);
