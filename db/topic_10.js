@@ -260,6 +260,6 @@ window.loadTopic("10 Task Scheduling", [
             {text: "The system merges both files and prioritizes the restrictions inside /etc/cron.deny.", correct: false}
         ], 
         rationale: "If `cron.allow` exists, the system checks it exclusively. If a user is not inside it, access is denied, regardless of whether `cron.deny` exists or not.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-cron.html' target='_blank'>📚 SUSE Docs: Cron Access Control</a>" 
-    }
+    },
 
 ]);
