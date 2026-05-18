@@ -293,6 +293,17 @@ window.loadTopic("17 Software Management", [
         ],
         rationale: "<b>Why B is correct:</b> The command <code>zypper install</code> (or its abbreviation <code>zypper in</code>) is the universal command to install software. Zypper automatically searches for packages, patterns, or capabilities that match the name provided.<br><br><b>Note:</b> While you can be more specific using <code>zypper in -t pattern &lt;name&gt;</code>, the options A, C, and D contain flags (`--group`, `--bundle`) that do not exist in the standard zypper syntax."
     },
+    { 
+        type: "SINGLE", 
+        text: "What is the key functional variance between executing 'zypper patches' and executing 'zypper updates' on SLES 15?", 
+        options: [
+            {text: "'zypper patches' queries official maintenance fixes targeting specific vulnerabilities; 'zypper updates' checks for overall package version bumps.", correct: true},
+            {text: "'zypper patches' changes the core kernel; 'zypper updates' only modifies applications.", correct: false},
+            {text: "There is no difference; they leverage the exact same execution paths.", correct: false},
+            {text: "'zypper patches' requires absolute registration with SMT servers.", correct: false}
+        ], 
+        rationale: "`zypper patches` is the enterprise-recommended strategy because it targets specific fixed bugs or CVE issues tracked by maintenance channels. `zypper updates` pulls newer package versions regardless of whether they fix a specific tracking bug.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-sw-cl.html' target='_blank'>📚 SUSE Docs: Patches vs Updates</a>" 
+    }
     
 
 ]);
