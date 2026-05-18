@@ -32,16 +32,13 @@ window.loadTopic("14 Logical Volume Management", [
         ], 
         rationale: "pvmove evacuates data to other disks in the VG. Only then can you reduce/remove." 
     },
-    // --- HOTSPOT LVM (Colocado en Topic 14) ---
     { 
         type: "HOTSPOT", 
         text: "Identify the Striped Logical Volume (RAID 0) layout in the diagram.", 
-        // --- AQUÍ VA TU IMAGEN DE LVM ---
         image: "assets/img/lvm_types_diagram.svg", 
         target: {x: 50, y: 80}, 
         rationale: "Striped volumes distribute data evenly across multiple disks simultaneously to improve performance.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-lvm.html' target='_blank'>📚 SUSE Docs: LVM Striping</a>" 
     },
-
     {
         type: "SINGLE",
         text: "What is the correct order of LVM components from physical storage to usable filesystem?",
@@ -53,7 +50,6 @@ window.loadTopic("14 Logical Volume Management", [
         ],
         rationale: "Physical Volumes are grouped into Volume Groups, which contain Logical Volumes."
     },
-
     {
         type: "SINGLE",
         text: "Which LVM component represents a physical disk or partition?",
@@ -65,7 +61,6 @@ window.loadTopic("14 Logical Volume Management", [
         ],
         rationale: "A Physical Volume is a disk or partition initialized for use with LVM."
     },
-
     {
         type: "MULTI",
         text: "Which operations can be performed on a Logical Volume? (Select 2)",
@@ -77,7 +72,6 @@ window.loadTopic("14 Logical Volume Management", [
         ],
         rationale: "Logical Volumes can be resized and snapshotted within a Volume Group."
     },
-
     {
         type: "SINGLE",
         text: "What is the primary benefit of using LVM?",
@@ -89,7 +83,6 @@ window.loadTopic("14 Logical Volume Management", [
         ],
         rationale: "LVM allows flexible resizing and management of storage."
     },
-
     {
         type: "SINGLE",
         text: "Which command displays detailed information about volume groups?",
@@ -101,7 +94,6 @@ window.loadTopic("14 Logical Volume Management", [
         ],
         rationale: "vgdisplay shows detailed information about volume groups."
     },
-
     {
         type: "SINGLE",
         text: "Which statement about LVM snapshots is true?",
@@ -113,7 +105,6 @@ window.loadTopic("14 Logical Volume Management", [
         ],
         rationale: "LVM snapshots use copy-on-write and store only changed blocks."
     },
-
     {
         type: "MULTI",
         text: "Which tasks can be performed using YaST LVM module? (Select 2)",
@@ -125,7 +116,6 @@ window.loadTopic("14 Logical Volume Management", [
         ],
         rationale: "YaST provides graphical management of LVM structures."
     },
-
     {
         type: "SINGLE",
         text: "What happens if a Volume Group runs out of free extents?",
@@ -137,14 +127,12 @@ window.loadTopic("14 Logical Volume Management", [
         ],
         rationale: "Logical volumes cannot be extended if no free space remains in the VG."
     },
-
     {
         type: "FILL",
         text: "Which command initializes a disk or partition as a Physical Volume?",
         validAnswers: ["pvcreate"],
         rationale: "pvcreate prepares a device for use with LVM."
     },
-
     {
         type: "MATCHING",
         text: "Match the LVM component to its description.",
