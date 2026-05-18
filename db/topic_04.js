@@ -231,5 +231,5 @@ window.loadTopic("04 The Linux Filesystem", [
             {text: "Essential system administration binaries.", correct: false}
         ], 
         rationale: "The `/run` directory is a transient, volatile runtime directory stored in a temporary RAM filesystem (tmpfs) that keeps tracking data since the system booted.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-fhs.html' target='_blank'>📚 SUSE Docs: FHS Structure</a>" 
-    }
+    },
 ]);
