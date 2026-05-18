@@ -145,6 +145,17 @@ window.loadTopic("13 Storage Management Fundamentals", [
         ],
         rationale: "<b>Why B is correct:</b><br>1. <b>File:</b> The file <code>/etc/fstab</code> is used for persistent mount configuration (boot time). <code>/etc/mtab</code> is a dynamic file maintained by the system to list currently mounted filesystems and should not be edited manually.<br>2. <b>Syntax Order:</b> The correct column order in fstab is: <code>[Device] [Mount Point] [Type] [Options] [Dump] [Pass]</code>.<br>Option C reverses the device and mount point, which is incorrect syntax."
     },
+    { 
+        type: "SINGLE", 
+        text: "An administrator needs to look up the exact filesystem UUID of an unmounted disk partition without querying partition tables. Which command provides this metadata mapping dynamically?", 
+        options: [
+            {text: "blkid", correct: true},
+            {text: "fdisk -l", correct: false},
+            {text: "df -h", correct: false},
+            {text: "mount --status", correct: false}
+        ], 
+        rationale: "`blkid` specifically identifies block device properties (UUID, Labels, Filesystem format), whereas `df` only interacts with currently mounted filesystems.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html' target='_blank'>📚 SUSE Docs: Block Device Identification</a>" 
+    }
     
 
 
