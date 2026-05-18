@@ -204,5 +204,49 @@ window.loadTopic("02 Overview & Install", [
         ], 
         rationale: "PackageHub provides additional community packages that are not fully supported by SUSE and are optional." 
     },
+    { 
+        type: "SINGLE", 
+        text: "During the SLES 15 installation process using the Unified Installer, which two modules are selected and installed by default to provide a minimal functional server environment?", 
+        options: [
+            {text: "Basesystem Module and Server Applications Module", correct: true},
+            {text: "Development Tools Module and Desktop Applications Module", correct: false},
+            {text: "Containers Module and Legacy Module", correct: false},
+            {text: "Public Cloud Module and Web Development Module", correct: false}
+        ], 
+        rationale: "According to the SUSE manual, the Basesystem and Server Applications modules are the baseline requirements for any standard SLES 15 server deployment.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-register-sle.html#sec-registration-modules' target='_blank'>📚 SUSE Docs: Default Modules</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "An administrator needs to deploy multiple SLES 15 instances in an air-gapped data center with no internet access. Which local service should be implemented to proxy registrations and mirror software repositories locally?", 
+        options: [
+            {text: "RMT (Repository Mirroring Tool)", correct: true},
+            {text: "SMT (Subscription Management Tool)", correct: false},
+            {text: "SUSE Proxy Server", correct: false},
+            {text: "YaST Software Router", correct: false}
+        ], 
+        rationale: "In SLES 15, SMT has been replaced by RMT (Repository Mirroring Tool). It allows local repository mirroring and system registration within private networks.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-rmt-overview.html' target='_blank'>📚 SUSE Docs: Repository Mirroring Tool</a>" 
+    },
+    { 
+        type: "MULTI", 
+        text: "When executing the 'supportconfig' utility to gather diagnostic data for SUSE L3 support, where is the resulting archive saved by default, and what accompanies it for validation? (Select 2)", 
+        options: [
+            {text: "The compressed archive is saved in /var/log/", correct: true},
+            {text: "An MD5 checksum file (.md5) is generated in the same directory", correct: true},
+            {text: "The archive is stored under /run/log/supportconfig/", correct: false},
+            {text: "A GPG public key is appended to the filename", correct: false}
+        ], 
+        rationale: "The `supportconfig` command generates a compressed tarball archive along with a matching .md5 checksum file, storing both securely inside `/var/log/`.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-support.html#sec-adm-support-supportconfig' target='_blank'>📚 SUSE Docs: supportconfig Output</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What is the primary operational difference between the SLES 15 'Online Installer' media and the 'Full Package' media?", 
+        options: [
+            {text: "The Online Installer contains only the architecture installer and fetches all packages via network; the Full Package media includes all packages offline.", correct: true},
+            {text: "The Online Installer can only install cloud instances; the Full Package media is for physical servers.", correct: false},
+            {text: "The Online Installer does not support btrfs; the Full Package media supports all filesystems.", correct: false},
+            {text: "There is no operational difference; they have identical storage size requirements.", correct: false}
+        ], 
+        rationale: "The Online Installer is a lightweight ISO that pulls everything dynamically during installation from SCC or RMT. The Full Package Media contains everything needed to install the entire operating system without network access.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-install-prep.html' target='_blank'>📚 SUSE Docs: Installation Media</a>" 
+    },
     
 ]);
