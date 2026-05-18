@@ -431,6 +431,6 @@ window.loadTopic("16 Network Management Fundamentals", [
             {text: "/etc/sysconfig/network/routes", correct: false}
         ], 
         rationale: "Wicked reads standard legacy configuration scripts located inside `/etc/sysconfig/network/`, evaluating files prefixed with `ifcfg-` coupled with the device name.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-network.html' target='_blank'>📚 SUSE Docs: Wicked Network Files</a>" 
-    }
+    },
 
 ]);
