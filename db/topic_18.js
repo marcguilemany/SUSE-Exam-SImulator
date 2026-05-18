@@ -134,5 +134,16 @@ window.loadTopic("18 System Logging", [
         ],
         rationale: "<b>Why A is correct:</b><br>1. <b>ForwardToSyslog=yes:</b> Ensures journald passes its data to the rsyslog daemon (local socket).<br>2. <b>Storage=persistent:</b> Ensures logs are saved to disk in <code>/var/log/journal</code> (surviving reboots), satisfying the retention requirement.<br>3. <b>@192...:</b> In rsyslog syntax, a single <code>@</code> denotes <b>UDP</b> forwarding. (Double <code>@@</code> is used for TCP).<br><br><b>Why others are incorrect:</b><br>- <b>B:</b> Stops journald from talking to rsyslog.<br>- <b>C:</b> <code>volatile</code> stores logs only in RAM (tmpfs), so they vanish on reboot.<br>- <b>D:</b> Uses <code>@@</code> which forces TCP, contradicting the UDP requirement."
     },
+    { 
+        type: "SINGLE", 
+        text: "You are investigating an intermittent application crash that occurred yesterday between 14:00 and 15:30. Which exact journalctl command filters log data for that precise timeline?", 
+        options: [
+            {text: "journalctl --since \"yesterday 14:00\" --until \"yesterday 15:30\"", correct: true},
+            {text: "journalctl -t 14:00-15:30", correct: false},
+            {text: "journalctl --time-window 14:00 15:30", correct: false},
+            {text: "journalctl -u application --date \"14:00-15:30\"", correct: false}
+        ], 
+        rationale: "`journalctl` parses descriptive string parameters natively using the `--since` and `--until` switches, allowing administrators to target specific forensic timelines.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-log.html' target='_blank'>📚 SUSE Docs: Querying systemd Journal</a>" 
+    }
 
 ]);
