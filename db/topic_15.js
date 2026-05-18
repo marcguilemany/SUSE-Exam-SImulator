@@ -153,7 +153,6 @@ window.loadTopic("15 Btrfs Management", [
             {text: "System metadata becomes scrambled if the kernel experiences an unexpected power outage.", correct: false}
         ], 
         rationale: "Btrfs snapshots take 0 space initially. However, when files are altered later, the modifications are saved in new blocks, while the old blocks remain preserved to safeguard the snapshot history, increasing overall storage usage.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-snapper.html' target='_blank'>📚 SUSE Docs: Btrfs Snapshots</a>" 
-    }
-    
+    },   
 
 ]);
