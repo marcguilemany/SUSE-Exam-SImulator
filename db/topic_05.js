@@ -374,5 +374,16 @@ window.loadTopic("05 Text Editors (Vim)", [
         ], 
         rationale: "':' enters Command-Line Mode to execute commands like :w, :q, :s etc." 
     },
+    { 
+        type: "SINGLE", 
+        text: "Which command string would you type in Vim Command Mode to replace all occurrences of the word 'alpha' with 'beta' throughout the entire open file?", 
+        options: [
+            {text: ":%s/alpha/beta/g", correct: true},
+            {text: ":s/alpha/beta/g", correct: false},
+            {text: ":g/alpha/beta/", correct: false},
+            {text: "%r/alpha/beta/", correct: false}
+        ], 
+        rationale: "The `:%s` tells Vim to scan the whole file, and the `/g` trailing option ensures every occurrence on a line is substituted, not just the first one.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-vim.html' target='_blank'>📚 SUSE Docs: Advanced Vim Usage</a>" 
+    },
 
 ]);
