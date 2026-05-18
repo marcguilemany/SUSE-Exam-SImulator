@@ -190,4 +190,15 @@ window.loadTopic("11 Privilege Delegation", [
         ],
         rationale: "<b>Why systemd is correct:</b> SUSE Linux Enterprise Server 15 uses <b>systemd</b> as its default system and service manager. It replaced the older System V (SysV) init system starting with SLES 12 to provide faster boot times, parallel service startup, and better dependency management.<br><br><b>Why others are incorrect:</b><br>- <b>System V:</b> Was used in SLES 11 and earlier.<br>- <b>UEFI:</b> Is the system firmware (BIOS replacement), not the OS initialization process.<br>- <b>undev:</b> Likely a distractor (a typo for 'udev', which manages devices, not init)."
     },
+    { 
+        type: "SINGLE", 
+        text: "To safely allow a junior administrator to edit system configuration files without granting them access to a full root shell via editors like Vim, which specific secure command wrapper should be configured?", 
+        options: [
+            {text: "sudoedit", correct: true},
+            {text: "sudo vim", correct: false},
+            {text: "visudo -e", correct: false},
+            {text: "sudo -u admin edit", correct: false}
+        ], 
+        rationale: "`sudoedit` allows users to modify files securely using their own user space editor. It drops privileges while editing a copy and replaces the file securely, blocking shell-escapes built into text editors.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-sudo.html' target='_blank'>📚 SUSE Docs: Configuring Sudo</a>" 
+    }
 ]);
