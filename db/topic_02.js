@@ -248,5 +248,49 @@ window.loadTopic("02 Overview & Install", [
         ], 
         rationale: "The Online Installer is a lightweight ISO that pulls everything dynamically during installation from SCC or RMT. The Full Package Media contains everything needed to install the entire operating system without network access.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-install-prep.html' target='_blank'>📚 SUSE Docs: Installation Media</a>" 
     },
+    { 
+        type: "SINGLE", 
+        text: "Which of the following describes the options available when SLES reaches GE (end of general support)?", 
+        options: [
+            {text: "An additional LTSS subscription can be purchased which extends support beyond GE", correct: true},
+            {text: "The product will continue to run but with reduced functionality", correct: false},
+            {text: "Only patches for critical security vulnerabilities will be published and made available", correct: false},
+            {text: "Support is provided for another 6 months beyond GE", correct: false}
+        ], 
+        rationale: "When a major version of SUSE Linux Enterprise Server reaches the end of its 10-year General Support (GS/GE) phase, it enters the Extended Support phase. To continue receiving maintenance, security fixes, and technical support for critical vulnerabilities during this period, administrators must purchase an additional <b>LTSS (Long Term Service Pack Support)</b> subscription. Without LTSS, the system will keep running normally but will no longer receive any official patches or package updates.<br><br><a href='https://www.suse.com/lifecycle/' target='_blank'>📚 SUSE Product Lifecycle Policy</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "After a service pack for SLES is released how many months is the previous service pack supported for?", 
+        options: [
+            {text: "18", correct: false},
+            {text: "6", correct: true},
+            {text: "3", correct: false},
+            {text: "12", correct: false}
+        ], 
+        rationale: "When a new SUSE Linux Enterprise Service Pack is released, SUSE provides a standard <b>6-month upgrade window</b>. During this transition period, the previous Service Pack remains fully supported to allow administrators time to plan and execute their migration to the new release. Once this 6-month window closes, you must have upgraded or purchased Long Term Service Pack Support (LTSS) to continue receiving maintenance updates[cite: 1, 2].<br><br><a href='https://www.suse.com/lifecycle/' target='_blank'>📚 SUSE Product Lifecycle Policy</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which statement is true about Package Hub?", 
+        options: [
+            {text: "All the packages are supported by SUSE", correct: false},
+            {text: "Only packages flagged with an S are supported by SUSE", correct: false},
+            {text: "Packages from Package Hub require an additional subscription", correct: false},
+            {text: "No packages from package hub are supported by SUSE", correct: true}
+        ], 
+        rationale: "According to the official SUSE training manual, SUSE Package Hub provides access to thousands of community-built packages for SUSE Linux Enterprise Server. While these packages are maintained entirely by the community and are <b>not officially supported by SUSE</b>, installing software from Package Hub does not invalidate or affect the official support contract of your base SLES operating system. Furthermore, Package Hub is an optional free extension that does not require an additional paid subscription.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-sw-cl.html#sec-zypper-packagehub' target='_blank'>📚 SUSE Docs: SUSE Package Hub</a>" 
+    },
+    { 
+        type: "MULTI", 
+        text: "Which of the following are extensions available for SUSE Linux Enterprise Server? (Select 2)", 
+        options: [
+            {text: "Live Patching", correct: true},
+            {text: "Base System", correct: false},
+            {text: "Containers", correct: false},
+            {text: "High Availability", correct: true}
+        ], 
+        rationale: "In the SUSE Linux Enterprise architecture, there is a strict technical distinction between Modules and Extensions. Extensions, such as <b>High Availability</b> and <b>Live Patching</b>, add specialized advanced features to the system and require a separate paid subscription. On the other hand, <b>Base System</b> and <b>Containers</b> are Modules, which are already included as part of the standard SLES subscription and do not require additional registration codes.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-register-sle.html#sec-registration-modules' target='_blank'>📚 SUSE Docs: Modules and Extensions</a>" 
+    },
     
 ]);
