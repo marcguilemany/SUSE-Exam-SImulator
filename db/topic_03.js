@@ -364,5 +364,26 @@ window.loadTopic("03 The Command Line", [
         ], 
         rationale: "In Linux terminal emulators, `Ctrl+S` suspends data transmission to the screen (XOFF), and `Ctrl+Q` resumes it (XON).<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Terminal Shortcuts</a>" 
     },
-
+    { 
+        type: "SINGLE", 
+        text: "How many different types of regular expression can the grep command use?", 
+        options: [
+            {text: "3", correct: true},
+            {text: "1", correct: false},
+            {text: "2", correct: false},
+            {text: "4", correct: false}
+        ], 
+        rationale: "The `grep` utility can interpret 3 main types of regular expression syntaxes depending on the flags used: <b>Basic Regular Expressions (BRE)</b> by default, <b>Extended Regular Expressions (ERE)</b> using the `-E` flag (equivalent to `egrep`), and <b>Perl-Compatible Regular Expressions (PCRE)</b> using the `-P` flag. Understanding these distinctions is critical for advanced text filtering and pattern matching in the command line.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Text Search Utilities</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What does the following command do? find / -name ntp.*", 
+        options: [
+            {text: "Searches starting in the current directory for directories", correct: false},
+            {text: "Searches in the current directory for all files containing the string ntp.*", correct: false},
+            {text: "Searches starting in the root (/) directory for file names starting with ntp. followed by zero or more characters", correct: true},
+            {text: "Searches starting in the users home directory for files that match the pattern ntp.*", correct: false}
+        ], 
+        rationale: "The `find` command requires a starting search location and evaluation criteria. In the command `find / -name ntp.*`, the <b>`/`</b> explicitly tells the system to begin traversing from the root directory recursively, while the <b>`-name`</b> switch limits the results to match the literal pattern. The wildcard asterisk (<b>`*`</b>) expands to represent zero or more characters trailing 'ntp.'.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Searching Files and Directories</a>" 
+    },
 ]);
