@@ -125,6 +125,18 @@ window.loadTopic("09 Privilege Delegation", [
             {text: "systemctl unmount <service_name>", correct: false}
         ], 
         rationale: "`systemctl mask` links the unit file to `/dev/null`, preventing it from being started under any circumstance. `disable` only removes boot symlinks, but it can still be started manually.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-systemd.html' target='_blank'>📚 SUSE Docs: Masking Units</a>" 
-    }
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which command switches the system to the default system target?", 
+        options: [
+            {text: "systemctl isolate", correct: false},
+            {text: "systemctl default", correct: true},
+            {text: "systemctl get-default", correct: false},
+            {text: "systemctl isolate get-default", correct: false}
+        ], 
+        rationale: "The <b>`systemctl default`</b> command tells systemd to immediately switch the running state of the operating system to its default target configuration (which is typically a symlink pointing to `multi-user.target` or `graphical.target`). While `systemctl get-default` only queries and displays the name of that target, and `systemctl isolate` requires you to specify a target name manually to change states, `systemctl default` acts as a direct shortcut to enforce the system's baseline boot target without needing further parameters.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-systemd.html' target='_blank'>📚 SUSE Docs: Managing System Targets</a>" 
+    },
+    
 
 ]);
