@@ -304,5 +304,15 @@ window.loadTopic("17 Software Management", [
         ], 
         rationale: "`zypper patches` is the enterprise-recommended strategy because it targets specific fixed bugs or CVE issues tracked by maintenance channels. `zypper updates` pulls newer package versions regardless of whether they fix a specific tracking bug.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-sw-cl.html' target='_blank'>📚 SUSE Docs: Patches vs Updates</a>" 
     },    
-
+    { 
+        type: "SINGLE", 
+        text: "Which of the following is used to install a pattern?", 
+        options: [
+            {text: "zypper in -t [OPTIONS] PATTERN", correct: true},
+            {text: "zypper in -p [OPTIONS] PATTERN", correct: false},
+            {text: "zypper install [OPTIONS] PATTERN", correct: false},
+            {text: "zypp in [OPTIONS] PACKAGE", correct: false}
+        ], 
+        rationale: "In SLES 15, software bundles that serve a specific architectural purpose (such as a DHCP server, a container host, or a LAMP stack) are grouped into a meta-package format called a <b>Pattern</b>. When using the command line tool `zypper` to install a specific package type other than a standard RPM, you must explicitly declare the target type using the <b>`-t`</b> (or `--type`) switch followed by the argument <b>`pattern`</b> (e.g., `zypper in -t pattern lamp_server`). Just using `zypper install` without specifying the type will cause the system to search exclusively for standard individual packages matching that name.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-sw-cl.html#sec-zypper-inst' target='_blank'>📚 SUSE Docs: Installing Patterns via Zypper</a>" 
+    },
 ]);
