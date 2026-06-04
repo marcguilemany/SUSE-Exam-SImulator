@@ -385,5 +385,28 @@ window.loadTopic("05 Text Editors (Vim)", [
         ], 
         rationale: "The `:%s` tells Vim to scan the whole file, and the `/g` trailing option ensures every occurrence on a line is substituted, not just the first one.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-vim.html' target='_blank'>📚 SUSE Docs: Advanced Vim Usage</a>" 
     },
+    { 
+        type: "SINGLE", 
+        text: "Which file must be created to configure Vim for a user?", 
+        options: [
+            {text: "~/.vim.conf", correct: false},
+            {text: "~/vimrc", correct: false},
+            {text: "~/.vimrc", correct: true},
+            {text: "/etc/vimrc", correct: false}
+        ], 
+        rationale: "To customize the Vim editor environment for an individual user (such as enabling syntax highlighting, line numbers, or custom tab spacing), you must create or modify the hidden <b>`.vimrc`</b> file directly inside that user's home directory (represented by the tilde <b>`~`</b>). While `/etc/vimrc` applies configurations globally to all users on the system, user-specific adjustments are always parsed from `~/.vimrc` and will override the global settings.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-vim.html' target='_blank'>📚 SUSE Docs: Configuring Vim</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which command allows the content of multiple text files to be compared and edited if required?", 
+        options: [
+            {text: "vimcompare", correct: false},
+            {text: "diffvim", correct: false},
+            {text: "vnew", correct: false},
+            {text: "vimdiff", correct: true}
+        ], 
+        rationale: "The <b>`vimdiff`</b> command launches Vim in diff mode, splitting the terminal screen vertically to display two or more files side-by-side. It dynamically highlights differences, missing lines, or modified characters between the files. Because it runs natively inside the Vim editor wrapper, administrators can use standard Vim navigation and editing shortcuts to modify, sync, or merge text lines in real-time.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-vim.html' target='_blank'>📚 SUSE Docs: Comparing Files with Vim</a>" 
+    },
+  
 
 ]);
