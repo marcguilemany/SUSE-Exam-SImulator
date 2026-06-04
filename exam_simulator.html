@@ -310,14 +310,32 @@ const quiz = {
     // Si necesitas que las pegue enteras dímelo, pero son idénticas a la versión anterior.
 
     renderOptions(q, container, prevAns) {
-        const div = document.createElement('div'); div.className = 'opt-list';
+        const div = document.createElement('div'); 
+        div.className = 'opt-list';
         const isMulti = q.type === 'MULTI';
-        q.options.forEach((opt, i) => {
-            const btn = document.createElement('div'); btn.className = 'opt-btn';
+
+        // Creamos una copia de las opciones añadiendo su índice original
+        // Esto permite desordenarlas sin perder la referencia de cuál es la correcta
+        if (!q._shuffledOptions || !prevAns) {
+            q._shuffledOptions = q.options
+                .map((opt, i) => ({ ...opt, originalIndex: i }))
+                .sort(() => Math.random() - 0.5);
+        }
+
+        q._shuffledOptions.forEach((opt, i) => {
+            const btn = document.createElement('div'); 
+            btn.className = 'opt-btn';
             if(prevAns) btn.classList.add('disabled');
-            let isChecked = prevAns && prevAns.userSel.includes(i);
-            btn.innerHTML = `<input type="${isMulti?'checkbox':'radio'}" name="opt" ${isChecked?'checked':''} ${prevAns?'disabled':''}> ${opt.text}`;
+
+            // Comprobamos si esta opción estaba seleccionada usando su originalIndex
+            let isChecked = prevAns && prevAns.userSel.includes(opt.originalIndex);
+            
+            btn.innerHTML = `<input type="${isMulti?'checkbox':'radio'}" name="opt" 
+                            data-orig="${opt.originalIndex}" 
+                            ${isChecked?'checked':''} ${prevAns?'disabled':''}> ${opt.text}`;
+            
             if(isChecked) btn.classList.add('selected');
+
             if(!prevAns) {
                 btn.onclick = (e) => {
                     const inp = btn.querySelector('input');
@@ -337,7 +355,7 @@ const quiz = {
         });
         container.appendChild(div);
     },
-
+    
     renderFill(q, container, prevAns) {
         const inp = document.createElement('input'); inp.type = 'text'; inp.className = 'input-fill';
         inp.placeholder = 'Type your answer...';
