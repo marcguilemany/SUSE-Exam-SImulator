@@ -200,5 +200,16 @@ window.loadTopic("11 Privilege Delegation", [
             {text: "sudo -u admin edit", correct: false}
         ], 
         rationale: "`sudoedit` allows users to modify files securely using their own user space editor. It drops privileges while editing a copy and replaces the file securely, blocking shell-escapes built into text editors.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-sudo.html' target='_blank'>📚 SUSE Docs: Configuring Sudo</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which of the following is used to execute a command with using a specified GUI?", 
+        options: [
+            {text: "su", correct: false},
+            {text: "sudo", correct: false},
+            {text: "sg", correct: true},
+            {text: "newgrp", correct: false}
+        ], 
+        rationale: "The <b>`sg`</b> (switch group) command allows a user to execute a specific command utilizing the permissions of an alternative <b>GID (Group ID)</b> without spawning a permanent new shell session. Note that the question text contains a common exam typo using 'GUI' instead of 'GID'. While `newgrp` switches the user's primary group logs and keeps the terminal session open under that new group context until they log out, `sg` executes only the single passed command with the specified group identity and immediately drops privileges back to the initial state.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-users.html' target='_blank'>📚 SUSE Docs: Managing User Groups</a>" 
     }
 ]);
