@@ -4,6 +4,9 @@ Todas las modificaciones notables de este proyecto serán documentadas en este a
 
 El formato se basa en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2026-06-04 (Add more questions) 
+- **Añadimos mas Preguntas:** Añadimos mas preguntas.
+
 ## [1.0.3] - 2025-12-24 (Add more questions) 
 - **Añadimos mas Preguntas:** Añadimos mas preguntas.
 
