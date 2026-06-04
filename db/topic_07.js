@@ -430,6 +430,50 @@ window.loadTopic("07 Standard Permissions", [
         ], 
         rationale: "The ACL mask defines the maximum effective rights for named users and groups. Even if a user is granted `rwx`, if the mask is `r--`, their effective permission is limited to read-only.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-security-acls.html' target='_blank'>📚 SUSE Docs: Understanding ACL Masks</a>" 
     },
+    { 
+        type: "SINGLE", 
+        text: "Which operator at the end of the permissions output of the ls -l command shows that the directory has extended ACLs?", 
+        options: [
+            {text: ".", correct: false},
+            {text: "+", correct: true},
+            {text: "-", correct: false},
+            {text: "*", correct: false}
+        ], 
+        rationale: "When a file or directory has an Extended Access Control List (ACL) configured, the standard `ls -l` command appends a plus sign (<b>`+`</b>) to the end of the 10-character permission string (e.g., `drwxr-xr-x+`). If the system uses SELinux or alternative security contexts instead, a dot (`.`) might appear, but for standard extended POSIX ACLs in SLES, the `+` indicates that additional user or group permissions are being enforced beyond traditional UGO bits.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-security-acls.html' target='_blank'>📚 SUSE Docs: Access Control Lists (ACLs)</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which option with setfacl will add or modify an ACL entry?", 
+        options: [
+            {text: "-m", correct: true},
+            {text: "-d", correct: false},
+            {text: "-x", correct: false},
+            {text: "-c", correct: false}
+        ], 
+        rationale: "The <b>`-m`</b> (modify) option is used with the `setfacl` command to add new entries or change existing rules within a file or directory's ACL structure (e.g., `setfacl -m u:tux:rx file`). Conversely, `-x` is used to remove entries, `-b` or `-c` completely strips the ACL headers, and `-d` sets default behaviors for future files.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-security-acls.html' target='_blank'>📚 SUSE Docs: Modifying ACLs</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "A directory has an extended ACL configured and default ACLs configured. When a subdirectory is created which of the following statements is true?", 
+        options: [
+            {text: "The default permissions of for a new directory will be assigned", correct: false},
+            {text: "The subdirectory will inherit both the user owner and group owner's permissions of it's parent directory", correct: true},
+            {text: "The subdirectory will inherit only the user owner's permissions of it's parent directory", correct: false},
+            {text: "The subdirectory will inherit only the group owner's permissions of it's parent directory", correct: false}
+        ], 
+        rationale: "In SLES 15, directory structures utilizing Default ACLs enforce inherited permission matrices onto newly generated sub-elements. When a subdirectory is created inside a parent folder containing predefined Default ACL criteria, <b>the subdirectory inherits both the user owner and group owner's access permissions</b> directly, along with the corresponding 'default' ACL ruleset, allowing seamless automated multi-user access continuity without manual intervention.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-security-acls.html' target='_blank'>📚 SUSE Docs: Hybrid ACL Inheritances</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which of the following describes the effect setting the SUID on a file where the file owner has execute permission?", 
+        options: [
+            {text: "The SUID only has an effect when set on a directory", correct: false},
+            {text: "When the file is executed the process owner is the file owner", correct: true},
+            {text: "The file can not be deleted while a process launched by executing the file is running", correct: false},
+            {text: "When the file is executed the process owner is the file's group owner", correct: false}
+        ], 
+        rationale: "The <b>SUID (Set Owner User ID)</b> permission bit causes an executable file to run with the security privileges of the <b>file's owner</b> rather than the privileges of the user who is interacting with the terminal shell. A common example is the `/usr/bin/passwd` command: it is owned by `root`, so when an unprivileged user executes it, the running process gains root-level access to safely alter `/etc/shadow`. If the owner has execution bits active, SUID shows up as a lowercase `s` in the owner field.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-security-acls.html' target='_blank'>📚 SUSE Docs: Special File Bits</a>" 
+    },
 
 
 ]);
