@@ -233,7 +233,40 @@ window.loadTopic("08 Process Management", [
             {text: "The user can lower the nice value to negative numbers to accelerate processing.", correct: false}
         ], 
         rationale: "Regular users can only 'be nice' to others by increasing their process's nice value (making it less urgent for the scheduler). Only root can lower a nice value (increase real priority).<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Process Monitoring</a>" 
-    }
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which of the following is true about nice values?", 
+        options: [
+            {text: "A regular user can only used positive values", correct: true},
+            {text: "The root user user can only use positive values", correct: false},
+            {text: "A regular user can only used negative values", correct: false},
+            {text: "The root user can only used negative values", correct: false}
+        ], 
+        rationale: "In Linux process scheduling, nice values range from <b>-20</b> (highest priority) to <b>19</b> (lowest priority). A standard, unprivileged user can only 'decrease' the scheduling priority of their own processes, meaning they are strictly restricted to assigning <b>positive nice values</b> (0 to 19). Only the `root` administrative user can lower nice values into the negative spectrum (-20 to -1) to increase a process's scheduling urgency.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Process Nice Priorities</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "A job is running in the foreground. What happens when Crtl + z is entered from the keyboard?", 
+        options: [
+            {text: "The job is terminated", correct: false},
+            {text: "The job is moved to the background and stopped", correct: true},
+            {text: "The job continues in the background", correct: false},
+            {text: "Nothing", correct: false}
+        ], 
+        rationale: "Pressing the <b>`Ctrl + Z`</b> terminal key combination intercepts the active foreground process by sending the <b>SIGTSTP</b> (Terminal Stop) signal. This operational flow safely halts the execution of the process in memory, strips its control over the terminal keyboard interactive session, and <b>moves it directly into the shell background as a stopped job</b> until it is explicitly resumed.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Job Control Strings</a>" 
+    }, 
+    { 
+        type: "SINGLE", 
+        text: "Which command will start a background job that is currently stopped?", 
+        options: [
+            {text: "bg", correct: true},
+            {text: "fg", correct: false},
+            {text: "jobs", correct: false},
+            {text: "ps", correct: false}
+        ], 
+        rationale: "The <b>`bg`</b> (background) command sends a <b>SIGCONT</b> signal to a suspended or stopped background job, forcing it to resume its execution state in the background without locking up the active terminal shell prompt. If multiple jobs are stopped, you can specify which one to resume by appending its job ID (e.g., `bg %1`), whereas the `fg` command would bring it back into the active interactive foreground instead.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Managing Background Jobs</a>" 
+    },
 
 
 
