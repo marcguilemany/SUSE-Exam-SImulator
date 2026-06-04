@@ -232,4 +232,26 @@ window.loadTopic("04 The Linux Filesystem", [
         ], 
         rationale: "The `/run` directory is a transient, volatile runtime directory stored in a temporary RAM filesystem (tmpfs) that keeps tracking data since the system booted.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-fhs.html' target='_blank'>📚 SUSE Docs: FHS Structure</a>" 
     },
+    { 
+        type: "SINGLE", 
+        text: "What does the data block of a symbolic link file contain?", 
+        options: [
+            {text: "Raw data", correct: false},
+            {text: "The path to the target file", correct: true},
+            {text: "The inode number of the target file", correct: false},
+            {text: "The directory structure", correct: false}
+        ], 
+        rationale: "Unlike a hard link (which points directly to the target file's inode number), a symbolic link (symlink) is a distinct, standalone file with its own unique inode. The data block allocated to a symbolic link file contains nothing more than <b>the text string of the path (absolute or relative) to the target file</b>. When accessed, the operating system reads this path pointer and automatically redirects the operation to that location.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Understanding Symbolic Links</a>" 
+    },    
+    { 
+        type: "SINGLE", 
+        text: "Which Linux file type is associated with storage devices?", 
+        options: [
+            {text: "Regular files", correct: false},
+            {text: "Directory files", correct: false},
+            {text: "Pipes and Sockets", correct: false},
+            {text: "Block device files", correct: true}
+        ], 
+        rationale: "In Linux, everything is managed as a file. Storage hardware peripherals such as hard drives, SSDs, NVMe drives, and flash storage are represented in the virtual filesystem structure as <b>Block device files</b> (typically located under `/dev/`). They differ from character devices because the kernel handles their input/output operations by buffering data in fixed-size blocks rather than streaming it byte-by-byte.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-fhs.html' target='_blank'>📚 SUSE Docs: Linux Device File Types</a>" 
+    },
 ]);
