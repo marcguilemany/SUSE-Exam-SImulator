@@ -156,4 +156,16 @@ window.loadTopic("13 Storage Management Fundamentals", [
         ], 
         rationale: "`blkid` specifically identifies block device properties (UUID, Labels, Filesystem format), whereas `df` only interacts with currently mounted filesystems.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html' target='_blank'>📚 SUSE Docs: Block Device Identification</a>" 
     },
+    { 
+        type: "SINGLE", 
+        text: "Which of the following parted commands will display the partition information for the first NVMe disk on the first NVMe controller?", 
+        options: [
+            {text: "parted /dev/nvme0n1 print", correct: true},
+            {text: "parted /dev/nvme1 show", correct: false},
+            {text: "parted /dev/sda show", correct: false},
+            {text: "parted /dev/sda print", correct: false}
+        ], 
+        rationale: "In Linux device naming conventions, non-volatile memory express devices follow a specific structural nomenclature: <b>`/dev/nvme<controller>n<namespace>`</b>. Therefore, the first NVMe disk (Namespace 1) attached to the first NVMe controller (Controller 0) is represented as <b>`/dev/nvme0n1`</b>. To display the internal partition table structure using the `parted` utility non-interactively, you must pass the device path followed by the sub-command <b>`print`</b> (as `show` is not a valid subcommand in parted).<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html' target='_blank'>📚 SUSE Docs: NVMe Device Naming</a>" 
+    },
+    
 ]);
