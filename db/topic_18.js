@@ -21,6 +21,28 @@ window.loadTopic("18 System Logging", [
     },
     { 
         type: "SINGLE", 
+        text: "What is the primary purpose of systemd-journald?", 
+        options: [
+            {text: "Storing binary files", correct: false},
+            {text: "Collecting and storing logging data", correct: true},
+            {text: "Managing system processes", correct: false},
+            {text: "Running system services", correct: false}
+        ], 
+        rationale: "The <b>`systemd-journald`</b> daemon is the core systemd component responsible for <b>collecting and storing system logging data</b>. It intercepts log messages from the Linux kernel, system services, standard output error streams, and PAM authentication modules. Unlike traditional syslog daemons that write messages to plain text files, `systemd-journald` writes logs into structured, indexed <b>binary files</b> (stored by default in volatile memory at `/run/log/journal/` or persistently at `/var/log/journal/`), which must be queried using the `journalctl` utility.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-log.html#sec-log-journald' target='_blank'>📚 SUSE Docs: systemd-journald Architecture</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "What is the primary purpose of the supportconfig tool?", 
+        options: [
+            {text: "Configuring firewall settings", correct: false},
+            {text: "Monitoring network traffic", correct: false},
+            {text: "Installing system updates", correct: false},
+            {text: "Gathering system information for troubleshooting", correct: true}
+        ], 
+        rationale: "The primary purpose of the <b>`supportconfig`</b> utility is to <b>gather comprehensive system configuration, logs, and hardware status info for troubleshooting purposes</b>. When executed, it runs a series of diagnostic scripts to analyze memory allocation, storage partitions, active network settings, systemd status, and kernel parameters, packaging everything into a compressed tarball archive inside `/var/log/`. This archive is the standard baseline document required by SUSE Level 2 and Level 3 engineers to resolve official support tickets.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-support.html#sec-adm-support-supportconfig' target='_blank'>📚 SUSE Docs: Gathering Diagnostics with supportconfig</a>" 
+    },
+    { 
+        type: "SINGLE", 
         text: "What does the term 'action' mean when referring to system logging (rsyslog/syslog-ng)?", 
         options: [
             {text: "An action defines where a log message ends up (file, db, remote).", correct: true},
