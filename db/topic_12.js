@@ -231,5 +231,37 @@ window.loadTopic("12 Remote Administration", [
         ], 
         rationale: "A One-time VNC session spawns a graphical interface upon connection and tears it down completely when the client disconnects, preserving server resources.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-vnc.html' target='_blank'>📚 SUSE Docs: VNC Sessions</a>" 
     },
-
+    { 
+        type: "SINGLE", 
+        text: "Which packages are required on a SLES server to enable and configure RDP access?", 
+        options: [
+            {text: "yast2-rdp", correct: false},
+            {text: "rdpx11 and rdp", correct: false},
+            {text: "xrdp and yast2-rdp", correct: true},
+            {text: "xrdp and rdp", correct: false}
+        ], 
+        rationale: "To enable and manage Remote Desktop Protocol (RDP) connections natively on a SUSE Linux Enterprise Server, two main software components are required: <b>`xrdp`</b>, which is the open-source server daemon that implements the RDP protocol, and <b>`yast2-rdp`</b>, which provides the official graphical and text-based YaST module wizard interface to easily configure and initialize the service without manually editing raw configuration files.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-vnc.html' target='_blank'>📚 SUSE Docs: Remote Desktop with xrdp</a>"
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which of the following can be configured when using YaST to configure remote access using VNC?", 
+        options: [
+            {text: "Enable or disable session management, enable VNC access from a web browser, configure the firewall to allow VNC access", correct: true},
+            {text: "Enable or disable session management, enable VNC access from a web browser", correct: false},
+            {text: "Enable VNC access from a web browser, configure the firewall to allow VNC access", correct: false},
+            {text: "Enable or disable session management, configure the firewall to allow VNC access", correct: false}
+        ], 
+        rationale: "The official YaST Remote Administration module (VNC) provides a comprehensive automation wizard. When configuring VNC services through YaST, it allows you to configure 3 critical areas simultaneously: <b>enable/disable session management</b> (persistent vs one-time sessions), <b>enable HTTP-based browser access</b> (via an embedded Java/NoVNC web applet), and <b>automatically open the required zones in the firewalld configuration</b> to permit external inbound desktop requests.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-vnc.html' target='_blank'>📚 SUSE Docs: YaST Remote Administration</a>"
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which URL will connect to the system server77.suse.com (opens in a new tab)over VNC from a browser?", 
+        options: [
+            {text: "server77.suse.com:5801", correct: true},
+            {text: "server.suse.com:5443", correct: false},
+            {text: "server77.suse.com", correct: false},
+            {text: "server77.suse.com:5901", correct: false}
+        ], 
+        rationale: "In SUSE Linux Enterprise Server VNC architecture, native desktop environments map their display outputs starting at port 5900 (e.g., `:1` uses port `5901`). However, when accessing VNC <b>via an HTTP web browser interface</b>, the server uses a separate configuration offset that starts listening on port <b>5800</b>. Therefore, the first desktop display session (`:1`) running its web-browser applet will map strictly to port <b>5801</b> (URL: `server77.suse.com:5801`).<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-vnc.html' target='_blank'>📚 SUSE Docs: Web Browser VNC Port Offsets</a>"
+    },
 ]);
