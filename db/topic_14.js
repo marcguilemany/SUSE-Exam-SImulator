@@ -187,5 +187,27 @@ window.loadTopic("14 Logical Volume Management", [
         ], 
         rationale: "You must always reduce the filesystem *before* reducing the Logical Volume container. If you truncate the LV first, you will physically slice off your data block references and corrupt the filesystem.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-lvm.html' target='_blank'>📚 SUSE Docs: LVM Operations</a>" 
     },
-
+    { 
+        type: "SINGLE", 
+        text: "When creating a LVM snapshot which of the following options is required to indicate the type of logical volume is a snapshot?", 
+        options: [
+            {text: "--merge", correct: false},
+            {text: "-L", correct: false},
+            {text: "-n", correct: false},
+            {text: "-s", correct: true}
+        ], 
+        rationale: "To create a traditional point-in-time snapshot of an existing logical volume using the `lvcreate` command, the <b>`-s`</b> (or `--snapshot`) option is strictly required to instruct the LVM subsystem that the new volume is a copy-on-write snapshot rather than a standard independent linear volume. When utilizing this option, you must also specify the size of the snapshot allocation space using `-L` and the target origin logical volume path (e.g., `lvcreate -L 5G -s -n lv_snap /dev/vg1/lv_data`).<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-lvm.html' target='_blank'>📚 SUSE Docs: LVM Snapshot Allocation</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which of the following commands will expand the volume group vg2 to include the physical volume /dev/sdf?", 
+        options: [
+            {text: "vgexpand vg=vg2 /dev/sdf", correct: false},
+            {text: "vgextend /dev/sdf vg2", correct: false},
+            {text: "vgextend /dev/sdf", correct: false},
+            {text: "vgextend vg2 /dev/sdf", correct: true}
+        ], 
+        rationale: "The <b>`vgextend`</b> command is used to add one or more initialized physical volumes (PVs) into an existing LVM volume group (VG), thereby increasing the total physical storage pool available for logical volume allocations. The mandatory command-line syntax requires passing <b>the name of the target Volume Group first, followed by the block path of the new Physical Volume</b> (e.g., `vgextend vg2 /dev/sdf`). The block device must be previously initialized via `pvcreate` before it can be appended to the group context.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-lvm.html' target='_blank'>📚 SUSE Docs: Modifying LVM Volume Groups</a>" 
+    },
+  
 ]);
