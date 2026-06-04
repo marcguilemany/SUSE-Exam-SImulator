@@ -228,4 +228,26 @@ window.loadTopic("10 Task Scheduling", [
         ], 
         rationale: "If `cron.allow` exists, the system checks it exclusively. If a user is not inside it, access is denied, regardless of whether `cron.deny` exists or not.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-cron.html' target='_blank'>📚 SUSE Docs: Cron Access Control</a>" 
     },
+    { 
+        type: "SINGLE", 
+        text: "Which command is used to show the timer unit named logrotate?", 
+        options: [
+            {text: "systemctl read logrotate.timer", correct: false},
+            {text: "systemctl list logrotate.timer", correct: false},
+            {text: "systemctl start logrotate.timer", correct: false},
+            {text: "systemctl cat logrotate.timer", correct: true}
+        ], 
+        rationale: "The <b>`systemctl cat`</b> command is used to inspect and display the raw text contents of a systemd unit file (such as services, targets, or timers) directly from its source location on disk without needing to look up its installation path. In SLES 15, `logrotate` is triggered natively by a systemd timer component rather than old legacy cron jobs, making `systemctl cat logrotate.timer` the proper administrative method to review its scheduling metadata and trigger conditions.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-systemd.html' target='_blank'>📚 SUSE Docs: Inspecting systemd Units</a>" 
+    },
+    { 
+        type: "SINGLE", 
+        text: "Which file contains the names of the users allowed to use the crontab command?", 
+        options: [
+            {text: "/etc/user/crontab", correct: false},
+            {text: "/etc/crontab", correct: false},
+            {text: "/etc/crontab/user", correct: false},
+            {text: "/etc/cron.allow", correct: true}
+        ], 
+        rationale: "The <b>`/etc/cron.allow`</b> configuration file acts as an explicit whitelist specifying exactly which local user accounts are authorized to execute the `crontab` command to schedule personal tasks. If this file exists, a user must be explicitly listed inside it to use cron privileges. If it does not exist, the system then checks `/etc/cron.deny` to block specific entries; however, when managing strict system security profiles, `/etc/cron.allow` is the primary authoritative allowlist parsed by the cron daemon.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-cron.html' target='_blank'>📚 SUSE Docs: Cron Access Security</a>" 
+    },
 ]);
