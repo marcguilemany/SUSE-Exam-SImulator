@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCA SUSE 15 - Simulator Pro</title>
     <script src="https://cdn.jsdelivr.net/npm/mobile-drag-drop@2.3.0/index.min.js"></script>
-    <!-- <script>MobileDragDrop.polyfill({dragImageTranslateOverride:0});</script> -->
-
     <style>
         :root { --primary: #0c322c; --secondary: #30ba78; --bg: #f8fafc; --text: #334155; --white: #ffffff; --border: #e2e8f0; --wrong: #ef4444; }
         * { box-sizing: border-box; outline: none; }
@@ -53,7 +51,7 @@
             background: #f1f5f9; 
             border: 2px dashed #cbd5e1; 
             border-radius: 8px; 
-            min-height: 250px; /* IMPORTANTE: Esto le da altura para que puedas soltar */
+            min-height: 250px; 
             padding: 15px; 
             transition: background 0.2s;
             display: flex;
@@ -96,9 +94,9 @@
             position: absolute; width: 30px; height: 30px; 
             background: var(--secondary); border: 2px solid white; 
             border-radius: 50%; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            transform: translate(-50%, -50%); /* Para centrar el pin en el click */
+            transform: translate(-50%, -50%); 
             pointer-events: none; transition: top 0.2s, left 0.2s;
-            display: none; /* Oculto hasta que se hace click */
+            display: none; 
             justify-content: center; align-items: center; font-size: 1.2rem;
         }
         .hotspot-pin.active { display: flex; }
@@ -119,7 +117,10 @@
         <div id="start-screen" class="screen active center-screen">
             <h2 style="margin-bottom: 10px;">Exam Simulation</h2>
             <p style="color: #64748b; margin-bottom: 40px;">Mixed questions: Single & Multiple Choice, Drag & Drop, Fill in the blanks and Hotspot.</p>
-            <button class="big-btn" onclick="quiz.start()">START EXAM</button>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <button class="big-btn" onclick="quiz.start('standard')">START EXAM (70 Q)</button>
+                <button class="big-btn" style="background: var(--primary); box-shadow: 0 4px 0 #051512;" onclick="quiz.start('full')">🚀 ALL QUESTIONS MODE</button>
+            </div>
         </div>
 
         <div id="quiz-screen" class="screen">
@@ -161,10 +162,9 @@
 <script> 
     window.examData = []; 
 
-    // ESTA FUNCIÓN ES LA CLAVE: Recibe el nombre del tema y se lo pega a cada pregunta
     window.loadTopic = function(name, questions) {
         questions.forEach(q => {
-            q.topic = name; // Aquí es donde se guarda el nombre del topic (ej: "02 Overview")
+            q.topic = name; 
             window.examData.push(q);
         });
         console.log(`Cargado: ${name} (${questions.length} preguntas)`);
@@ -191,10 +191,8 @@
 <script>console.log("Questions loaded:", window.examData.length);</script>
 
 <script>
-
-
 // =============================================================================
-//  ENGINE LOGIC - PRO VERSION 2.0 (Balanced & Reporting)
+//  ENGINE LOGIC - PRO VERSION 2.5 (Balanced, Anti-Pattern & Stable Render)
 // =============================================================================
 const quiz = {
     list: [],
@@ -203,55 +201,50 @@ const quiz = {
     timer: null,
     timeLeft: 5400,
 
-    start() {
+    start(mode = 'standard') {
         if (!window.examData || window.examData.length === 0) {
             alert("Error: No questions loaded. Check your 'db' folder.");
             return;
         }
 
-        // --- ALGORITMO DE REPARTO EQUITATIVO ---
-        
-        // 1. Agrupar preguntas por tema
-        const questionsByTopic = {};
-        window.examData.forEach(q => {
-            const t = q.topic || "Unknown Topic";
-            if (!questionsByTopic[t]) questionsByTopic[t] = [];
-            questionsByTopic[t].push(q);
-        });
-
         let finalSelection = [];
-        let remainingPool = [];
 
-        // 2. Seleccionar 2 preguntas obligatorias de cada tema (si hay)
-        Object.keys(questionsByTopic).forEach(topic => {
-            // Barajar las preguntas de este tema
-            const shuffled = questionsByTopic[topic].sort(() => Math.random() - 0.5);
-            
-            // Coger las 2 primeras para el examen
-            const guaranteed = shuffled.slice(0, 2);
-            finalSelection = finalSelection.concat(guaranteed);
-            
-            // El resto van al "pool" general para rellenar
-            remainingPool = remainingPool.concat(shuffled.slice(2));
-        });
+        if (mode === 'full') {
+            // Modo Maratón completo
+            finalSelection = [...window.examData];
+            this.timeLeft = 180 * 60; // 3 Horas para el pool completo
+        } else {
+            // Algoritmo de reparto equitativo standard (70 Q)
+            const questionsByTopic = {};
+            window.examData.forEach(q => {
+                const t = q.topic || "Unknown Topic";
+                if (!questionsByTopic[t]) questionsByTopic[t] = [];
+                questionsByTopic[t].push(q);
+            });
 
-        // 3. Rellenar hasta llegar a 70
-        const questionsNeeded = 70 - finalSelection.length;
-        if (questionsNeeded > 0) {
-            // Barajar el pool restante
-            remainingPool.sort(() => Math.random() - 0.5);
-            // Coger las que faltan
-            finalSelection = finalSelection.concat(remainingPool.slice(0, questionsNeeded));
+            let remainingPool = [];
+
+            Object.keys(questionsByTopic).forEach(topic => {
+                const shuffled = questionsByTopic[topic].sort(() => Math.random() - 0.5);
+                const guaranteed = shuffled.slice(0, 2);
+                finalSelection = finalSelection.concat(guaranteed);
+                remainingPool = remainingPool.concat(shuffled.slice(2));
+            });
+
+            const questionsNeeded = 70 - finalSelection.length;
+            if (questionsNeeded > 0) {
+                remainingPool.sort(() => Math.random() - 0.5);
+                finalSelection = finalSelection.concat(remainingPool.slice(0, questionsNeeded));
+            }
+            this.timeLeft = 90 * 60; 
         }
 
-        // 4. Barajar la selección final para que los temas salgan mezclados
+        // Barajamos completo para mezclar bloques temáticos
         this.list = finalSelection.sort(() => Math.random() - 0.5);
 
-        // --- INICIO STANDARD ---
         this.idx = 0;
         this.answers = {};
         clearInterval(this.timer);
-        this.timeLeft = 90 * 60; 
         this.startTimer();
 
         document.getElementById('total-q').innerText = this.list.length;
@@ -284,7 +277,6 @@ const quiz = {
         
         document.getElementById('curr-q').innerText = this.idx + 1;
         document.getElementById('progress').style.width = ((this.idx / this.list.length) * 100) + '%';
-        // Mostrar el Topic además del tipo
         document.getElementById('q-type').innerHTML = `<span style="opacity:0.7">${q.topic || 'General'}</span> &nbsp;|&nbsp; ${q.type}`;
         document.getElementById('q-text').innerText = q.text;
         
@@ -296,59 +288,51 @@ const quiz = {
         area.innerHTML = '';
         document.getElementById('feedback').style.display = 'none';
 
-        if(q.type === 'SINGLE' || q.type === 'MULTI') this.renderOptions(q, area, answered);
-        else if(q.type === 'FILL') this.renderFill(q, area, answered);
-        else if(q.type === 'ORDER') this.renderOrder(q, area, answered);
-        else if(q.type === 'MATCHING') this.renderMatch(q, area, answered);
-        else if(q.type === 'HOTSPOT') this.renderHotspot(q, area, answered);
+        // Sanitización del string de tipo para evitar falsos negativos por formato
+        const questionType = String(q.type).toUpperCase().trim();
 
-        if(answered) this.showFeedback(answered.isCorrect, q.rationale);
+        if (questionType === 'SINGLE' || questionType === 'MULTI') this.renderOptions(q, area, answered);
+        else if (questionType === 'FILL') this.renderFill(q, area, answered);
+        else if (questionType === 'ORDER') this.renderOrder(q, area, answered);
+        else if (questionType === 'MATCHING') this.renderMatch(q, area, answered);
+        else if (questionType === 'HOTSPOT') this.renderHotspot(q, area, answered);
+
+        if (answered) this.showFeedback(answered.isCorrect, q.rationale);
     },
-
-    // ... (renderOptions, renderFill, renderOrder, renderMatch, renderHotspot, check, showFeedback, next, prev SE QUEDAN IGUAL QUE ANTES) ...
-    // ... COPIA AQUÍ ESAS FUNCIONES DEL CÓDIGO ANTERIOR PARA NO HACER ESTO MUY LARGO ...
-    // Si necesitas que las pegue enteras dímelo, pero son idénticas a la versión anterior.
 
     renderOptions(q, container, prevAns) {
         const div = document.createElement('div'); 
         div.className = 'opt-list';
         const isMulti = q.type === 'MULTI';
 
-        // 1. Salvaguarda radical: Si la pregunta no tiene opciones estructuradas, salimos para no romper el DOM
         if (!q || !q.options || !Array.isArray(q.options)) {
-            container.innerHTML = '<p style="color:var(--wrong);">Error: Las opciones de esta pregunta no están definidas en la base de datos.</p>';
+            container.innerHTML = '<p style="color:var(--wrong);">Error: Opciones no declaradas en la BD.</p>';
             return;
         }
 
-        // 2. Crear la copia barajada asegurando que cada una tenga su índice original mapeado
         if (!q._shuffledOptions || !prevAns) {
             q._shuffledOptions = q.options
                 .map((opt, i) => ({ ...opt, originalIndex: i }))
                 .sort(() => Math.random() - 0.5);
         }
 
-        // 3. Obtener de forma segura los índices que el usuario ya había seleccionado si volvió atrás
         const safeUserSel = (prevAns && prevAns.userSel && Array.isArray(prevAns.userSel)) ? prevAns.userSel : [];
 
         q._shuffledOptions.forEach((opt) => {
-            // Validar que la opción individual no sea nula
             if (!opt) return;
 
             const btn = document.createElement('div'); 
             btn.className = 'opt-btn';
             if(prevAns) btn.classList.add('disabled');
 
-            // Comprobación limpia usando el array seguro
             let isChecked = safeUserSel.includes(opt.originalIndex);
             
-            // Inyección limpia en el DOM
             btn.innerHTML = `<input type="${isMulti ? 'checkbox' : 'radio'}" name="opt" 
                             data-orig="${opt.originalIndex}" 
                             ${isChecked ? 'checked' : ''} ${prevAns ? 'disabled' : ''}> ${opt.text || ''}`;
             
             if(isChecked) btn.classList.add('selected');
 
-            // Configuración de los manejadores de clicks si la pregunta no está respondida aún
             if(!prevAns) {
                 btn.onclick = (e) => {
                     const inp = btn.querySelector('input');
@@ -361,19 +345,38 @@ const quiz = {
                             inp.checked = true; 
                         }
                     }
-                    if(isMulti) {
-                        btn.classList.toggle('selected', inp.checked);
-                    } else {
-                        btn.classList.add('selected');
-                    }
+                    if(isMulti) btn.classList.toggle('selected', inp.checked);
+                    else btn.classList.add('selected');
                 };
             }
             div.appendChild(btn);
         });
-        
         container.appendChild(div);
     },
-    
+
+    renderFill(q, container, prevAns) {
+        container.innerHTML = '';
+        const inp = document.createElement('input'); 
+        inp.type = 'text'; 
+        inp.className = 'input-fill';
+        inp.placeholder = 'Type your answer here...';
+        inp.autocomplete = 'off';
+
+        if (prevAns) { 
+            inp.value = (prevAns.userVal !== undefined && prevAns.userVal !== null) ? prevAns.userVal : ''; 
+            inp.disabled = true; 
+        } else {
+            inp.value = '';
+            inp.disabled = false;
+        }
+        
+        container.appendChild(inp);
+        if (!prevAns) {
+            // Retardo seguro para evitar bloqueos asíncronos en la carga
+            setTimeout(() => { if(document.body.contains(inp)) inp.focus(); }, 60);
+        }
+    },
+
     renderOrder(q, container, prevAns) {
         const wrap = document.createElement('div'); wrap.className = 'drag-container';
         const col1 = document.createElement('div'); col1.className = 'drag-col'; col1.innerHTML = `<div class="drag-header">OPTIONS</div>`;
@@ -427,7 +430,6 @@ const quiz = {
             slot.className = 'match-drop drop-zone'; 
             slot.dataset.term = p.term;
             
-            // Si ya está respondida, dibujamos el resultado fijo
             if(prevAns) {
                 const userVal = userMatches[p.term] || 'No respondido';
                 const filled = document.createElement('div'); 
@@ -436,7 +438,6 @@ const quiz = {
                 filled.style.cursor = 'default';
                 filled.style.opacity = '0.9';
                 
-                // Feedback visual dentro de las cajitas: verde si coincide con el "p.def" correcto, rojo si no
                 if (userVal === p.def) {
                     filled.style.borderLeft = '4px solid #16a34a';
                     filled.style.background = '#f0fdf4';
@@ -444,11 +445,9 @@ const quiz = {
                     filled.style.borderLeft = '4px solid #dc2626';
                     filled.style.background = '#fef2f2';
                 }
-                
                 slot.appendChild(filled);
             }
             
-            // Si NO está respondida, activamos los eventos de arrastrar clásicos
             if(!prevAns) {
                 slot.ondragover = e => { e.preventDefault(); slot.classList.add('drag-over'); };
                 slot.ondragleave = () => slot.classList.remove('drag-over');
@@ -469,21 +468,14 @@ const quiz = {
         
         container.appendChild(grid);
         
-        // El pool de respuestas de abajo SOLO se dibuja si la pregunta está activa (sin responder)
         if(!prevAns) {
             const pool = document.createElement('div'); 
-            pool.style.marginTop = '20px'; 
-            pool.style.display = 'flex'; 
-            pool.style.gap = '10px'; 
-            pool.style.flexWrap = 'wrap'; 
-            pool.className = 'drop-zone';
+            pool.style.marginTop = '20px'; pool.style.display = 'flex'; pool.style.gap = '10px'; pool.style.flexWrap = 'wrap'; pool.className = 'drop-zone';
             
             q.pairs.map(p => p.def).sort(() => Math.random() - 0.5).forEach(def => {
                 const el = document.createElement('div'); 
                 el.className = 'drag-item pool-item';
-                el.draggable = true; 
-                el.innerText = def; 
-                el.dataset.val = def;
+                el.draggable = true; el.innerText = def; el.dataset.val = def;
                 el.ondragstart = e => e.dataTransfer.setData('text/plain', def); 
                 pool.appendChild(el);
             });
@@ -518,85 +510,50 @@ const quiz = {
         area.appendChild(img); area.appendChild(pin); wrap.appendChild(area); container.appendChild(wrap);
     },
 
-    renderFill(q, container, prevAns) {
-        // 1. Limpieza preventiva del contenedor
-        container.innerHTML = '';
-
-        // 2. Crear el elemento input de forma robusta
-        const inp = document.createElement('input'); 
-        inp.type = 'text'; 
-        inp.className = 'input-fill';
-        inp.placeholder = 'Type your answer here...';
-        inp.autocomplete = 'off'; // Evita que el historial del navegador tape el feedback
-
-        // 3. Control de estado: ¿Ya la hemos respondido antes?
-        if (prevAns) { 
-            // Si ya se respondió, recuperamos el valor de forma segura y lo bloqueamos
-            inp.value = (prevAns.userVal !== undefined && prevAns.userVal !== null) ? prevAns.userVal : ''; 
-            inp.disabled = true; 
-        } else {
-            // Si es una pregunta nueva, empieza vacía y editable
-            inp.value = '';
-            inp.disabled = false;
-        }
-        
-        // 4. Inyección obligatoria en el DOM
-        container.appendChild(inp);
-
-        // 5. Autofoco para poder escribir directamente sin hacer click en la caja
-        if (!prevAns) {
-            setTimeout(() => inp.focus(), 50);
-        }
-    },
-
     check() {
         const q = this.list[this.idx]; 
         let isCorrect = false; 
         let dataToSave = {};
+        const questionType = String(q.type).toUpperCase().trim();
 
-        if(q.type === 'SINGLE') {
+        if(questionType === 'SINGLE') {
             const selectedInp = document.querySelector('input[name="opt"]:checked');
             let s = -1;
             if(selectedInp) {
-                s = parseInt(selectedInp.dataset.orig); // Obtenemos el índice real original
+                s = parseInt(selectedInp.dataset.orig);
                 if(q.options[s].correct) isCorrect = true;
             }
             dataToSave = { userSel: [s] };
         } 
-        else if(q.type === 'MULTI') {
+        else if(questionType === 'MULTI') {
             const inputs = document.querySelectorAll('input[name="opt"]');
             let userSel = []; 
             let allGood = true;
-            let countCorrect = q.options.filter(o => o.correct).length;
 
             inputs.forEach((inp) => {
                 const origIdx = parseInt(inp.dataset.orig);
                 const isChecked = inp.checked;
                 
                 if(isChecked) userSel.push(origIdx);
-                // Si está marcado y no era correcta, o si no está marcado y era correcta -> Error
                 if(isChecked !== q.options[origIdx].correct) allGood = false;
             });
 
             if(userSel.length > 0 && allGood) isCorrect = true;
             dataToSave = { userSel };
         }
-        else if(q.type === 'FILL') {
+        else if(questionType === 'FILL') {
             const inputEl = document.querySelector('.input-fill');
             const val = inputEl ? inputEl.value.trim() : '';
             
-            // Validación estándar (insensible a mayúsculas/minúsculas)
             if(q.validAnswers && q.validAnswers.some(ans => ans.toLowerCase() === val.toLowerCase())) {
                 isCorrect = true;
             } 
-            // Salvaguarda por si el banco usa una estructura de respuesta simple 'q.answer'
             else if (q.answer && q.answer.toLowerCase() === val.toLowerCase()) {
                 isCorrect = true;
             }
-            
             dataToSave = { userVal: val };
         }
-        else if(q.type === 'MATCHING') {
+        else if(questionType === 'MATCHING') {
             const slots = document.querySelectorAll('.match-drop'); 
             let hits = 0; 
             let m = {}; 
@@ -612,12 +569,32 @@ const quiz = {
                         if(pair && pair.def === txt) hits++; 
                     } 
                 });
-                // Es correcto solo si el número de aciertos es igual al total de parejas
                 if(hits === q.pairs.length) isCorrect = true;
             }
             dataToSave = { matches: m };
         }
-        // ... (el resto de la función, ORDER, etc., se queda igual)
+        else if(questionType === 'ORDER') {
+            const el = document.getElementById('drag-tgt'); 
+            const current = el ? [...el.children].map(c => c.innerText) : [];
+            if(JSON.stringify(current) === JSON.stringify(q.correct)) isCorrect = true; 
+            dataToSave = { userOrder: current };
+        }
+        else if(questionType === 'HOTSPOT') {
+            const area = document.querySelector('.hotspot-container');
+            if(area) { 
+                const userX = parseFloat(area.dataset.x || -999); 
+                const userY = parseFloat(area.dataset.y || -999);
+                
+                // Soporte híbrido: Si la pregunta usa Caja Límite (Pro) o Punto Central con Tolerancia
+                if (q.target.xMin !== undefined) {
+                    if(userX >= q.target.xMin && userX <= q.target.xMax && userY >= q.target.yMin && userY <= q.target.yMax) isCorrect = true;
+                } else {
+                    if(Math.abs(userX - q.target.x) < 12 && Math.abs(userY - q.target.y) < 12) isCorrect = true;
+                }
+                dataToSave = { x: userX, y: userY }; 
+            }
+        }
+
         this.answers[this.idx] = { isCorrect, ...dataToSave }; 
         this.showFeedback(isCorrect, q.rationale); 
         this.load();
@@ -638,8 +615,7 @@ const quiz = {
         document.getElementById('result-screen').classList.add('active');
         document.getElementById('footer').style.display = 'none';
 
-        // --- CÁLCULO DE ESTADÍSTICAS POR TEMA ---
-        const stats = {}; // { "Topic 02": { total: 0, correct: 0 } }
+        const stats = {}; 
         
         this.list.forEach((q, i) => {
             const ans = this.answers[i];
@@ -651,14 +627,12 @@ const quiz = {
             if (ans && ans.isCorrect) stats[topic].correct++;
         });
 
-        // --- RENDERIZADO DEL REPORTE ---
         const totalQ = this.list.length;
         const totalCorrect = Object.values(this.answers).filter(a => a.isCorrect).length;
         const totalPct = Math.round((totalCorrect / totalQ) * 100);
 
         document.getElementById('final-score').innerText = totalPct + '%';
         
-        // Tabla detallada
         let tableHTML = `
             <div style="margin-top:30px; text-align:left; max-height:300px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:8px;">
             <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
@@ -669,7 +643,6 @@ const quiz = {
                 </tr>
         `;
 
-        // Ordenar temas alfabéticamente
         Object.keys(stats).sort().forEach(t => {
             const s = stats[t];
             const pct = Math.round((s.correct / s.total) * 100);
@@ -685,7 +658,6 @@ const quiz = {
         });
         tableHTML += `</table></div>`;
 
-        // Botón de descarga
         const downloadBtn = `<button onclick="quiz.downloadCSV()" class="nav-btn btn-sec" style="margin-top:15px; width:100%; border:1px solid #cbd5e1;">📥 Download Failed Questions Report</button>`;
 
         const msgDiv = document.getElementById('final-msg');
@@ -697,19 +669,16 @@ const quiz = {
     },
 
     downloadCSV() {
-        // Generar CSV con preguntas falladas
-        let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; // BOM para Excel
-        csvContent += "Topic,Question,Result,Your Answer\n";
+        let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
+        csvContent += "Topic,Question,Result\n";
 
         this.list.forEach((q, i) => {
             const ans = this.answers[i];
             const isCorrect = ans && ans.isCorrect;
             const status = isCorrect ? "CORRECT" : "WRONG";
-            const topic = (q.topic || "General").replace(/,/g, ""); // Limpiar comas
-            const text = q.text.replace(/,/g, " ").replace(/\n/g, " "); // Limpiar comas y saltos
+            const topic = (q.topic || "General").replace(/,/g, ""); 
+            const text = q.text.replace(/,/g, " ").replace(/\n/g, " "); 
 
-            // Solo incluimos en el CSV para estudiar (o todo si prefieres)
-            // Vamos a incluir TODO para que tengas el reporte completo
             csvContent += `"${topic}","${text}","${status}"\n`;
         });
 
