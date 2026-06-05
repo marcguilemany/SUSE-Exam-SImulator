@@ -357,9 +357,17 @@ const quiz = {
     },
     
     renderFill(q, container, prevAns) {
-        const inp = document.createElement('input'); inp.type = 'text'; inp.className = 'input-fill';
+        const inp = document.createElement('input'); 
+        inp.type = 'text'; 
+        inp.className = 'input-fill';
         inp.placeholder = 'Type your answer...';
-        if(prevAns) { inp.value = prevAns.userVal; inp.disabled = true; }
+        
+        if(prevAns) { 
+            // Si prevAns.userVal no existe o es indefinido, ponemos un string vacío
+            inp.value = prevAns.userVal !== undefined ? prevAns.userVal : ''; 
+            inp.disabled = true; 
+        }
+        
         container.appendChild(inp);
     },
 
