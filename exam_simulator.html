@@ -411,38 +411,90 @@ const quiz = {
 
     renderMatch(q, container, prevAns) {
         const grid = document.createElement('div');
-        const userMatches = prevAns ? prevAns.matches : {}; 
+        const userMatches = (prevAns && prevAns.matches) ? prevAns.matches : {}; 
+        
+        if (!q.pairs || !Array.isArray(q.pairs)) return;
+
         q.pairs.forEach(p => {
-            const row = document.createElement('div'); row.className = 'match-row';
-            const term = document.createElement('div'); term.className = 'match-static'; term.innerText = p.term;
-            const slot = document.createElement('div'); slot.className = 'match-drop drop-zone'; slot.dataset.term = p.term;
-            if(prevAns && userMatches[p.term]) {
-                const filled = document.createElement('div'); filled.className = 'drag-item'; 
-                filled.innerText = userMatches[p.term]; filled.style.cursor='default'; slot.appendChild(filled);
+            const row = document.createElement('div'); 
+            row.className = 'match-row';
+            
+            const term = document.createElement('div'); 
+            term.className = 'match-static'; 
+            term.innerText = p.term;
+            
+            const slot = document.createElement('div'); 
+            slot.className = 'match-drop drop-zone'; 
+            slot.dataset.term = p.term;
+            
+            // Si ya está respondida, dibujamos el resultado fijo
+            if(prevAns) {
+                const userVal = userMatches[p.term] || 'No respondido';
+                const filled = document.createElement('div'); 
+                filled.className = 'drag-item'; 
+                filled.innerText = userVal; 
+                filled.style.cursor = 'default';
+                filled.style.opacity = '0.9';
+                
+                // Feedback visual dentro de las cajitas: verde si coincide con el "p.def" correcto, rojo si no
+                if (userVal === p.def) {
+                    filled.style.borderLeft = '4px solid #16a34a';
+                    filled.style.background = '#f0fdf4';
+                } else {
+                    filled.style.borderLeft = '4px solid #dc2626';
+                    filled.style.background = '#fef2f2';
+                }
+                
+                slot.appendChild(filled);
             }
+            
+            // Si NO está respondida, activamos los eventos de arrastrar clásicos
             if(!prevAns) {
                 slot.ondragover = e => { e.preventDefault(); slot.classList.add('drag-over'); };
                 slot.ondragleave = () => slot.classList.remove('drag-over');
                 slot.ondrop = e => {
-                    e.preventDefault(); slot.classList.remove('drag-over');
+                    e.preventDefault(); 
+                    slot.classList.remove('drag-over');
                     const txt = e.dataTransfer.getData('text/plain');
                     if(slot.children.length === 0) {
-                        const el = document.querySelector(`.pool-item[data-val="${txt}"]`); if(el) slot.appendChild(el);
+                        const el = document.querySelector(`.pool-item[data-val="${txt}"]`); 
+                        if(el) slot.appendChild(el);
                     }
                 };
             }
-            row.appendChild(term); row.appendChild(slot); grid.appendChild(row);
+            row.appendChild(term); 
+            row.appendChild(slot); 
+            grid.appendChild(row);
         });
+        
         container.appendChild(grid);
+        
+        // El pool de respuestas de abajo SOLO se dibuja si la pregunta está activa (sin responder)
         if(!prevAns) {
-            const pool = document.createElement('div'); pool.style.marginTop = '20px'; pool.style.display = 'flex'; pool.style.gap='10px'; pool.style.flexWrap='wrap'; pool.className = 'drop-zone';
+            const pool = document.createElement('div'); 
+            pool.style.marginTop = '20px'; 
+            pool.style.display = 'flex'; 
+            pool.style.gap = '10px'; 
+            pool.style.flexWrap = 'wrap'; 
+            pool.className = 'drop-zone';
+            
             q.pairs.map(p => p.def).sort(() => Math.random() - 0.5).forEach(def => {
-                const el = document.createElement('div'); el.className = 'drag-item pool-item';
-                el.draggable = true; el.innerText = def; el.dataset.val = def;
-                el.ondragstart = e => e.dataTransfer.setData('text/plain', def); pool.appendChild(el);
+                const el = document.createElement('div'); 
+                el.className = 'drag-item pool-item';
+                el.draggable = true; 
+                el.innerText = def; 
+                el.dataset.val = def;
+                el.ondragstart = e => e.dataTransfer.setData('text/plain', def); 
+                pool.appendChild(el);
             });
+            
             pool.ondragover = e => e.preventDefault();
-            pool.ondrop = e => { e.preventDefault(); const txt = e.dataTransfer.getData('text/plain'); const el = document.querySelector(`.pool-item[data-val="${txt}"]`); if(el) pool.appendChild(el); }
+            pool.ondrop = e => { 
+                e.preventDefault(); 
+                const txt = e.dataTransfer.getData('text/plain'); 
+                const el = document.querySelector(`.pool-item[data-val="${txt}"]`); 
+                if(el) pool.appendChild(el); 
+            };
             container.appendChild(pool);
         }
     },
@@ -512,6 +564,27 @@ const quiz = {
             }
             
             dataToSave = { userVal: val };
+        }
+        else if(q.type === 'MATCHING') {
+            const slots = document.querySelectorAll('.match-drop'); 
+            let hits = 0; 
+            let m = {}; 
+            
+            if (slots.length > 0) {
+                slots.forEach(s => { 
+                    if(s.children.length > 0) { 
+                        const txt = s.children[0].innerText; 
+                        const termName = s.dataset.term;
+                        m[termName] = txt; 
+                        
+                        const pair = q.pairs.find(p => p.term === termName); 
+                        if(pair && pair.def === txt) hits++; 
+                    } 
+                });
+                // Es correcto solo si el número de aciertos es igual al total de parejas
+                if(hits === q.pairs.length) isCorrect = true;
+            }
+            dataToSave = { matches: m };
         }
         // ... (el resto de la función, ORDER, etc., se queda igual)
         this.answers[this.idx] = { isCorrect, ...dataToSave }; 
