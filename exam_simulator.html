@@ -314,8 +314,9 @@ const quiz = {
         div.className = 'opt-list';
         const isMulti = q.type === 'MULTI';
 
-        // Creamos una copia de las opciones añadiendo su índice original
-        // Esto permite desordenarlas sin perder la referencia de cuál es la correcta
+        // Validamos que existan opciones para evitar que rompa otros tipos de pregunta
+        if (!q.options) return;
+
         if (!q._shuffledOptions || !prevAns) {
             q._shuffledOptions = q.options
                 .map((opt, i) => ({ ...opt, originalIndex: i }))
@@ -327,7 +328,6 @@ const quiz = {
             btn.className = 'opt-btn';
             if(prevAns) btn.classList.add('disabled');
 
-            // Comprobamos si esta opción estaba seleccionada usando su originalIndex
             let isChecked = prevAns && prevAns.userSel.includes(opt.originalIndex);
             
             btn.innerHTML = `<input type="${isMulti?'checkbox':'radio'}" name="opt" 
