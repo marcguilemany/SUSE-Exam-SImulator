@@ -518,6 +518,37 @@ const quiz = {
         area.appendChild(img); area.appendChild(pin); wrap.appendChild(area); container.appendChild(wrap);
     },
 
+    renderFill(q, container, prevAns) {
+        // 1. Limpieza preventiva del contenedor
+        container.innerHTML = '';
+
+        // 2. Crear el elemento input de forma robusta
+        const inp = document.createElement('input'); 
+        inp.type = 'text'; 
+        inp.className = 'input-fill';
+        inp.placeholder = 'Type your answer here...';
+        inp.autocomplete = 'off'; // Evita que el historial del navegador tape el feedback
+
+        // 3. Control de estado: ¿Ya la hemos respondido antes?
+        if (prevAns) { 
+            // Si ya se respondió, recuperamos el valor de forma segura y lo bloqueamos
+            inp.value = (prevAns.userVal !== undefined && prevAns.userVal !== null) ? prevAns.userVal : ''; 
+            inp.disabled = true; 
+        } else {
+            // Si es una pregunta nueva, empieza vacía y editable
+            inp.value = '';
+            inp.disabled = false;
+        }
+        
+        // 4. Inyección obligatoria en el DOM
+        container.appendChild(inp);
+
+        // 5. Autofoco para poder escribir directamente sin hacer click en la caja
+        if (!prevAns) {
+            setTimeout(() => inp.focus(), 50);
+        }
+    },
+
     check() {
         const q = this.list[this.idx]; 
         let isCorrect = false; 
