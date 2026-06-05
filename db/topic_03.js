@@ -267,7 +267,7 @@ window.loadTopic("03 The Command Line", [
             {text: ";", correct: true},
             {text: "|", correct: false}
         ], 
-        rationale: "The semicolon (;) executes commands sequentially regardless of success or failure." 
+        rationale: "The correct answer is <b>`;`</b>. The semicolon acts as a sequential command separator in Bash, ensuring that the subsequent command runs <b>regardless of the success or failure</b> of the preceding one. In contrast, `&&` requires success, `||` requires failure, and `|` is a pipe used to pass standard output to standard input.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Shell Command Chaining</a>" 
     },
     { 
         type: "FILL", 
