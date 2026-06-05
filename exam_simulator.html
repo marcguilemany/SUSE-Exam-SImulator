@@ -314,63 +314,66 @@ const quiz = {
         div.className = 'opt-list';
         const isMulti = q.type === 'MULTI';
 
-        // Validamos que existan opciones para evitar que rompa otros tipos de pregunta
-        if (!q.options) return;
+        // 1. Salvaguarda radical: Si la pregunta no tiene opciones estructuradas, salimos para no romper el DOM
+        if (!q || !q.options || !Array.isArray(q.options)) {
+            container.innerHTML = '<p style="color:var(--wrong);">Error: Las opciones de esta pregunta no están definidas en la base de datos.</p>';
+            return;
+        }
 
+        // 2. Crear la copia barajada asegurando que cada una tenga su índice original mapeado
         if (!q._shuffledOptions || !prevAns) {
             q._shuffledOptions = q.options
                 .map((opt, i) => ({ ...opt, originalIndex: i }))
                 .sort(() => Math.random() - 0.5);
         }
 
-        q._shuffledOptions.forEach((opt, i) => {
+        // 3. Obtener de forma segura los índices que el usuario ya había seleccionado si volvió atrás
+        const safeUserSel = (prevAns && prevAns.userSel && Array.isArray(prevAns.userSel)) ? prevAns.userSel : [];
+
+        q._shuffledOptions.forEach((opt) => {
+            // Validar que la opción individual no sea nula
+            if (!opt) return;
+
             const btn = document.createElement('div'); 
             btn.className = 'opt-btn';
             if(prevAns) btn.classList.add('disabled');
 
-            let isChecked = prevAns && prevAns.userSel.includes(opt.originalIndex);
+            // Comprobación limpia usando el array seguro
+            let isChecked = safeUserSel.includes(opt.originalIndex);
             
-            btn.innerHTML = `<input type="${isMulti?'checkbox':'radio'}" name="opt" 
+            // Inyección limpia en el DOM
+            btn.innerHTML = `<input type="${isMulti ? 'checkbox' : 'radio'}" name="opt" 
                             data-orig="${opt.originalIndex}" 
-                            ${isChecked?'checked':''} ${prevAns?'disabled':''}> ${opt.text}`;
+                            ${isChecked ? 'checked' : ''} ${prevAns ? 'disabled' : ''}> ${opt.text || ''}`;
             
             if(isChecked) btn.classList.add('selected');
 
+            // Configuración de los manejadores de clicks si la pregunta no está respondida aún
             if(!prevAns) {
                 btn.onclick = (e) => {
                     const inp = btn.querySelector('input');
                     if(e.target !== inp) {
-                        if(isMulti) inp.checked = !inp.checked;
-                        else { 
+                        if(isMulti) {
+                            inp.checked = !inp.checked;
+                        } else { 
                             div.querySelectorAll('input').forEach(x => x.checked = false);
                             div.querySelectorAll('.opt-btn').forEach(x => x.classList.remove('selected'));
                             inp.checked = true; 
                         }
                     }
-                    if(isMulti) btn.classList.toggle('selected', inp.checked);
-                    else btn.classList.add('selected');
+                    if(isMulti) {
+                        btn.classList.toggle('selected', inp.checked);
+                    } else {
+                        btn.classList.add('selected');
+                    }
                 };
             }
             div.appendChild(btn);
         });
+        
         container.appendChild(div);
     },
     
-    renderFill(q, container, prevAns) {
-        const inp = document.createElement('input'); 
-        inp.type = 'text'; 
-        inp.className = 'input-fill';
-        inp.placeholder = 'Type your answer...';
-        
-        if(prevAns) { 
-            // Si prevAns.userVal no existe o es indefinido, ponemos un string vacío
-            inp.value = prevAns.userVal !== undefined ? prevAns.userVal : ''; 
-            inp.disabled = true; 
-        }
-        
-        container.appendChild(inp);
-    },
-
     renderOrder(q, container, prevAns) {
         const wrap = document.createElement('div'); wrap.className = 'drag-container';
         const col1 = document.createElement('div'); col1.className = 'drag-col'; col1.innerHTML = `<div class="drag-header">OPTIONS</div>`;
