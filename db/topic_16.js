@@ -436,5 +436,18 @@ window.loadTopic("16 Network Management Fundamentals", [
         ],
         rationale: "The correct answer is <b>Bond</b>. In SUSE Linux Enterprise Server, a Network Bond (Link Aggregation) allows administrators to bind multiple physical network interfaces into a single logical channel. This configuration provides hardware redundancy (failover) and network load balancing capabilities. Other interface types like Bridge are used to connect distinct network segments, and Basic represents standard individual interfaces.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-network.html#sec-network-yast-change-bond' target='_blank'>📚 SUSE Docs: Configuring Network Bonding</a>"
     },
-
+   {
+        type: "MULTI",
+        text: "firewalld maintains two separate configurations. What are they named? (Choose two)",
+        options: [
+            {text: "Runtime", correct: true},
+            {text: "Temporary", correct: false},
+            {text: "Production", correct: false},
+            {text: "Permanent", correct: true},
+            {text: "Static", correct: false},
+            {text: "Testing", correct: false},
+            {text: "Fixed", correct: false}
+        ],
+        rationale: "The correct answers are <b>Runtime</b> and <b>Permanent</b>. The `firewalld` daemon manages firewall rules dynamically by separating them into two independent states:<br>• <b>Runtime Configuration:</b> Active directly in system RAM, applies changes instantaneously but is completely lost upon system reboot or service reload.<br>• <b>Permanent Configuration:</b> Stored persistently in XML files within the disk storage. Changes made here do not take effect immediately until the firewall daemon is reloaded using `firewall-cmd --reload`.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-security-firewall.html' target='_blank'>📚 SUSE Docs: Introduction to firewalld Configurations</a>"
+    },
 ]);
