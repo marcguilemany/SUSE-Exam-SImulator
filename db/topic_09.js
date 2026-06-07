@@ -174,6 +174,16 @@ window.loadTopic("09 Privilege Delegation", [
         ],
         rationale: "The correct answer is <b>/boot/grub2/custom.cfg</b>. In SLES 15, the shell script `/etc/grub.d/41_custom` automatically includes a directive to check for and source an external file named `custom.cfg` located inside the main bootloader directory (`/boot/grub2/`). Any manual boot entries added here are dynamically parsed by GRUB2 at boot time without requiring the administrator to manually regenerate the main configuration using `grub2-mkconfig`.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-grub2.html' target='_blank'>📚 SUSE Docs: Customizing the GRUB2 Boot Menu</a>"
     },
-    
+    {
+        type: "SINGLE",
+        text: "You are managing a SUSE Linux Enterprise Server 15 system where a critical application service (app.service) must be part of a custom systemd target (app-stack.target). The target should pull in app.service and db.service, ensuring they start after network-online.target. The target must be active in the multi-user.target runlevel.\nWhich target unit file configuration is correct?",
+        options: [
+            {text: "[Unit] Requires=app.service db.service, After=network.target, WantedBy=graphical.target", correct: false},
+            {text: "[Unit] Wants=app.service db.service, After=network-online.target, WantedBy=multi-user.target", correct: true},
+            {text: "[Unit] After=app.service db.service, Requires=network-online.target, PartOf=multi-user.target", correct: false},
+            {text: "[Unit] Wants=network-online.target, Requires=app.service db.service, WantedBy=default.target", correct: false}
+        ],
+        rationale: "The correct answer is <b>[Unit] Wants=app.service db.service, After=network-online.target, WantedBy=multi-user.target</b>.<br><br>In systemd architecture, a custom target uses `Wants=` to pull supplementary services as dependencies. The `After=network-online.target` directive guarantees that the initialization sequence pauses until the networking subsystem has finished fully binding IP interfaces. Finally, `WantedBy=multi-user.target` links this custom state to the multi-user target framework (traditional runlevel 3), ensuring it mounts and loads automatically during the standard system boot sequence.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-systemd.html' target='_blank'>📚 SUSE Docs: Creating and Customizing systemd Units</a>"
+    },    
 
 ]);
