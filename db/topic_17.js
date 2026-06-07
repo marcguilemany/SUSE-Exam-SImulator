@@ -315,4 +315,15 @@ window.loadTopic("17 Software Management", [
         ], 
         rationale: "In SLES 15, software bundles that serve a specific architectural purpose (such as a DHCP server, a container host, or a LAMP stack) are grouped into a meta-package format called a <b>Pattern</b>. When using the command line tool `zypper` to install a specific package type other than a standard RPM, you must explicitly declare the target type using the <b>`-t`</b> (or `--type`) switch followed by the argument <b>`pattern`</b> (e.g., `zypper in -t pattern lamp_server`). Just using `zypper install` without specifying the type will cause the system to search exclusively for standard individual packages matching that name.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-sw-cl.html#sec-zypper-inst' target='_blank'>📚 SUSE Docs: Installing Patterns via Zypper</a>" 
     },
+    {
+        type: "SINGLE",
+        text: "If a system administrator wishes to check which files belong to a specific RPM package, what command should be executed?",
+        options: [
+            {text: "rpm -qa | grep package_name", correct: false},
+            {text: "rpm -ql package_name", correct: true},
+            {text: "rpm -qf file_path", correct: false},
+            {text: "rpm -q --filesbypkg package_name", correct: false}
+        ],
+        rationale: "The correct answer is <b>rpm -ql package_name</b>. In the RPM package management ecosystem, the `-q` flag switches the utility to query mode, and appending the `-l` (list) modifier instructs it to display every absolute file path owned and deployed by that specific package. Alternatively, `-qf` is used in reverse to find which package owns a specific file path, and `-qa` lists all installed packages across the entire system.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-rpm.html' target='_blank'>📚 SUSE Docs: Managing Packages with RPM</a>"
+    },
 ]);
