@@ -264,4 +264,16 @@ window.loadTopic("12 Remote Administration", [
         ], 
         rationale: "In SUSE Linux Enterprise Server VNC architecture, native desktop environments map their display outputs starting at port 5900 (e.g., `:1` uses port `5901`). However, when accessing VNC <b>via an HTTP web browser interface</b>, the server uses a separate configuration offset that starts listening on port <b>5800</b>. Therefore, the first desktop display session (`:1`) running its web-browser applet will map strictly to port <b>5801</b> (URL: `server77.suse.com:5801`).<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-vnc.html' target='_blank'>📚 SUSE Docs: Web Browser VNC Port Offsets</a>"
     },
+    {
+        type: "SINGLE",
+        text: "By default, what does the VNC Client and the VNC server daemon use for secure communications?",
+        options: [
+            {text: "On SLE 15 the VNC Client assumes the server is set up as a CA.", correct: false},
+            {text: "Both the VNC Client and the VNC server assume you have access to a valid 3rd party CA like Verisign.", correct: false},
+            {text: "The VNC server prompts the VNC Client for a password that was configured when the VNC server was installed.", correct: false},
+            {text: "VNC is based on the Telnet protocol so encrypted communication between the VNC Client and Server is not possible.", correct: false},
+            {text: "A self-signed SSL certificate", correct: true}
+        ],
+        rationale: "The correct answer is <b>A self-signed SSL certificate</b>. In SLES 15, the VNC server framework automatically provisions a local self-signed SSL/TLS certificate upon initialization to encrypt the remote graphical session data traffic. While the VNC client will inherently look for a TLS negotiation by default, it does not rely on corporate 3rd party Certificate Authorities (CAs) unless manually hardened by the system administrator.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-remote-admin.html#sec-vnc-secure' target='_blank'>📚 SUSE Docs: VNC Security and Encryption</a>"
+    },
 ]);
