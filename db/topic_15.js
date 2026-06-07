@@ -189,4 +189,15 @@ window.loadTopic("15 Btrfs Management", [
         ],
         rationale: "YaST includes a specialized module called the <b>Expert Partitioner</b>, which provides a comprehensive graphical interface to format disks with Btrfs, define subvolume structures, and enable snapshotting capabilities during or after installation[cite: 1]. Additionally, the 'YaST Snapper' module allows for the visual management and comparison of Btrfs snapshots without using the terminal[cite: 1].<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-yast-part.html' target='_blank'>📚 SUSE Docs: YaST Expert Partitioner</a>"
     },
+    {
+        type: "SINGLE",
+        text: "A SUSE Linux Enterprise Server 15 system uses a Btrfs file system on /dev/sda1, mounted at /data, with subvolumes @/home and @/logs. The administrator needs to create a snapshot of the @/home subvolume for backup purposes and ensure it is read-only. The snapshot should be stored at /data/@/home_snap.\nWhich commands achieve this, and what is the correct syntax for verifying the snapshot's properties?",
+        options: [
+            {text: "btrfs subvolume snapshot -r /data/@/home /data/@/home_snap; btrfs subvolume show /data/@/home_snap", correct: true},
+            {text: "btrfs snapshot create /data/@/home /data/@/home_snap; btrfs property set /data/@/home_snap ro true; btrfs filesystem show /data", correct: false},
+            {text: "btrfs subvolume snapshot /data/home /data/home_snap; btrfs property set /data/home_snap ro true; btrfs subvolume list /data", correct: false},
+            {text: "btrfs subvolume create /data/@/home_snap; btrfs snapshot /data/@/home /data/@/home_snap; btrfs subvolume show /data/@/home_snap", correct: false}
+        ],
+        rationale: "The correct answer is <b>btrfs subvolume snapshot -r /data/@/home /data/@/home_snap; btrfs subvolume show /data/@/home_snap</b>.<br><br>In Btrfs management, creating an atomic copy of a subvolume requires the `btrfs subvolume snapshot` structure, and appending the `-r` flag natively forces the snapshot to be marked as read-only instantly upon creation. To verify its structural parameters and readonly status flags, the `btrfs subvolume show` command acts as the standard inspection tool. Legacy or shortened syntaxes like `btrfs snapshot` are completely invalid.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-filesystems.html#sec-filesystems-btrfs-snapshots' target='_blank'>📚 SUSE Docs: Btrfs Subvolume and Snapshot Management</a>"
+    },
 ]);
