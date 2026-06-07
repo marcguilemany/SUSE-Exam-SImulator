@@ -150,6 +150,18 @@ window.loadTopic("09 Privilege Delegation", [
         ],
         rationale: "The correct answers are <b>The contents of these scripts are incorporated into the /boot/grub2/grub.cfg file</b> and <b>These scripts are taken as input by the grub2-mkconfig command</b>.<br><br>In SLES 15, GRUB2 configuration is modular. The main boot loader file `/boot/grub2/grub.cfg` should never be edited manually. Instead, administrators modify the general settings in `/etc/default/grub` and custom execution scripts within the <b>`/etc/grub.d/`</b> directory. When the <b>`grub2-mkconfig -o /boot/grub2/grub.cfg`</b> command is executed, it parses those scripts as input to construct and overwrite the final compiled configuration file.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-grub2.html' target='_blank'>📚 SUSE Docs: GRUB2 Configuration Architecture</a>"
     },
+    {
+        type: "SINGLE",
+        text: "What starts the Linux Kernel during the boot process?",
+        options: [
+            {text: "initd", correct: false},
+            {text: "The Boot Loader", correct: false},
+            {text: "systemd", correct: false},
+            {text: "The udev process", correct: false},
+            {text: "BIOS or UEFI depending on the hardware architecture", correct: true}
+        ],
+        rationale: "The correct answer according to the mock test is <b>BIOS or UEFI depending on the hardware architecture</b>. The firmware (BIOS/UEFI) initializes the hardware components and targets the boot device to execute the bootstrap process, which subsequently passes control to the boot loader to launch the vmlinuz kernel.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-boot.html' target='_blank'>📚 SUSE Docs: Linux Boot Process Architecture</a>"
+    },
     
 
 ]);
