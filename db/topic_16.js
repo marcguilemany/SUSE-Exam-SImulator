@@ -450,4 +450,15 @@ window.loadTopic("16 Network Management Fundamentals", [
         ],
         rationale: "The correct answers are <b>Runtime</b> and <b>Permanent</b>. The `firewalld` daemon manages firewall rules dynamically by separating them into two independent states:<br>• <b>Runtime Configuration:</b> Active directly in system RAM, applies changes instantaneously but is completely lost upon system reboot or service reload.<br>• <b>Permanent Configuration:</b> Stored persistently in XML files within the disk storage. Changes made here do not take effect immediately until the firewall daemon is reloaded using `firewall-cmd --reload`.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-security-firewall.html' target='_blank'>📚 SUSE Docs: Introduction to firewalld Configurations</a>"
     },
+    {
+        type: "SINGLE",
+        text: "In a multi-homed system, how does the kernel determine which routing table to use for outgoing packets when multiple default gateways are configured?",
+        options: [
+            {text: "It selects the gateway with the lowest metric.", correct: true},
+            {text: "It uses the first defined gateway.", correct: false},
+            {text: "It randomly selects a gateway.", correct: false},
+            {text: "It prioritizes the gateway based on interface speed", correct: false}
+        ],
+        rationale: "The correct answer is <b>It selects the gateway with the lowest metric.</b>. When multiple default gateways (0.0.0.0/0 routes) co-exist in the Linux routing table, the kernel evaluates their priority based on the metric value assigned to each interface path. A lower metric indicates a higher priority or lower logical cost, making it the preferred route for outbound traffic. Interface speed or random ordering do not dictate standard default route election unless explicit advanced bonding or multipath routing (ECMP) is configured.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-network.html' target='_blank'>📚 SUSE Docs: Advanced Network Configuration and Routing</a>"
+    },
 ]);
