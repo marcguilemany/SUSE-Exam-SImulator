@@ -209,5 +209,16 @@ window.loadTopic("14 Logical Volume Management", [
         ], 
         rationale: "The <b>`vgextend`</b> command is used to add one or more initialized physical volumes (PVs) into an existing LVM volume group (VG), thereby increasing the total physical storage pool available for logical volume allocations. The mandatory command-line syntax requires passing <b>the name of the target Volume Group first, followed by the block path of the new Physical Volume</b> (e.g., `vgextend vg2 /dev/sdf`). The block device must be previously initialized via `pvcreate` before it can be appended to the group context.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-lvm.html' target='_blank'>📚 SUSE Docs: Modifying LVM Volume Groups</a>" 
     },
+    {
+        type: "SINGLE",
+        text: "In a situation where you need to revert a logical volume \"data_lv\" back to its previous state after making changes, which command would you use if a snapshot named \"data_snapshot\" was created?",
+        options: [
+            {text: "lvmerge data_snapshot", correct: false},
+            {text: "lvconvert --merge data_snapshot", correct: true},
+            {text: "lvremove data_snapshot", correct: false},
+            {text: "lvsnapshot --restore data_snapshot", correct: false}
+        ],
+        rationale: "The correct answer is <b>lvconvert --merge data_snapshot</b>. In LVM architecture, to roll back a logical volume to a previous state captured by a snapshot, the `lvconvert` command with the `--merge` option must be used. If the origin volume is closed (unmounted), the merge starts immediately. If the volume is active or mounted, the merge operation is deferred and will automatically execute the next time the logical volume is deactivated and reactivated.<br><br>Commands like `lvmerge` or `lvsnapshot` do not exist in the standard LVM2 utility suite.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-storage-lvm.html' target='_blank'>📚 SUSE Docs: LVM Advanced Volume Management</a>"
+    },
   
 ]);
