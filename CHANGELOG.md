@@ -4,6 +4,9 @@ Todas las modificaciones notables de este proyecto serán documentadas en este a
 
 El formato se basa en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.6] - 2026-06-07 (Refactor to include: "all questions mode") 
+- **Refactorizamos para añadir un modo de realizar todas las preguntas que hay, no modo examen**
+
 ## [1.0.5] - 2026-06-04 (Refactor renderOptions and check) 
 - **Refactorizamos RenderOptions y Check para que las respuestas aparezcan en orden distintas**
 
