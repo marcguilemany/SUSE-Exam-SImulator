@@ -276,4 +276,16 @@ window.loadTopic("12 Remote Administration", [
         ],
         rationale: "The correct answer is <b>A self-signed SSL certificate</b>. In SLES 15, the VNC server framework automatically provisions a local self-signed SSL/TLS certificate upon initialization to encrypt the remote graphical session data traffic. While the VNC client will inherently look for a TLS negotiation by default, it does not rely on corporate 3rd party Certificate Authorities (CAs) unless manually hardened by the system administrator.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-remote-admin.html#sec-vnc-secure' target='_blank'>📚 SUSE Docs: VNC Security and Encryption</a>"
     },
+    {
+        type: "MULTI",
+        text: "What types of VNC sessions does SUSE Linux Enterprise Server support? (Choose two)",
+        options: [
+            {text: "One-time Sessions", correct: true},
+            {text: "Automatic Sessions", correct: false},
+            {text: "Server-initiated Sessions", correct: false},
+            {text: "Persistent Sessions", correct: true},
+            {text: "Timed Sessions", correct: false}
+        ],
+        rationale: "The correct answers are <b>One-time Sessions</b> and <b>Persistent Sessions</b>. SLES 15 supports two distinct operational frameworks for VNC remote management:<br>• <b>One-time Sessions:</b> Managed dynamically via D-Bus/systemd sockets and the display manager (GDM). Sessions are spawned on-demand when a client connects and are completely terminated from memory once the user logs out.<br>• <b>Persistent Sessions:</b> The graphical environment runs continuously in the background tied to a specific user. Disconnecting the client preserves all open applications and the session state remains active for future reconnections.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-remote-admin.html#sec-remote-admin-vnc-types' target='_blank'>📚 SUSE Docs: VNC Session Types and Lifecycle</a>"
+    },
 ]);
