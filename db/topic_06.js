@@ -272,6 +272,18 @@ window.loadTopic("06 Users and Groups", [
             {text: "chage -M 0 <username>", correct: false}
         ], 
         rationale: "Setting the 'last password change' date to 0 with `chage -d 0` tells the PAM system that the password has expired, forcing an immediate reset on login.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-users.html' target='_blank'>📚 SUSE Docs: Password Aging</a>" 
-    }
+    },
+    {
+        type: "MULTI",
+        text: "Which commands can display the groups of which a user is a member? (Choose two)",
+        options: [
+            {text: "groups", correct: true},
+            {text: "whoami -g", correct: false},
+            {text: "whoami", correct: false},
+            {text: "finger", correct: false},
+            {text: "id", correct: true}
+        ],
+        rationale: "The correct answers are <b>groups</b> and <b>id</b> (listed as 'id' or with a typo 'id_d' in some dumps).<br><br>In SLES 15, both utilities are standard coretools used to verify group membership:<br>• <b>groups:</b> Directly prints the names of all groups the current or specified user belongs to.<br>• <b>id:</b> Displays specific identification numbers, including the User ID (UID), primary Group ID (GID), and all supplementary groups names and numerical IDs.<br><br>The `whoami` command only displays the current username, and `whoami -g` is an invalid syntax option.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-users.html' target='_blank'>📚 SUSE Docs: User and Group Administration</a>"
+    },
 
 ]);
