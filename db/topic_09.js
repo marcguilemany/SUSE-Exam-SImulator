@@ -137,6 +137,19 @@ window.loadTopic("09 Privilege Delegation", [
         ], 
         rationale: "The <b>`systemctl default`</b> command tells systemd to immediately switch the running state of the operating system to its default target configuration (which is typically a symlink pointing to `multi-user.target` or `graphical.target`). While `systemctl get-default` only queries and displays the name of that target, and `systemctl isolate` requires you to specify a target name manually to change states, `systemctl default` acts as a direct shortcut to enforce the system's baseline boot target without needing further parameters.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-systemd.html' target='_blank'>📚 SUSE Docs: Managing System Targets</a>" 
     },
+{
+        type: "MULTI",
+        text: "How are the scripts in the /etc/grub.d directory used? (Select 2)",
+        options: [
+            {text: "The contents of these scripts are incorporated into the /boot/grub2/custom.cfg file.", correct: false},
+            {text: "The contents of these scripts are incorporated into the /etc/grub2.d/configfile.", correct: false},
+            {text: "The contents of these scripts are incorporated into the /boot/grub2/grub.cfg file.", correct: true},
+            {text: "These scripts are taken as input by the mkinitrd command.", correct: false},
+            {text: "These scripts are taken as input by the grub2-init command.", correct: false},
+            {text: "These scripts are taken as input by the grub2-mkconfig command.", correct: true}
+        ],
+        rationale: "The correct answers are <b>The contents of these scripts are incorporated into the /boot/grub2/grub.cfg file</b> and <b>These scripts are taken as input by the grub2-mkconfig command</b>.<br><br>In SLES 15, GRUB2 configuration is modular. The main boot loader file `/boot/grub2/grub.cfg` should never be edited manually. Instead, administrators modify the general settings in `/etc/default/grub` and custom execution scripts within the <b>`/etc/grub.d/`</b> directory. When the <b>`grub2-mkconfig -o /boot/grub2/grub.cfg`</b> command is executed, it parses those scripts as input to construct and overwrite the final compiled configuration file.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-grub2.html' target='_blank'>📚 SUSE Docs: GRUB2 Configuration Architecture</a>"
+    },
     
 
 ]);
