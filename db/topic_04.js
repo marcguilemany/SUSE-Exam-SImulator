@@ -254,4 +254,15 @@ window.loadTopic("04 The Linux Filesystem", [
         ], 
         rationale: "In Linux, everything is managed as a file. Storage hardware peripherals such as hard drives, SSDs, NVMe drives, and flash storage are represented in the virtual filesystem structure as <b>Block device files</b> (typically located under `/dev/`). They differ from character devices because the kernel handles their input/output operations by buffering data in fixed-size blocks rather than streaming it byte-by-byte.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-fhs.html' target='_blank'>📚 SUSE Docs: Linux Device File Types</a>" 
     },
+    {
+        type: "SINGLE",
+        text: "In a SUSE Linux Enterprise Server 15 environment, you are auditing file types and find a file /dev/null with a c in its ls -l output.\nWhat type of file is this, and what is its primary use?",
+        options: [
+            {text: "Character device; discards data", correct: true},
+            {text: "Block device; stores data", correct: false},
+            {text: "Regular file; logs errors", correct: false},
+            {text: "Symbolic link; redirects data", correct: false}
+        ],
+        rationale: "The correct answer is <b>Character device; discards data</b>. In SLES 15, the `c` flag in the first column of an `ls -l` output designates a Character Special Device, which handles unbuffered stream communication byte by byte. The `/dev/null` file is a virtual character device that instantly drops and discards all data written to it, returning an End-of-File (EOF) signature upon any read attempt. Block devices are denoted by a `b` and handle structured storage data blocks instead.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-storage-concepts.html' target='_blank'>📚 SUSE Docs: Linux Device Files and Storage Concepts</a>"
+    },
 ]);
