@@ -424,5 +424,17 @@ window.loadTopic("16 Network Management Fundamentals", [
         ], 
         rationale: "Wicked reads standard legacy configuration scripts located inside `/etc/sysconfig/network/`, evaluating files prefixed with `ifcfg-` coupled with the device name.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-network.html' target='_blank'>📚 SUSE Docs: Wicked Network Files</a>" 
     },
+    {
+        type: "SINGLE",
+        text: "Which Network Interface type supported by SLES is used for link aggregation?",
+        options: [
+            {text: "Basic", correct: false},
+            {text: "Bridge", correct: false},
+            {text: "VPN", correct: false},
+            {text: "Bond", correct: true},
+            {text: "Custom", correct: false}
+        ],
+        rationale: "The correct answer is <b>Bond</b>. In SUSE Linux Enterprise Server, a Network Bond (Link Aggregation) allows administrators to bind multiple physical network interfaces into a single logical channel. This configuration provides hardware redundancy (failover) and network load balancing capabilities. Other interface types like Bridge are used to connect distinct network segments, and Basic represents standard individual interfaces.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-network.html#sec-network-yast-change-bond' target='_blank'>📚 SUSE Docs: Configuring Network Bonding</a>"
+    },
 
 ]);
