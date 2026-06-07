@@ -220,5 +220,15 @@ window.loadTopic("14 Logical Volume Management", [
         ],
         rationale: "The correct answer is <b>lvconvert --merge data_snapshot</b>. In LVM architecture, to roll back a logical volume to a previous state captured by a snapshot, the `lvconvert` command with the `--merge` option must be used. If the origin volume is closed (unmounted), the merge starts immediately. If the volume is active or mounted, the merge operation is deferred and will automatically execute the next time the logical volume is deactivated and reactivated.<br><br>Commands like `lvmerge` or `lvsnapshot` do not exist in the standard LVM2 utility suite.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-storage-lvm.html' target='_blank'>📚 SUSE Docs: LVM Advanced Volume Management</a>"
     },
-  
+    {
+        type: "SINGLE",
+        text: "What is the primary purpose of the /etc/lvm/lvm.conf file in a SUSE Linux environment?",
+        options: [
+            {text: "It stores user-defined volume group names.", correct: false},
+            {text: "It defines the physical volumes available to the system.", correct: false},
+            {text: "It logs all LVM-related commands executed.", correct: false},
+            {text: "It contains configuration settings for LVM operations.", correct: true}
+        ],
+        rationale: "The correct answer is <b>It contains configuration settings for LVM operations.</b>. In SLES 15, `/etc/lvm/lvm.conf` acts as the master configuration file for the LVM2 toolset ecosystem. It houses operational parameters such as disk device scanning filters, metadata allocation policies, locking mechanisms, and auto-activation features. It does not store real-time runtime objects like names of volume groups or lists of active physical volumes, which are dynamically polled directly from disk device metadata fields.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-storage-lvm.html' target='_blank'>📚 SUSE Docs: LVM Configuration Files</a>"
+    },  
 ]);
