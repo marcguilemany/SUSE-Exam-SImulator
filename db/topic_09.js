@@ -162,6 +162,18 @@ window.loadTopic("09 Privilege Delegation", [
         ],
         rationale: "The correct answer according to the mock test is <b>BIOS or UEFI depending on the hardware architecture</b>. The firmware (BIOS/UEFI) initializes the hardware components and targets the boot device to execute the bootstrap process, which subsequently passes control to the boot loader to launch the vmlinuz kernel.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-boot.html' target='_blank'>📚 SUSE Docs: Linux Boot Process Architecture</a>"
     },
+    {
+        type: "SINGLE",
+        text: "You want to add two new custom items to the GRUB2 boot menu. Which file should you modify to accomplish this?",
+        options: [
+            {text: "/etc/grub.d/custom.cfg", correct: false},
+            {text: "/etc/default/grub", correct: false},
+            {text: "/etc/boot/grub.cfg", correct: false},
+            {text: "/boot/grub2/menu.cfg", correct: false},
+            {text: "/boot/grub2/custom.cfg", correct: true}
+        ],
+        rationale: "The correct answer is <b>/boot/grub2/custom.cfg</b>. In SLES 15, the shell script `/etc/grub.d/41_custom` automatically includes a directive to check for and source an external file named `custom.cfg` located inside the main bootloader directory (`/boot/grub2/`). Any manual boot entries added here are dynamically parsed by GRUB2 at boot time without requiring the administrator to manually regenerate the main configuration using `grub2-mkconfig`.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-grub2.html' target='_blank'>📚 SUSE Docs: Customizing the GRUB2 Boot Menu</a>"
+    },
     
 
 ]);
