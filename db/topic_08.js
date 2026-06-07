@@ -267,6 +267,18 @@ window.loadTopic("08 Process Management", [
         ], 
         rationale: "The <b>`bg`</b> (background) command sends a <b>SIGCONT</b> signal to a suspended or stopped background job, forcing it to resume its execution state in the background without locking up the active terminal shell prompt. If multiple jobs are stopped, you can specify which one to resume by appending its job ID (e.g., `bg %1`), whereas the `fg` command would bring it back into the active interactive foreground instead.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-shell.html' target='_blank'>📚 SUSE Docs: Managing Background Jobs</a>" 
     },
+    {
+        type: "MULTI",
+        text: "Which statements about log file rotation are true? (Choose two)",
+        options: [
+            {text: "Configuration files in the /etc/logrotate.d/ directory can override settings in /etc/logrotate.conf.", correct: true},
+            {text: "The /etc/logrotate.conf file controls which log files will be compressed or deleted based on some regular interval or when the log file reaches a particular size.", correct: true},
+            {text: "The /etc/cron.daily/logrotate file controls which log files will be compressed or deleted based on some regular interval or when the log file reaches a particular size.", correct: false},
+            {text: "Configuration files in the /etc/logrotate.d/ directory can override settings in /etc/cron.daily/logrotate.", correct: false},
+            {text: "The /usr/sbin/logrotate program is used to create and configure settings in the /etc/logrotate.conf file.", correct: false}
+        ],
+        rationale: "The correct answers are <b>Configuration files in the /etc/logrotate.d/ directory can override settings in /etc/logrotate.conf</b> and <b>The /etc/logrotate.conf file controls which log files will be compressed or deleted based on some regular interval or when the log file reaches a particular size</b>.<br><br>In SLES 15, the `logrotate` utility manages log preservation. The global defaults are defined in `/etc/logrotate.conf`, while application-specific rotation blocks are stored in the `/etc/logrotate.d/` directory, which naturally inherit and override the global settings. The file inside `/etc/cron.daily/logrotate` is merely a cron script that executes the `/usr/sbin/logrotate` binary daily, but it does not contain configuration policies.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-adm-lifecycle.html' target='_blank'>📚 SUSE Docs: Managing Log Files with logrotate</a>"
+    },
 
 
 
