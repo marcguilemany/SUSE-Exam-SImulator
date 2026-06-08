@@ -265,4 +265,15 @@ window.loadTopic("14 Logical Volume Management", [
         ],
         rationale: "The correct answers are <b>They consume storage blocks from a shared 'Thin Pool' dynamically only as data is actually written by applications</b> and <b>They allow virtual over-provisioning (overcommitting), enabling the total size of logical volumes to exceed the physical pool boundaries</b>.<br><br>Thin provisioning separates virtual volume presentation from actual physical allocation. Unlike 'Thick/Standard' LVM types, space is only claimed when data hits the disk, letting administrators overcommit resources efficiently.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-storage-lvm.html' target='_blank'>📚 SUSE Docs: Thin Provisioning Setup</a>"
     },
+    {
+        type: "SINGLE",
+        text: "When configuring redundant storage structures directly inside LVM2 on SLES 15, what is the key design advantage of a modern 'RAID Logical Volume' compared to a legacy 'Mirrored Logical Volume'?",
+        options: [
+            {text: "RAID volumes do not require an external cluster log or locking mechanism to maintain synchronization state.", correct: true},
+            {text: "Mirrored volumes provide better performance for parity configurations like RAID 5 and 6.", correct: false},
+            {text: "RAID volumes cannot be resized or extended online while unmounted.", correct: false},
+            {text: "Legacy Mirrored volumes are the only type capable of handling thin snapshots.", correct: false}
+        ],
+        rationale: "The correct answer is <b>RAID volumes do not require an external cluster log or locking mechanism to maintain synchronization state</b>. In LVM2, the modern `RAID` type (`lvcreate --type raid1`) leverages the kernel's MD subsystem capabilities directly. This eliminates the dependency on a separate, fault-prone synchronization log device that old legacy mirrors (`--type mirror`) needed to track changes.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-storage-lvm.html' target='_blank'>📚 SUSE Docs: LVM RAID Features</a>"
+    },
 ]);
