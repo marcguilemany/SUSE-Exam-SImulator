@@ -230,5 +230,16 @@ window.loadTopic("14 Logical Volume Management", [
             {text: "It contains configuration settings for LVM operations.", correct: true}
         ],
         rationale: "The correct answer is <b>It contains configuration settings for LVM operations.</b>. In SLES 15, `/etc/lvm/lvm.conf` acts as the master configuration file for the LVM2 toolset ecosystem. It houses operational parameters such as disk device scanning filters, metadata allocation policies, locking mechanisms, and auto-activation features. It does not store real-time runtime objects like names of volume groups or lists of active physical volumes, which are dynamically polled directly from disk device metadata fields.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-storage-lvm.html' target='_blank'>📚 SUSE Docs: LVM Configuration Files</a>"
-    },  
+    },
+    {
+        type: "SINGLE",
+        text: "By default, LVM initializes Volume Groups with a default Physical Extent (PE) size of 4MB. An administrator needs to create a new volume group named 'vg_data' using /dev/sdb1, but requires the Physical Extent size to be explicitly set to 16MB instead. Which command should be used?",
+        options: [
+            {text: "vgcreate -s 16M vg_data /dev/sdb1", correct: true},
+            {text: "pvcreate --pe-size 16M /dev/sdb1; vgcreate vg_data /dev/sdb1", correct: false},
+            {text: "vgcreate -p 16M vg_data /dev/sdb1", correct: false},
+            {text: "lvcreate -s 16M -n vg_data /dev/sdb1", correct: false}
+        ],
+        rationale: "The correct answer is <b>vgcreate -s 16M vg_data /dev/sdb1</b>. In LVM2 architecture, the size of the Physical Extents (PE) is a property of the Volume Group (VG) itself, not the physical or logical volumes. The <b>`-s`</b> flag (or `--physicalextentsize`) within the `vgcreate` command allows the administrator to override the default 4MB block size using suffixes like M for Megabytes or G for Gigabytes.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-storage-lvm.html' target='_blank'>📚 SUSE Docs: LVM Volume Group Advanced Creation</a>"
+    },
 ]);
