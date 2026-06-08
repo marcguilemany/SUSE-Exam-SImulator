@@ -1,7 +1,7 @@
 # 🐧 SUSE SCA 15 Exam Simulator
 
 Un simulador de examen ligero, gratuito y **sin backend** diseñado para ayudar a estudiar para la certificación **SUSE Certified Administrator (SCA 15)[SLES201v15]**.
-Actualmente está en +385 preguntas en total.
+Actualmente está en +400 preguntas en total.
 
 Funciona completamente en el navegador (Client-side) utilizando HTML5, CSS3 y Vanilla JavaScript moderno.
 
