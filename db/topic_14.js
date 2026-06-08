@@ -242,4 +242,15 @@ window.loadTopic("14 Logical Volume Management", [
         ],
         rationale: "The correct answer is <b>vgcreate -s 16M vg_data /dev/sdb1</b>. In LVM2 architecture, the size of the Physical Extents (PE) is a property of the Volume Group (VG) itself, not the physical or logical volumes. The <b>`-s`</b> flag (or `--physicalextentsize`) within the `vgcreate` command allows the administrator to override the default 4MB block size using suffixes like M for Megabytes or G for Gigabytes.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-storage-lvm.html' target='_blank'>📚 SUSE Docs: LVM Volume Group Advanced Creation</a>"
     },
+    {
+        type: "SINGLE",
+        text: "An administrator needs to create a new logical volume designed for high-performance databases. The storage traffic must be distributed alternately across three distinct physical volumes (/dev/sdb1, /dev/sdc1, and /dev/sdd1) to leverage parallel I/O operations. Which type of Logical Volume should be created?",
+        options: [
+            {text: "Linear Logical Volume", correct: false},
+            {text: "Striped Logical Volume", correct: true},
+            {text: "Mirrored Logical Volume", correct: false},
+            {text: "Thin-Provisioned Logical Volume", correct: false}
+        ],
+        rationale: "The correct answer is <b>Striped Logical Volume</b>. By default, LVM creates 'Linear' volumes where data blocks fill one disk before moving to the next. A 'Striped' volume (similar to RAID 0) interleaves data extents across a specified number of physical devices (`lvcreate -i 3`), multiplying read/write throughput by performing parallel I/O operations across all stripes.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-storage-lvm.html' target='_blank'>📚 SUSE Docs: LVM Volume Types</a>"
+    },
 ]);
