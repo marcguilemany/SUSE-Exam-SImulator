@@ -253,4 +253,16 @@ window.loadTopic("14 Logical Volume Management", [
         ],
         rationale: "The correct answer is <b>Striped Logical Volume</b>. By default, LVM creates 'Linear' volumes where data blocks fill one disk before moving to the next. A 'Striped' volume (similar to RAID 0) interleaves data extents across a specified number of physical devices (`lvcreate -i 3`), multiplying read/write throughput by performing parallel I/O operations across all stripes.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-storage-lvm.html' target='_blank'>📚 SUSE Docs: LVM Volume Types</a>"
     },
+    {
+        type: "MULTI",
+        text: "What are the primary characteristics and advantages of using Thin-Provisioned Logical Volumes in a SUSE Linux Enterprise Server 15 environment? (Choose two)",
+        options: [
+            {text: "They allocate the full virtual storage capacity on the physical disk immediately upon creation.", correct: false},
+            {text: "They consume storage blocks from a shared 'Thin Pool' dynamically only as data is actually written by applications.", correct: true},
+            {text: "They allow virtual over-provisioning (overcommitting), enabling the total size of logical volumes to exceed the physical pool boundaries.", correct: true},
+            {text: "They automatically provide hardware-level mirroring redundancy across different storage networks.", correct: false},
+            {text: "They are limited to non-extensible read-only layouts.", correct: false}
+        ],
+        rationale: "The correct answers are <b>They consume storage blocks from a shared 'Thin Pool' dynamically only as data is actually written by applications</b> and <b>They allow virtual over-provisioning (overcommitting), enabling the total size of logical volumes to exceed the physical pool boundaries</b>.<br><br>Thin provisioning separates virtual volume presentation from actual physical allocation. Unlike 'Thick/Standard' LVM types, space is only claimed when data hits the disk, letting administrators overcommit resources efficiently.<br><br><a href='https://documentation.suse.com/sles/15-SP5/html/SLES-all/cha-storage-lvm.html' target='_blank'>📚 SUSE Docs: Thin Provisioning Setup</a>"
+    },
 ]);
